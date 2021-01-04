@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamProjectFunction.Models
 {
-    class Gebruiker
+    public class Gebruiker
     {
         public string Naam { get; set; }
         public string Voornaam { get; set; }
