@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.Onboarding.OnboardingEteppes">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions> <!-- 6 row difinitions-->
+                <RowDefinition /> <!-- Titel -->
+                <RowDefinition /> <!-- SVG -->
+                <RowDefinition /> <!-- Tussen titel-->
+                <RowDefinition /> <!-- omschrijving-->
+                <RowDefinition /> <!-- Carousel bollekes -->
+                <RowDefinition /> <!-- buttons -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions> <!-- 2 columns (buttons) -->
+                <ColumnDefinition /> <!-- return button -->
+                <ColumnDefinition /> <!-- next button -->
+            </Grid.ColumnDefinitions>
+            <Label Grid.ColumnSpan="2"  Text="Tempo Track" Font="35" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
+            <Image Grid.ColumnSpan="2" Grid.Row="1" x:Name="imgLogo" Source="TempoTrack/Assets/LogoOnboarding.png" />
+            <Label Grid.ColumnSpan="2" Grid.Row="2" Text="Virtueële Etappes" Font="Bold,24" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
+            <Label Grid.ColumnSpan="2" Grid.Row="3" Text="Creëer jouw eigen Tour De France op de wielerpiste in Brugge" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
+            <Label Grid.ColumnSpan="2" Grid.Row="4" Text="Bollekes komen hier" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+            <Button x:Name="btnContinue" Grid.Row="5" Grid.Column="1" Text="Continue" BackgroundColor="Transparent" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
