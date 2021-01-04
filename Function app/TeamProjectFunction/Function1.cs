@@ -12,9 +12,9 @@ namespace TeamProjectFunction
 {
     public static class Function1
     {
-        [FunctionName("Function1")]
+        [FunctionName("CreateAccount")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "gebruikers/create")] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
