@@ -7,29 +7,44 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using TeamProjectFunction.Models;
+using System.Data.SqlClient;
 
 namespace TeamProjectFunction
 {
     public static class Function1
     {
         [FunctionName("CreateAccount")]
-        public static async Task<IActionResult> Run(
+        public static async Task<IActionResult> CreateAccount(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "gebruikers/create")] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            string name = req.Query["name"];
+            
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            Gebruiker gebruiker = JsonConvert.DeserializeObject<Gebruiker>(requestBody);
+            gebruiker.GebruikerId = Guid.NewGuid();
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                await sqlConnection.OpenAsync();
+                using(SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "INSERT INTO Gebruiker VALUES (@GebruikerId, @Naam, @Voornaam,@Email, @Wachtwoord)";
+                    sqlCommand.Parameters.AddWithValue("@GebruikerId", gebruiker.GebruikerId);
+                    sqlCommand.Parameters.AddWithValue("@Naam", gebruiker.Naam);
+                    sqlCommand.Parameters.AddWithValue("@Voornaam", gebruiker.Voornaam);
+                    sqlCommand.Parameters.AddWithValue("@Email", gebruiker.Email);
+                    sqlCommand.Parameters.AddWithValue("@Wachtwoord", gebruiker.Wachtwoord);
 
-            return new OkObjectResult(responseMessage);
+                    await sqlCommand.ExecuteNonQueryAsync();
+                }
+            }
+
+
+            return new OkObjectResult(gebruiker);
         }
     }
 }
