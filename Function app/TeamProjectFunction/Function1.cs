@@ -84,17 +84,24 @@ namespace TeamProjectFunction
                             // psswd correct
                             return new OkObjectResult("Wachtwoord correct");
                         }
+
+                        else
+                        {
+                            // psswd incorrect
+                            return new OkObjectResult("Wachtwoord onjuist");
+                        }
                     }
 
                     else
                     {
                         // no user in db with this email
+                        return new OkObjectResult("Geen gebruiker gevonden");
                     }
                 }
             }
 
 
-            return new OkObjectResult("");
+
         }
     }
 }
