@@ -9,8 +9,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TeamProjectFunction.Models;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
-using TeamProjectFunction.Repository;
 
 namespace TeamProjectFunction
 {
