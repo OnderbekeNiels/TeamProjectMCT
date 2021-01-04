@@ -4346,7 +4346,7 @@
       ]
     },
     "NETStandard.Library/2.0.3": {
-      "sha512": "548M6mnBSJWxsIlkQHfbzoYxpiYFXZZSL00p4GHYv8PkiqFBnnT68mW5mGEsA/ch9fDO9GkPgkFQpWiXZN7mAQ==",
+      "sha512": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "type": "package",
       "path": "netstandard.library/2.0.3",
       "files": [
@@ -8068,18 +8068,18 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\robbe\\.nuget\\packages\\": {},
+    "C:\\Users\\Xander\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+      "projectUniqueName": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
       "projectName": "TempoTrack.UWP",
-      "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
-      "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
-      "outputPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
+      "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+      "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
+      "outputPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -8087,7 +8087,7 @@
         "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -8101,8 +8101,8 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-              "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+            "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
             }
           }
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "apDSZhrr5ZxkOL/7jOpnzbDnmNYzgn5CBE5GJsOEe/cy/XveDRkgXQc45BCCITzxkbR0TPVMGiiYPzyd2oikoQ==",
+  "dgSpecHash": "WbA9IMIv2veSAqJHfAqiy+zaCsWlbip8aQA3MEUoQItpGHO13Lub2pFURcwLkzCPS0DqmebPWrGcqkJhpmII0Q==",
   "success": true,
-  "projectFilePath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+  "projectFilePath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.arch.core.common\\1.1.1.3\\xamarin.android.arch.core.common.1.1.1.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.arch.core.runtime\\1.1.1.3\\xamarin.android.arch.core.runtime.1.1.1.3.nupkg.sha512",

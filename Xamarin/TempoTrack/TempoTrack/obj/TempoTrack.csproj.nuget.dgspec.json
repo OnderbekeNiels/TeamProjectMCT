@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {}
+    "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {}
   },
   "projects": {
-    "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+    "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectUniqueName": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "projectName": "TempoTrack",
-        "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
-        "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
-        "outputPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
+        "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
+        "outputPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -68,7 +67,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

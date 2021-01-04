@@ -15,7 +15,7 @@ namespace TempoTrack.Views.Onboarding
         public OnboardingEteppes()
         {
             InitializeComponent();
-            //imgLogo.Source = ImageSource.FromResource("TempoTrack.Assets.LogoOnboarding.svg");
+            imgLogo.Source = ImageSource.FromResource("TempoTrack.Assets.LogoOnboarding.png");
         }
     }
 }
