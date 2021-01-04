@@ -46,5 +46,55 @@ namespace TeamProjectFunction
 
             return new OkObjectResult(gebruiker);
         }
+
+        [FunctionName("AccountLogin")]
+        public static async Task<IActionResult> AccountLogin(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "gebruikers/login")] HttpRequest req,
+            ILogger log)
+        {
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Gebruiker gebruikerLogin = JsonConvert.DeserializeObject<Gebruiker>(requestBody);
+            
+
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                await sqlConnection.OpenAsync();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SELECT * FROM Gebruiker WHERE Email = @Email";
+                    sqlCommand.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
+
+                    SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                    Gebruiker gebruikerDb = new Gebruiker();
+                    while (reader.Read())
+                    {
+                        gebruikerDb.Email = reader["Email"].ToString();
+                        gebruikerDb.Wachtwoord = reader["Wachtwoord"].ToString();
+
+                    }
+
+                    if (gebruikerDb.Email != null)
+                    {
+                        if (gebruikerDb.Wachtwoord == gebruikerLogin.Wachtwoord)
+                        {
+                            // psswd correct
+                            return new OkObjectResult("Wachtwoord correct");
+                        }
+                    }
+
+                    else
+                    {
+                        // no user in db with this email
+                    }
+                }
+            }
+
+
+            return new OkObjectResult("");
+        }
     }
 }
