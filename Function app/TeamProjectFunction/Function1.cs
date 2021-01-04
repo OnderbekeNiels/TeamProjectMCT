@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TeamProjectFunction.Models;
 using System.Data.SqlClient;
-using TeamProjectFunction.Repository;
 
 namespace TeamProjectFunction
 {
@@ -24,8 +23,7 @@ namespace TeamProjectFunction
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Gebruiker gebruiker = JsonConvert.DeserializeObject<Gebruiker>(requestBody);
-            gebruiker.GebruikerId = Guid.NewGuid();
-            gebruiker.Wachtwoord = SecurePasswordHasher.Hash(gebruiker.Wachtwoord);
+            gebruiker.GebruikerId = Guid.NewGuid();         
 
             string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
