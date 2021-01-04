@@ -53,8 +53,21 @@ namespace TeamProjectFunction
             ILogger log)
         {
 
+            //Account login:
+            //naar api sturen email en ww via json, vb:
+            //{
+            //"email": "test1@email.com",
+            //"wachtwoord": "test1efe"
+            //}
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            //mogelijke returns:
+            //ww correct: Wachtwoord correct
+            //ww incorrect: Wachtwoord incorrect
+            //geen account gevonde: Geen gebruiker gevonden
+            //de return values kunnen aangepast worden natuurlijk, deze zijn als vb
+
+
+        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Gebruiker gebruikerLogin = JsonConvert.DeserializeObject<Gebruiker>(requestBody);
             
 
