@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Assets\LogoOnboarding.svg" />
     <EmbeddedResource Include="Assets\LogoOnboarding.png" />
+    <EmbeddedResource Include="Assets\LogoOnboarding.svg" />
   </ItemGroup>
 
   <ItemGroup>

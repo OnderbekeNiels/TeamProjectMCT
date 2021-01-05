@@ -8,8 +8,6 @@ D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstan
 D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingEtappes.xaml.g.cs
 D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.AssemblyInfoInputs.cache
 D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.AssemblyInfo.cs
-D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
-D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
 D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
 D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
 D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
@@ -28,3 +26,5 @@ D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
+D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
+D:\howest\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
