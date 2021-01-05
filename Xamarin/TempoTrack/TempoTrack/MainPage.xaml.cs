@@ -19,9 +19,9 @@ namespace TempoTrack
             if (VersionTracking.IsFirstLaunchEver)
             {
                 //Naar onboarding sturen
-                Navigation.PushAsync(new OnboardingEteppes());
+                Navigation.PushAsync(new OnboardingEtappes());
             }
-            Navigation.PushAsync(new OnboardingEteppes());
+            Navigation.PushAsync(new OnboardingEtappes());
         }
     }
 }

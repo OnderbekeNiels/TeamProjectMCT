@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace TempoTrack.Views.Onboarding
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class OnboardingEtappes : ContentPage
+    public partial class OnboardingGPS : ContentPage
     {
-        public OnboardingEtappes()
+        public OnboardingGPS()
         {
             InitializeComponent();
             imgLogo.Source = ImageSource.FromResource("TempoTrack.Assets.Images.LogoOnboarding.png");
-            btnContinue.Clicked += btnContinue_Clicked;
+            btnToestaan.Clicked += btnToestaan_Clicked;
+            btnReturn.Clicked += btnReturn_Clicked;
         }
 
-        private void btnContinue_Clicked(object sender, EventArgs e)
+        private void btnReturn_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new OnboardingKlassement());
+            Navigation.PopAsync();
+        }
+
+        private void btnToestaan_Clicked(object sender, EventArgs e)
+        {
+            //Navigation.PopAsync();
         }
     }
 }

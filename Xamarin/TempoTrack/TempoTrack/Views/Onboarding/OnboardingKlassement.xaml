@@ -1,25 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TempoTrack.Views.Onboarding.OnboardingEtappes" 
+             x:Class="TempoTrack.Views.Onboarding.OnboardingKlassement"             
              NavigationPage.HasNavigationBar="False" 
              BackgroundColor="#2D2D2D"
              >
     <ContentPage.Content>
         <StackLayout Spacing="0" Padding="16,50,16,16">
-            <Label Text="Virtueële Etappes" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" />
+            <Label Text="Virtueel Klassement" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" />
             <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="144" />
 
-            <Label Text="Creëer jouw eigen Tour De France op de wielerpiste in Brugge" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="56,0,56,48"/>
+            <Label Text="Bekijk het klassement van jouw virtuele tour en etappes" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="56,0,56,48"/>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,56">
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="#016FB7" BorderColor="#016FB7" />
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
-                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
             </StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button x:Name="btnContinue" Text="Continue" BackgroundColor="#016FB7" FontFamily="DIN2014-Regular" CornerRadius="20" TextColor="#FFFFFF" Margin="0,8,8,8" HeightRequest="40" WidthRequest="136" Padding="0" />
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnReturn" Text="Return" BackgroundColor="Transparent" FontFamily="DIN2014-Regular" TextColor="#FFFFFF" Margin="16,8,8,8" HeightRequest="40" Padding="0" />
+                <Button x:Name="btnContinue" Text="Continue"  BackgroundColor="#016FB7" FontFamily="DIN2014-Regular" CornerRadius="20" TextColor="#FFFFFF" Margin="96,8,8,8" HeightRequest="40" WidthRequest="136" Padding="0" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
