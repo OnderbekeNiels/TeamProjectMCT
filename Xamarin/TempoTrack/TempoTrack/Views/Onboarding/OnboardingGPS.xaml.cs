@@ -1,9 +1,9 @@
 ﻿using System;
+using Xamarin.Essentials;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,9 +25,18 @@ namespace TempoTrack.Views.Onboarding
             Navigation.PopAsync();
         }
 
-        private void btnToestaan_Clicked(object sender, EventArgs e)
+        private async void btnToestaan_Clicked(object sender, EventArgs e)
         {
-            //Navigation.PopAsync();
+            //Toestemming vragen
+            var permission = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+            if (permission == PermissionStatus.Granted)
+            {
+                //doorgaan
+            }
+            else if (permission != PermissionStatus.Granted) 
+            {
+                permission = await Permissions.RequestAsync<Permissions.LocationAlways>();
+            }
         }
     }
 }
