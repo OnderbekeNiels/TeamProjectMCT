@@ -229,7 +229,10 @@ namespace TeamProjectFunction
                     else
                     {
                         // gebruiker bestaat al
-                        return new OkObjectResult("{'response':'failed','error':'user already exists'}");
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = false;
+                        customResponse.Message = "Gebruiker bestaat al";
+                        return new OkObjectResult(customResponse);
                     }
                 }
             }
