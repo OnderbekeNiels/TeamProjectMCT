@@ -8,13 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("TempoTrack.Views.Onboarding.OnboardingEtappes.xaml", "Views/Onboarding/OnboardingEtappes.xaml", typeof(global::TempoTrack.Views.Onboarding.OnboardingEteppes))]
+[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("TempoTrack.Views.Onboarding.OnboardingEtappes.xaml", "Views/Onboarding/OnboardingEtappes.xaml", typeof(global::TempoTrack.Views.Onboarding.OnboardingEtappes))]
 
 namespace TempoTrack.Views.Onboarding {
     
     
     [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("Views\\Onboarding\\OnboardingEtappes.xaml")]
-    public partial class OnboardingEteppes : global::Xamarin.Forms.ContentPage {
+    public partial class OnboardingEtappes : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Image imgLogo;
@@ -24,7 +24,7 @@ namespace TempoTrack.Views.Onboarding {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
-            global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(OnboardingEteppes));
+            global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(OnboardingEtappes));
             imgLogo = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Image>(this, "imgLogo");
             btnContinue = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "btnContinue");
         }
