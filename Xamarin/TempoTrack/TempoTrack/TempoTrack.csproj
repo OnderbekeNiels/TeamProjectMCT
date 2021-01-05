@@ -11,13 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\DIN2014-Light.ttf" />
+    <None Remove="Assets\Fonts\DIN2014-Regular.ttf" />
     <None Remove="Assets\LogoOnboarding.png" />
     <None Remove="Assets\LogoOnboarding.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Assets\LogoOnboarding.png" />
-    <EmbeddedResource Include="Assets\LogoOnboarding.svg" />
+    <EmbeddedResource Include="Assets\Fonts\DIN2014-Light.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\DIN2014-Regular.ttf" />
+    <EmbeddedResource Include="Assets\Images\LogoOnboarding.png" />
+    <EmbeddedResource Include="Assets\Images\LogoOnboarding.svg" />
   </ItemGroup>
 
   <ItemGroup>

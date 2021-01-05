@@ -3,6 +3,9 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+[assembly: ExportFont("DIN2014-Regular.ttf", Alias = "DIN2014-Regular")]
+[assembly: ExportFont("DIN2014-Light.ttf", Alias = "DIN2014-Light")]
+
 namespace TempoTrack
 {
     public partial class App : Application
