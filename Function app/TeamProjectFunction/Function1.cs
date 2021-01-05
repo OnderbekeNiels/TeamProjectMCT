@@ -405,9 +405,7 @@ namespace TeamProjectFunction
             //}
 
             //mogelijke returns:
-            //account aangemaakt: gebruikerv2 met alle params
-            //gebruiker bestaat al: custom response zie model
-            //de return values kunnen aangepast worden natuurlijk, deze zijn als vb
+            //als ronde gemaakt is wordt het model ronde met alle params terug gestuurd
 
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -480,5 +478,57 @@ namespace TeamProjectFunction
 
 
         }
+
+
+        [FunctionName("UpdateRonde")]
+        public static async Task<IActionResult> UpdateRonde(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "rondes/update")] HttpRequest req,
+           ILogger log)
+        {
+
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"rondeId": "4dca58c9-7e62-4bcb-8b05-b81b15a1ba75",
+            //"naam": "testronde1",
+            //"startDatum": "2021-01-05T15:00:00",
+            //"eindDatum": "2020-12-31T11:59:59"
+            //}
+
+            //mogelijke returns:
+            //als ronde gemaakt is wordt het model ronde met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "UPDATE Rondes SET Naam = @Naam,StartDatum = @StartDatum,EindDatum = @EindDatum WHERE RondeId = @RondeId";
+                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@Naam", ronde.Naam);
+                    sqlCommandInsert.Parameters.AddWithValue("@StartDatum", ronde.StartDatum);
+                    sqlCommandInsert.Parameters.AddWithValue("@EindDatum", ronde.EindDatum);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(ronde);
+
+                }
+            }
+
+
+
+
+        }
+
     }
 }
