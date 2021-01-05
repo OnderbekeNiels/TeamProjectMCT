@@ -32,6 +32,7 @@ namespace TempoTrack.Views.Onboarding
             if (permission == PermissionStatus.Granted)
             {
                 //doorgaan
+                Navigation.PushAsync(new OnboardingStart());
             }
             else if (permission != PermissionStatus.Granted) 
             {
