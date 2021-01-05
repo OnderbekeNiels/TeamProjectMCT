@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TeamProjectFunction.Models;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace TeamProjectFunction
 {
@@ -178,8 +179,8 @@ namespace TeamProjectFunction
             //}
 
             //mogelijke returns:
-            //account aangemaakt gebruiker met alle params
-            //gebruiker bestaat al: Gebruiker bestaat al
+            //account aangemaakt: gebruikerv2 met alle params
+            //gebruiker bestaat al: custom response zie model
             //de return values kunnen aangepast worden natuurlijk, deze zijn als vb
 
 
@@ -241,5 +242,73 @@ namespace TeamProjectFunction
 
 
         }
+   
+
+
+        [FunctionName("AccountLogin")]
+        public static async Task<IActionResult> AccountLogin(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "gebruikers/login")] HttpRequest req,
+            ILogger log)
+        {
+
+            //Account login:
+            //naar api sturen email json, vb:
+            //{
+            //"email": "test1@email.com"
+            //}
+
+            //mogelijke returns:
+            //gebruiker gevonden: gebruikerv2 met alle params
+            //geen account gevonden: custom response zie model
+            //de return values kunnen aangepast worden natuurlijk, deze zijn als vb
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            GebruikerV2 gebruikerLogin = JsonConvert.DeserializeObject<GebruikerV2>(requestBody);
+
+
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                await sqlConnection.OpenAsync();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SELECT * FROM Gebruiker WHERE Email = @Email";
+                    sqlCommand.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
+
+                    SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                    GebruikerV2 gebruikerDb = new GebruikerV2();
+                    while (reader.Read())
+                    {
+                        gebruikerDb.Email = reader["Email"].ToString();
+                        gebruikerDb.GebruikerId = Guid.Parse(reader["GebruikersId"].ToString());
+                        gebruikerDb.GebruikersNaam = reader["GebruikersNaam"].ToString();
+
+                    }
+
+                    if (gebruikerDb.Email != null)
+                    {
+                        gebruikerLogin.GebruikerId = gebruikerDb.GebruikerId;
+                        gebruikerLogin.GebruikersNaam = gebruikerDb.GebruikersNaam;
+
+                        return new OkObjectResult(gebruikerLogin);
+                    }
+
+                    else
+                    {
+                        // no user in db with this email
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = false;
+                        customResponse.Message = "Geen gebruiker gevonden in de db";
+                        return new OkObjectResult(customResponse);
+                    }
+                }
+            }
+
+
+
+        }
+
     }
 }
