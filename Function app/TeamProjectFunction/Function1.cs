@@ -659,12 +659,62 @@ namespace TeamProjectFunction
 
 
 
-        
+        [FunctionName("CreateEtappe")]
+        public static async Task<IActionResult> CreateEtappe(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "etappes/create")] HttpRequest req,
+           ILogger log)
+        {
+
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"laps" : 3,
+            //"rondeid": "55c83dc3-8bc6-43de-b1ae-50fdf9a10590",
+            //"lapdistance": 102.33,
+            //"starttijd": "2021-01-05T15:00:00"
+            //}
+
+            //mogelijke returns:
+            //als etappe gemaakt is wordt het model etappe met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+            etappe.EtappeId = Guid.NewGuid();
+            
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand)";
+                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
+                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+                    sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(etappe);
+
+                }
+            }
 
 
 
 
-    
+        }
+
+
+
+
+
 
 
     }
