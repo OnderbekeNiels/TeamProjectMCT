@@ -36,6 +36,7 @@ namespace TeamProject_LocationTrigger.Models
 
         public void OnRegionStateChanged(GeofenceResult result)
         {
+            Debug.WriteLine("REGION ENTERED");
             Debug.WriteLine(string.Format("{0} - {1}", CrossGeofence.Id, result.ToString()));
         }
 

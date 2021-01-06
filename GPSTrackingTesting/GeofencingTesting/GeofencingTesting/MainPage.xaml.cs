@@ -16,12 +16,12 @@ namespace GeofencingTesting
         }
 
         //LocationManager
-        //PendingIntent pendingIntent = ...; //Intent to launch
-        //LatLng mpCoord = ...; //Center point
-        //float alertRadius ... ; //Radius of proximity in meters
-        //long expiration = -1; //Timeout in msec, -1 = infinite
+        PendingIntent pendingIntent = ...; //Intent to launch
+        LatLng mpCoord = ...; //Center point
+        float alertRadius ... ; //Radius of proximity in meters
+        long expiration = -1; //Timeout in msec, -1 = infinite
 
-        //locManager.AddProximityAlert(mpCoord.Latitude, mpCoord.Longtitude, alertRadius, timeout, pendingIntent);
+        locManager.AddProximityAlert(mpCoord.Latitude, mpCoord.Longtitude, alertRadius, timeout, pendingIntent);
 
 
     }

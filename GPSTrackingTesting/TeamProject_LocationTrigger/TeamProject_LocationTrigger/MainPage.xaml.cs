@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Geofence;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,9 +18,23 @@ namespace TeamProject_LocationTrigger
         public MainPage()
         {
             InitializeComponent();
+            
+            btnStart.Clicked += BtnStart_Clicked;
+            btnStop.Clicked += BtnStop_Clicked;
+        }
+
+        private void BtnStop_Clicked(object sender, EventArgs e)
+        {
+            CrossGeofence.Current.StopMonitoringAllRegions();
+            IReadOnlyDictionary<string, GeofenceResult> GeofenceResults = CrossGeofence.Current.GeofenceResults;
+        }
+
+        private void BtnStart_Clicked(object sender, EventArgs e)
+        {
             TriggerAsync();
         }
 
+        #region *** First attempt ***
 
         CancellationTokenSource cts;
 
@@ -79,6 +94,7 @@ namespace TeamProject_LocationTrigger
             //Location Point2 = new Location(51.205871733863816, 3.243559074497764);
             //Location Point3 = new Location(51.2058952604116, 3.2435081125272998);
 
+            //Gegevens thuis
             Location Point1 = new Location(50.91526320925043, 3.651294345010419);
             Location Point2 = new Location(50.91524376217434, 3.6511924210694904);
             Location Point3 = new Location(50.915230233768796, 3.651101896516691);
@@ -101,58 +117,57 @@ namespace TeamProject_LocationTrigger
 
        bool raceGoing = true;
 
+
         //public async Task TriggerAsync()
         //{
-        //    TimeSpan lastMeasurement = DateTime.Now.TimeOfDay;
         //    int lap = 0;
+        //    DateTime lastMeasurement = DateTime.Now;
         //    while (raceGoing)
         //    {
         //        if (!await CheckIfPassed())
         //        {
-        //            lblPassed.Text = "Did not pass";
-        //        }
-        //        else if ((lastMeasurement + TimeSpan.FromSeconds(10)) <= DateTime.Now.TimeOfDay)
-        //        {
-        //            lastMeasurement = DateTime.Now.TimeOfDay;
-        //            lap++;
-        //            lblPassed.Text = $"Line passed";
-        //            lblLap.Text = $"Crossed point: {lap} times";
-        //            lblTimeOfLap.Text = $"{lastMeasurement}";
-
+        //            lblPassed.Text = "Did not pass line";
         //        }
         //        else
         //        {
-        //            lblPassed.Text = "we zimme aant wachten";
+        //            if(lastMeasurement.AddSeconds(10) < DateTime.Now)
+        //            {
+        //                lap++;
+        //                lblPassed.Text = $"Line passed";
+        //                lblLap.Text = $"Crossed point: {lap} times";
+        //                lastMeasurement = DateTime.Now;
+        //            }
         //        }
         //    }
 
         //}
 
+        #endregion
+
+        #region *** Second attempt - GEOFENCING ***
+
         public async Task TriggerAsync()
         {
-            int lap = 0;
-            DateTime lastMeasurement = DateTime.Now;
-            while (raceGoing)
-            {
-                if (!await CheckIfPassed())
-                {
-                    lblPassed.Text = "Did not pass line";
-                }
-                else
-                {
-                    if(lastMeasurement.AddSeconds(10) < DateTime.Now)
-                    {
-                        lap++;
-                        lblPassed.Text = $"Line passed";
-                        lblLap.Text = $"Crossed point: {lap} times";
-                        lastMeasurement = DateTime.Now;
-                    }
-                }
-            }
 
+            //GeofenceCircularRegion P1 = new GeofenceCircularRegion("Point1", 50.91526320925043, 3.651294345010419, 3);
+            //GeofenceCircularRegion P2 = new GeofenceCircularRegion("Point2", 50.91524376217434, 3.6511924210694904, 3);
+            //GeofenceCircularRegion P3 = new GeofenceCircularRegion("Point3", 50.915230233768796, 3.651101896516691, 3);
+
+            //List<GeofenceCircularRegion> Regions = new List<GeofenceCircularRegion> { P1, P2, P3 };
+
+
+
+            CrossGeofence.Initialize<CrossGeofenceListener>();
+            CrossGeofence.GeofencePriority = GeofencePriority.HighAccuracy;
+
+            //Doet hij niet
+            CrossGeofence.RequestLocationPermission = true;
+            CrossGeofence.RequestNotificationPermission = true;
+
+            CrossGeofence.Current.StartMonitoring(new GeofenceCircularRegion("TestPoint", 50.9153565753776, 3.6510869957532956, 20) { ShowEntryNotification = true, NotificationEntryMessage = "entered line", ShowStayNotification = true, NotificationStayMessage="je bent er nog", StayedInThresholdDuration = TimeSpan.FromSeconds(10)});
         }
 
-       
+        #endregion
 
     }
 }
