@@ -550,6 +550,7 @@ namespace TeamProjectFunction
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
+            deelnemer.DeelnemerId = Guid.NewGuid();
             Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
 
             //controleren als invitecode bestaat
@@ -582,7 +583,8 @@ namespace TeamProjectFunction
                             using (SqlCommand sqlCommandInsert = new SqlCommand())
                             {
                                 sqlCommandInsert.Connection = sqlConnectionInsert;
-                                sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@GebruikerId, @RondeId)";
+                                sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
+                                sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
                                 sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
                                 sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
 
@@ -624,8 +626,7 @@ namespace TeamProjectFunction
         {
 
             //{
-            //    "rondeid": "4cc9e0df-1ded-4dc6-8000-b4d27fd3027a",
-            //    "gebruikerId": "986c5f65-cafc-43ce-8fa5-bf4f97921e92"
+            //    "deelnemerId": "f0429da0-f5cd-4f39-bb88-cc46d14bae20"
             //}
 
 
@@ -644,9 +645,8 @@ namespace TeamProjectFunction
                 using (SqlCommand sqlCommandInsert = new SqlCommand())
                 {
                     sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "DELETE FROM Deelnemers WHERE GebruikersId = @GebruikerId and RondeId = @GebruikerId";
-                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+                    sqlCommandInsert.CommandText = "DELETE FROM Deelnemers WHERE deelnemerId = @deelnemerId";
+                    sqlCommandInsert.Parameters.AddWithValue("@deelnemerId", deelnemer.DeelnemerId);
 
 
 
@@ -817,6 +817,8 @@ namespace TeamProjectFunction
 
 
         }
+
+
 
     }
 }
