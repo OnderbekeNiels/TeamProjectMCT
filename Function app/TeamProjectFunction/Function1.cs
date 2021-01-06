@@ -318,9 +318,10 @@ namespace TeamProjectFunction
         {
 
             //Account login:
-            //naar api sturen email json, vb:
+            //naar api sturen email json gebruikersnaam niet verplicht bij inloggen, wel verplicht als de account voor het eerst aangemaakt wordt , vb:
             //{
-            //"email": "test1@email.com"
+            //"email": "test1@email.com",
+            //"gebruikersnaam": "test1"
             //}
 
             //mogelijke returns:
@@ -363,6 +364,7 @@ namespace TeamProjectFunction
 
                     else
                     {
+                        //gebruiker bestond nog niet
                         gebruikerLogin.GebruikerId = Guid.NewGuid();
                         using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionString))
                         {
@@ -764,7 +766,57 @@ namespace TeamProjectFunction
         }
 
 
+        [FunctionName("AddLaptijd")]
+        public static async Task<IActionResult> AddLaptijd(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "laptijden/add")] HttpRequest req,
+           ILogger log)
+        {
 
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"etappeId": "b3a5f165-3011-4fdb-bba3-8c888e7a15d9",
+            //"gebruikerid": "f35d476e-55c8-484a-8b12-fb52da1c1413",
+            //"tijdlap": 95,
+            //"lapnummer": 1
+            //}
+
+            //mogelijke returns:
+            //als laptijd gemaakt is wordt het model laptijd met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
+            lapTijd.LapTijdId = Guid.NewGuid();
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
+                    sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
+                    sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
+                    sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(lapTijd);
+
+                }
+            }
+
+
+
+
+        }
 
     }
 }
