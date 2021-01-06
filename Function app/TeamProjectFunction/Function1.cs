@@ -313,7 +313,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AccountLogin")]
         public static async Task<IActionResult> AccountLogin(
-            [HttpTrigger(AuthorizationLevel.Anonymous,"post", "get", Route = "gebruikers/login")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", "get", Route = "gebruikers/login")] HttpRequest req,
             ILogger log)
         {
 
@@ -435,7 +435,7 @@ namespace TeamProjectFunction
                         while (reader.Read())
                         {
                             rondeDb.InviteCode = reader["InviteCode"].ToString();
-                            
+
                         }
 
                         if (rondeDb.InviteCode == null)
@@ -470,7 +470,7 @@ namespace TeamProjectFunction
                     await sqlCommandInsert.ExecuteNonQueryAsync();
 
                     return new OkObjectResult(ronde);
-                   
+
                 }
             }
 
@@ -576,7 +576,47 @@ namespace TeamProjectFunction
         }
 
 
-        
+        [FunctionName("DelDeelenmerfromRonde")]
+        public static async Task<IActionResult> DelDeelenmerfromRonde(
+          [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "deelnemer/del")] HttpRequest req,
+          ILogger log)
+        {
+
+            //{
+            //    "rondeid": "4cc9e0df-1ded-4dc6-8000-b4d27fd3027a",
+            //    "gebruikerId": "986c5f65-cafc-43ce-8fa5-bf4f97921e92"
+            //}
+
+
+            //mogelijke returns:
+            //als ronde verwijderd is wordt het model deelnemer met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "DELETE FROM Deelnemers WHERE GebruikersId = @GebruikerId and RondeId = @GebruikerId";
+                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(deelnemer);
+
+                }
+            }
 
         }
+
+    }
 }
