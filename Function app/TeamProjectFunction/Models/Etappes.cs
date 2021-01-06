@@ -4,9 +4,11 @@ using System.Text;
 
 namespace TeamProjectFunction.Models
 {
-    public class Deelnemer
+    public class Etappes
     {
-        public Guid GebruikerId { get; set; }
+        public Guid EtappeId { get; set; }
+        public int Laps { get; set; }
         public Guid RondeId { get; set; }
+        public float LapDistance { get; set; }
     }
 }
