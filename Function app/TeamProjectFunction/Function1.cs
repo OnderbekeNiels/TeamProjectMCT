@@ -670,7 +670,7 @@ namespace TeamProjectFunction
             //{
             //"laps" : 3,
             //"rondeid": "55c83dc3-8bc6-43de-b1ae-50fdf9a10590",
-            //"lapdistance": 102.33,
+            //"lapafstand": 102.33,
             //"starttijd": "2021-01-05T15:00:00"
             //}
 
@@ -712,7 +712,56 @@ namespace TeamProjectFunction
         }
 
 
+        [FunctionName("UpdateEtappe")]
+        public static async Task<IActionResult> UpdateEtappe(
+          [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "etappe/update")] HttpRequest req,
+          ILogger log)
+        {
 
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"laps" : 3,
+            //"rondeid": "55c83dc3-8bc6-43de-b1ae-50fdf9a10590",
+            //"lapafstand": 105.33,
+            //"starttijd": "2021-01-05T15:00:00",
+            //"EtappeId" : "6B2C2BE0-C30C-4742-8ED2-83A14B4FE066"
+            //}
+
+            //mogelijke returns:
+            //als etappe aangepast is wordt het model etappe met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "UPDATE Etappes SET Laps = @Laps, StartTijd = @StartTijd, LapAfstand = @LapAfstand WHERE EtappeId = @EtappeId";
+                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
+                    sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
+                    sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(etappe);
+
+                }
+            }
+
+
+
+
+        }
 
 
 
