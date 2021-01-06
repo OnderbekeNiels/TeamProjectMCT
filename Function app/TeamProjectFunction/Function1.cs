@@ -530,14 +530,14 @@ namespace TeamProjectFunction
 
         }
 
-        [FunctionName("AddDeelenmerToRonde")]
-        public static async Task<IActionResult> AddDeelenmerToRonde(
+        [FunctionName("AddDeelnemerToRonde")]
+        public static async Task<IActionResult> AddDeelnemerToRonde(
           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "deelnemer/add")] HttpRequest req,
           ILogger log)
         {
 
             //{
-            //    "rondeid": "4cc9e0df-1ded-4dc6-8000-b4d27fd3027a",
+            //    "invitecode": "4cc9e0df-1ded-4dc6-8000-b4d27fd3027a",
             //    "gebruikerId": "986c5f65-cafc-43ce-8fa5-bf4f97921e92"
             //}
 
@@ -548,24 +548,63 @@ namespace TeamProjectFunction
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
+            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
 
-
+            //controleren als invitecode bestaat
             string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            using (SqlConnection sqlConnection = new SqlConnection(connectionStringInsert))
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                await sqlConnection.OpenAsync();
+                using (SqlCommand sqlCommand = new SqlCommand())
                 {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@GebruikerId, @RondeId)";
-                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SELECT * FROM Rondes WHERE InviteCode = @InviteCode";
+                    sqlCommand.Parameters.AddWithValue("@InviteCode", ronde.InviteCode);
+
+                    SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                    Ronde rondeDb = new Ronde();
+                    while (reader.Read())
+                    {
+
+                        rondeDb.RondeId = Guid.Parse(reader["RondeId"].ToString());
+
+                    }
+                    if (rondeDb.RondeId != null && rondeDb.RondeId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                    {
+                        //invitecode bestaat
+                        ronde.RondeId = rondeDb.RondeId;
+
+                        using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                        {
+                            await sqlConnectionInsert.OpenAsync();
+                            using (SqlCommand sqlCommandInsert = new SqlCommand())
+                            {
+                                sqlCommandInsert.Connection = sqlConnectionInsert;
+                                sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@GebruikerId, @RondeId)";
+                                sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                                sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+
+                                //deelnemer.RondeId = ronde.RondeId;
+
+                                await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                                return new OkObjectResult(deelnemer);
+
+                            }
+                        }
 
 
+                    }
 
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                    else
+                    {
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = false;
+                        customResponse.Message = "Invitecode betsaat niet";
+                        return new OkObjectResult(customResponse);
+                    }
 
-                    return new OkObjectResult(deelnemer);
+
 
                 }
             }
@@ -576,8 +615,8 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelDeelenmerfromRonde")]
-        public static async Task<IActionResult> DelDeelenmerfromRonde(
+        [FunctionName("DelDeelnemerfromRonde")]
+        public static async Task<IActionResult> DelDeelnemerfromRonde(
           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "deelnemer/del")] HttpRequest req,
           ILogger log)
         {
@@ -617,6 +656,11 @@ namespace TeamProjectFunction
             }
 
         }
+
+
+        
+
+
 
     }
 }
