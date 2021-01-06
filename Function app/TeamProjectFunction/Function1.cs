@@ -340,7 +340,7 @@ namespace TeamProjectFunction
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
                     sqlCommand.Connection = sqlConnection;
-                    sqlCommand.CommandText = "SELECT * FROM Gebruiker WHERE Email = @Email";
+                    sqlCommand.CommandText = "SELECT * FROM Gebruikers WHERE Email = @Email";
                     sqlCommand.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
 
                     SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
@@ -370,7 +370,7 @@ namespace TeamProjectFunction
                             using (SqlCommand sqlCommandInsert = new SqlCommand())
                             {
                                 sqlCommandInsert.Connection = sqlConnectionInsert;
-                                sqlCommandInsert.CommandText = "INSERT INTO Gebruiker VALUES (@GebruikerId, @GebruikersNaam, @Email)";
+                                sqlCommandInsert.CommandText = "INSERT INTO Gebruikers VALUES (@GebruikerId, @GebruikersNaam, @Email)";
                                 sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", gebruikerLogin.GebruikerId);
                                 sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.GebruikersNaam);
                                 sqlCommandInsert.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
@@ -575,5 +575,8 @@ namespace TeamProjectFunction
 
         }
 
-    }
+
+        
+
+        }
 }
