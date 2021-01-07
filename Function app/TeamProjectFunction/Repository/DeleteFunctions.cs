@@ -99,5 +99,81 @@ namespace TeamProjectFunction.Repository
                 }
             }
         }
+
+        public static async Task<CustomResponse> DelRondeFunction(Guid ronde)
+        {
+            // eerst controleren als er nog deelnemers betsaan in deze ronde
+            // en controleren als er nog etappes zijn
+            //List<Guid> lapTijden = new List<Guid>();
+            List<Guid> deelnemerIds = new List<Guid>();
+            string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+            //deelnemers verwijderen:
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+            {
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "SELECT * FROM Deelnemers WHERE RondeId = @RondeId";
+                    sqlCommandDel.Parameters.AddWithValue("@RondeId", ronde);
+
+                    SqlDataReader reader = await sqlCommandDel.ExecuteReaderAsync();
+
+                    while (reader.Read())
+                    {
+                        deelnemerIds.Add(Guid.Parse(reader["DeelnemerId"].ToString()));
+                    }
+
+                }
+                foreach (Guid deelnemer in deelnemerIds)
+                {
+                    await DelDeelnemerFromRonde(deelnemer);
+                }
+            }
+            //etappes verwijderen
+            List<Guid> etappeIds = new List<Guid>();
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+            {
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "SELECT * FROM Etappes WHERE RondeId = @RondeId";
+                    sqlCommandDel.Parameters.AddWithValue("@RondeId", ronde);
+
+                    SqlDataReader reader = await sqlCommandDel.ExecuteReaderAsync();
+
+                    while (reader.Read())
+                    {
+                        etappeIds.Add(Guid.Parse(reader["EtappeId"].ToString()));
+                    }
+
+                }
+                foreach (Guid etappe in etappeIds)
+                {
+                    await DelEtappeFunction(etappe);
+                }
+            }
+
+
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+            {
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "DELETE FROM Rondes WHERE RondeId = @RondeId";
+                    sqlCommandDel.Parameters.AddWithValue("@RondeId", ronde);
+
+
+                    await sqlCommandDel.ExecuteNonQueryAsync();
+                    CustomResponse customResponse = new CustomResponse();
+                    customResponse.Succes = true;
+                    return customResponse;
+                }
+
+            }
+        }
+
     }
 }

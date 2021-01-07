@@ -576,7 +576,7 @@ namespace TeamProjectFunction
                     if (rondeDb.RondeId != null && rondeDb.RondeId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
                     {
                         //invitecode bestaat
-                        ronde.RondeId = rondeDb.RondeId;
+                        deelnemer.RondeId = rondeDb.RondeId;
 
                         using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                         {
@@ -586,7 +586,7 @@ namespace TeamProjectFunction
                                 sqlCommandInsert.Connection = sqlConnectionInsert;
                                 sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
                                 sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
-                                sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                                sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
                                 sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
 
                                 //deelnemer.RondeId = ronde.RondeId;
@@ -625,8 +625,8 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del/{DeelnemerId}")] HttpRequest req,
           ILogger log, Guid DeelnemerId)
         {
-
-            return new OkObjectResult(await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId));
+            CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
+            return new OkObjectResult(customResponse);
 
         }
 
@@ -795,17 +795,6 @@ namespace TeamProjectFunction
           ILogger log, Guid LaptijdId)
         {
 
-            //{
-            //    "laptijdid": "f0429da0-f5cd-4f39-bb88-cc46d14bae20"
-            //}
-
-
-            //mogelijke returns:
-            //als laptijd verwijderd is wordt het model laptijd met alle params terug gestuurd
-
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
 
             CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(LaptijdId);
 
@@ -823,13 +812,7 @@ namespace TeamProjectFunction
           ILogger log, Guid EtappeId)
         {
 
-            //{
-            //    "etappeId": "6b2c2be0-c30c-4742-8ed2-83a14b4fe066"
-            //}
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
 
             CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
 
@@ -841,6 +824,15 @@ namespace TeamProjectFunction
         }
 
 
+        [FunctionName("DelRonde")]
+        public static async Task<IActionResult> DelRonde(
+         [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/del/{RondeId}")] HttpRequest req,
+         ILogger log, Guid RondeId)
+        {
 
+            CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
+            return new OkObjectResult(customResponse);
+
+        }
     }
 }
