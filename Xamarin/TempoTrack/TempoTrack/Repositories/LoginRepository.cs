@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TempoTrack.Models;
 using Newtonsoft.Json;
 
+
 namespace TempoTrack.Repositories
 {
     class LoginRepository
@@ -30,12 +31,21 @@ namespace TempoTrack.Repositories
                     //httpClient.DefaultRequestHeaders.Add("email", googleLogin.email); 
                     //httpClient.DefaultRequestHeaders.Add("gebruikersnaam", googleLogin.name);
                     string data = JsonConvert.SerializeObject(googleLogin);
-                    StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync(url, content);
-                    var result = response.Content.ReadAsStringAsync();
+                    var request = new HttpRequestMessage
+                    {
+                        Method = HttpMethod.Get,
+                        RequestUri = new Uri(url),
+                        Content = new StringContent(data, Encoding.UTF8, "application/json"),
+                    };
+
+                    var response = await client.SendAsync(request).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+
+                    var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
 
                     //string json = await client.GetStringAsync(url);
-                    GebruikerV2 gebruikerInfo = JsonConvert.DeserializeObject<GebruikerV2>(Convert.ToString(result));
+                    GebruikerV2 gebruikerInfo = JsonConvert.DeserializeObject<GebruikerV2>(Convert.ToString(responseBody));
                     return gebruikerInfo;
                 }
                 catch (Exception ex)
@@ -45,6 +55,6 @@ namespace TempoTrack.Repositories
                 }
             }
         }
-       
+
     }
 }
