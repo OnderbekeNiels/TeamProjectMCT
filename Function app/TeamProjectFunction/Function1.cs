@@ -313,15 +313,15 @@ namespace TeamProjectFunction
 
         [FunctionName("AccountLogin")]
         public static async Task<IActionResult> AccountLogin(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", "get", Route = "gebruikers/login")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Admin, "post", "get", Route = "gebruikers/login")] HttpRequest req,
             ILogger log)
         {
 
             //Account login:
-            //naar api sturen email json gebruikersnaam niet verplicht bij inloggen, wel verplicht als de account voor het eerst aangemaakt wordt , vb:
+            //naar api sturen email json gebruikersnaam verplicht, vb:
             //{
             //"email": "test1@email.com",
-            //"gebruikersnaam": "test1"
+            //"name": "test1"
             //}
 
             //mogelijke returns:
@@ -350,14 +350,14 @@ namespace TeamProjectFunction
                     {
                         gebruikerDb.Email = reader["Email"].ToString();
                         gebruikerDb.GebruikerId = Guid.Parse(reader["GebruikersId"].ToString());
-                        gebruikerDb.GebruikersNaam = reader["GebruikersNaam"].ToString();
+                        gebruikerDb.Name = reader["GebruikersNaam"].ToString();
 
                     }
 
                     if (gebruikerDb.Email != null)
                     {
                         gebruikerLogin.GebruikerId = gebruikerDb.GebruikerId;
-                        gebruikerLogin.GebruikersNaam = gebruikerDb.GebruikersNaam;
+                        gebruikerLogin.Name = gebruikerDb.Name;
 
                         return new OkObjectResult(gebruikerLogin);
                     }
@@ -374,13 +374,14 @@ namespace TeamProjectFunction
                                 sqlCommandInsert.Connection = sqlConnectionInsert;
                                 sqlCommandInsert.CommandText = "INSERT INTO Gebruikers VALUES (@GebruikerId, @GebruikersNaam, @Email)";
                                 sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", gebruikerLogin.GebruikerId);
-                                sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.GebruikersNaam);
+                                sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.Name);
                                 sqlCommandInsert.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
 
                                 await sqlCommandInsert.ExecuteNonQueryAsync();
+                                // return gemaakte gebruiker
+                                return new OkObjectResult(gebruikerLogin);
                             }
-                            // return gemaakte gebruiker
-                            return new OkObjectResult(gebruikerLogin);
+                            
                         }
 
                     }
@@ -394,7 +395,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateRonde")]
         public static async Task<IActionResult> CreateRonde(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "rondes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "rondes/create")] HttpRequest req,
            ILogger log)
         {
 
@@ -484,7 +485,7 @@ namespace TeamProjectFunction
 
         [FunctionName("UpdateRonde")]
         public static async Task<IActionResult> UpdateRonde(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "rondes/update")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "rondes/update")] HttpRequest req,
            ILogger log)
         {
 
@@ -534,7 +535,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AddDeelnemerToRonde")]
         public static async Task<IActionResult> AddDeelnemerToRonde(
-          [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "deelnemer/add")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "deelnemer/add")] HttpRequest req,
           ILogger log)
         {
 
@@ -621,7 +622,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelDeelnemerfromRonde")]
         public static async Task<IActionResult> DelDeelnemerfromRonde(
-          [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "deelnemer/del")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del")] HttpRequest req,
           ILogger log)
         {
 
@@ -663,7 +664,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateEtappe")]
         public static async Task<IActionResult> CreateEtappe(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "etappes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "etappes/create")] HttpRequest req,
            ILogger log)
         {
 
@@ -716,7 +717,7 @@ namespace TeamProjectFunction
 
         [FunctionName("UpdateEtappe")]
         public static async Task<IActionResult> UpdateEtappe(
-          [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "etappe/update")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/update")] HttpRequest req,
           ILogger log)
         {
 
@@ -768,7 +769,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AddLaptijd")]
         public static async Task<IActionResult> AddLaptijd(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "laptijden/add")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "laptijden/add")] HttpRequest req,
            ILogger log)
         {
 
@@ -820,7 +821,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelLapTijd")]
         public static async Task<IActionResult> DelLapTijd(
-          [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "laptijden/del")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/del")] HttpRequest req,
           ILogger log)
         {
 

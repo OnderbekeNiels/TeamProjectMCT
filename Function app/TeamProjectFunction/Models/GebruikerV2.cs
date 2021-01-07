@@ -8,6 +8,6 @@ namespace TeamProjectFunction.Models
     {
         public Guid GebruikerId { get; set; }
         public string Email { get; set; }
-        public string GebruikersNaam { get; set; }
+        public string Name { get; set; }
     }
 }

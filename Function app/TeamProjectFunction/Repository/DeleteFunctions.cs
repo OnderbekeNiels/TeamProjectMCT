@@ -11,19 +11,19 @@ namespace TeamProjectFunction.Repository
     {
         public static async Task<CustomResponse> DelLapTijdFunction(LapTijd lapTijd)
         {
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
                 {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "DELETE FROM LapTijden WHERE LapTijdId = @LapTijdId";
-                    sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "DELETE FROM LapTijden WHERE LapTijdId = @LapTijdId";
+                    sqlCommandDel.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
 
 
 
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                    await sqlCommandDel.ExecuteNonQueryAsync();
                     CustomResponse customResponse = new CustomResponse();
                     customResponse.Succes = true;
                     return customResponse;
@@ -31,6 +31,43 @@ namespace TeamProjectFunction.Repository
                 }
             }
 
+        }
+
+        public static async Task<CustomResponse> DelEtappeFunction(Etappe etappe)
+        {
+            // eerst controleren als er nog laptijden betsaan van deze etappe
+            string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+            {
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "SELECT * FROM LapTijden WHERE EtappeId = @EtappeId";
+                    sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+
+                    SqlDataReader reader = await sqlCommandDel.ExecuteReaderAsync();
+
+                }
+
+
+
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "DELETE FROM Etappes WHERE EtappeId = @EtappeId";
+                    sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+
+
+
+                    await sqlCommandDel.ExecuteNonQueryAsync();
+                    CustomResponse customResponse = new CustomResponse();
+                    customResponse.Succes = true;
+                    return customResponse;
+
+                    //}
+                }
+            }
         }
     }
 }
