@@ -4,10 +4,10 @@ using System.Text;
 
 namespace TeamProjectFunction.Models
 {
-    public class GebruikerV2
+    public class Deelnemer
     {
         public Guid GebruikerId { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
+        public Guid RondeId { get; set; }
+        public Guid DeelnemerId { get; set; }
     }
 }

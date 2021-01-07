@@ -313,14 +313,15 @@ namespace TeamProjectFunction
 
         [FunctionName("AccountLogin")]
         public static async Task<IActionResult> AccountLogin(
-            [HttpTrigger(AuthorizationLevel.Anonymous,"post", "get", Route = "gebruikers/login")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Admin, "post", "get", Route = "gebruikers/login")] HttpRequest req,
             ILogger log)
         {
 
             //Account login:
-            //naar api sturen email json, vb:
+            //naar api sturen email json gebruikersnaam verplicht, vb:
             //{
-            //"email": "test1@email.com"
+            //"email": "test1@email.com",
+            //"name": "test1"
             //}
 
             //mogelijke returns:
@@ -340,7 +341,7 @@ namespace TeamProjectFunction
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
                     sqlCommand.Connection = sqlConnection;
-                    sqlCommand.CommandText = "SELECT * FROM Gebruiker WHERE Email = @Email";
+                    sqlCommand.CommandText = "SELECT * FROM Gebruikers WHERE Email = @Email";
                     sqlCommand.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
 
                     SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
@@ -349,20 +350,21 @@ namespace TeamProjectFunction
                     {
                         gebruikerDb.Email = reader["Email"].ToString();
                         gebruikerDb.GebruikerId = Guid.Parse(reader["GebruikersId"].ToString());
-                        gebruikerDb.GebruikersNaam = reader["GebruikersNaam"].ToString();
+                        gebruikerDb.Name = reader["GebruikersNaam"].ToString();
 
                     }
 
                     if (gebruikerDb.Email != null)
                     {
                         gebruikerLogin.GebruikerId = gebruikerDb.GebruikerId;
-                        gebruikerLogin.GebruikersNaam = gebruikerDb.GebruikersNaam;
+                        gebruikerLogin.Name = gebruikerDb.Name;
 
                         return new OkObjectResult(gebruikerLogin);
                     }
 
                     else
                     {
+                        //gebruiker bestond nog niet
                         gebruikerLogin.GebruikerId = Guid.NewGuid();
                         using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionString))
                         {
@@ -370,15 +372,16 @@ namespace TeamProjectFunction
                             using (SqlCommand sqlCommandInsert = new SqlCommand())
                             {
                                 sqlCommandInsert.Connection = sqlConnectionInsert;
-                                sqlCommandInsert.CommandText = "INSERT INTO Gebruiker VALUES (@GebruikerId, @GebruikersNaam, @Email)";
+                                sqlCommandInsert.CommandText = "INSERT INTO Gebruikers VALUES (@GebruikerId, @GebruikersNaam, @Email)";
                                 sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", gebruikerLogin.GebruikerId);
-                                sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.GebruikersNaam);
+                                sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.Name);
                                 sqlCommandInsert.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
 
                                 await sqlCommandInsert.ExecuteNonQueryAsync();
+                                // return gemaakte gebruiker
+                                return new OkObjectResult(gebruikerLogin);
                             }
-                            // return gemaakte gebruiker
-                            return new OkObjectResult(gebruikerLogin);
+                            
                         }
 
                     }
@@ -392,7 +395,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateRonde")]
         public static async Task<IActionResult> CreateRonde(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "rondes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "rondes/create")] HttpRequest req,
            ILogger log)
         {
 
@@ -405,9 +408,7 @@ namespace TeamProjectFunction
             //}
 
             //mogelijke returns:
-            //account aangemaakt: gebruikerv2 met alle params
-            //gebruiker bestaat al: custom response zie model
-            //de return values kunnen aangepast worden natuurlijk, deze zijn als vb
+            //als ronde gemaakt is wordt het model ronde met alle params terug gestuurd
 
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -437,7 +438,7 @@ namespace TeamProjectFunction
                         while (reader.Read())
                         {
                             rondeDb.InviteCode = reader["InviteCode"].ToString();
-                            
+
                         }
 
                         if (rondeDb.InviteCode == null)
@@ -472,7 +473,7 @@ namespace TeamProjectFunction
                     await sqlCommandInsert.ExecuteNonQueryAsync();
 
                     return new OkObjectResult(ronde);
-                   
+
                 }
             }
 
@@ -480,5 +481,370 @@ namespace TeamProjectFunction
 
 
         }
+
+
+        [FunctionName("UpdateRonde")]
+        public static async Task<IActionResult> UpdateRonde(
+           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "rondes/update")] HttpRequest req,
+           ILogger log)
+        {
+
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"rondeId": "4dca58c9-7e62-4bcb-8b05-b81b15a1ba75",
+            //"naam": "testronde1",
+            //"startDatum": "2021-01-05T15:00:00",
+            //"eindDatum": "2020-12-31T11:59:59"
+            //}
+
+            //mogelijke returns:
+            //als ronde gemaakt is wordt het model ronde met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "UPDATE Rondes SET Naam = @Naam,StartDatum = @StartDatum,EindDatum = @EindDatum WHERE RondeId = @RondeId";
+                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@Naam", ronde.Naam);
+                    sqlCommandInsert.Parameters.AddWithValue("@StartDatum", ronde.StartDatum);
+                    sqlCommandInsert.Parameters.AddWithValue("@EindDatum", ronde.EindDatum);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(ronde);
+
+                }
+            }
+
+
+
+
+        }
+
+        [FunctionName("AddDeelnemerToRonde")]
+        public static async Task<IActionResult> AddDeelnemerToRonde(
+          [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "deelnemer/add")] HttpRequest req,
+          ILogger log)
+        {
+
+            //{
+            //    "invitecode": "4cc9e0df-1ded-4dc6-8000-b4d27fd3027a",
+            //    "gebruikerId": "986c5f65-cafc-43ce-8fa5-bf4f97921e92"
+            //}
+
+
+            //mogelijke returns:
+            //als ronde gemaakt is wordt het model deelnemer met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
+            deelnemer.DeelnemerId = Guid.NewGuid();
+            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
+
+            //controleren als invitecode bestaat
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnection = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnection.OpenAsync();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SELECT * FROM Rondes WHERE InviteCode = @InviteCode";
+                    sqlCommand.Parameters.AddWithValue("@InviteCode", ronde.InviteCode);
+
+                    SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                    Ronde rondeDb = new Ronde();
+                    while (reader.Read())
+                    {
+
+                        rondeDb.RondeId = Guid.Parse(reader["RondeId"].ToString());
+
+                    }
+                    if (rondeDb.RondeId != null && rondeDb.RondeId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                    {
+                        //invitecode bestaat
+                        ronde.RondeId = rondeDb.RondeId;
+
+                        using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                        {
+                            await sqlConnectionInsert.OpenAsync();
+                            using (SqlCommand sqlCommandInsert = new SqlCommand())
+                            {
+                                sqlCommandInsert.Connection = sqlConnectionInsert;
+                                sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
+                                sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                                sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                                sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+
+                                //deelnemer.RondeId = ronde.RondeId;
+
+                                await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                                return new OkObjectResult(deelnemer);
+
+                            }
+                        }
+
+
+                    }
+
+                    else
+                    {
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = false;
+                        customResponse.Message = "Invitecode betsaat niet";
+                        return new OkObjectResult(customResponse);
+                    }
+
+
+
+                }
+            }
+
+
+
+
+        }
+
+
+        [FunctionName("DelDeelnemerfromRonde")]
+        public static async Task<IActionResult> DelDeelnemerfromRonde(
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del")] HttpRequest req,
+          ILogger log)
+        {
+
+            //{
+            //    "deelnemerId": "f0429da0-f5cd-4f39-bb88-cc46d14bae20"
+            //}
+
+
+            //mogelijke returns:
+            //als ronde verwijderd is wordt het model deelnemer met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "DELETE FROM Deelnemers WHERE deelnemerId = @deelnemerId";
+                    sqlCommandInsert.Parameters.AddWithValue("@deelnemerId", deelnemer.DeelnemerId);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(deelnemer);
+
+                }
+            }
+
+        }
+
+
+
+        [FunctionName("CreateEtappe")]
+        public static async Task<IActionResult> CreateEtappe(
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "etappes/create")] HttpRequest req,
+           ILogger log)
+        {
+
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"laps" : 3,
+            //"rondeid": "55c83dc3-8bc6-43de-b1ae-50fdf9a10590",
+            //"lapafstand": 102.33,
+            //"starttijd": "2021-01-05T15:00:00"
+            //}
+
+            //mogelijke returns:
+            //als etappe gemaakt is wordt het model etappe met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+            etappe.EtappeId = Guid.NewGuid();
+            
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand)";
+                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
+                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+                    sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(etappe);
+
+                }
+            }
+
+
+
+
+        }
+
+
+        [FunctionName("UpdateEtappe")]
+        public static async Task<IActionResult> UpdateEtappe(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/update")] HttpRequest req,
+          ILogger log)
+        {
+
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"laps" : 3,
+            //"rondeid": "55c83dc3-8bc6-43de-b1ae-50fdf9a10590",
+            //"lapafstand": 105.33,
+            //"starttijd": "2021-01-05T15:00:00",
+            //"EtappeId" : "6B2C2BE0-C30C-4742-8ED2-83A14B4FE066"
+            //}
+
+            //mogelijke returns:
+            //als etappe aangepast is wordt het model etappe met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "UPDATE Etappes SET Laps = @Laps, StartTijd = @StartTijd, LapAfstand = @LapAfstand WHERE EtappeId = @EtappeId";
+                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
+                    sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
+                    sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(etappe);
+
+                }
+            }
+
+
+
+
+        }
+
+
+        [FunctionName("AddLaptijd")]
+        public static async Task<IActionResult> AddLaptijd(
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "laptijden/add")] HttpRequest req,
+           ILogger log)
+        {
+
+            //Account create:
+            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
+            //{
+            //"etappeId": "b3a5f165-3011-4fdb-bba3-8c888e7a15d9",
+            //"gebruikerid": "f35d476e-55c8-484a-8b12-fb52da1c1413",
+            //"tijdlap": 95,
+            //"lapnummer": 1
+            //}
+
+            //mogelijke returns:
+            //als laptijd gemaakt is wordt het model laptijd met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
+            lapTijd.LapTijdId = Guid.NewGuid();
+
+
+            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            {
+                await sqlConnectionInsert.OpenAsync();
+                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                {
+                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                    sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
+                    sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
+                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
+                    sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
+                    sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
+
+
+
+                    await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                    return new OkObjectResult(lapTijd);
+
+                }
+            }
+
+
+
+
+        }
+
+        [FunctionName("DelLapTijd")]
+        public static async Task<IActionResult> DelLapTijd(
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/del")] HttpRequest req,
+          ILogger log)
+        {
+
+            //{
+            //    "laptijdid": "f0429da0-f5cd-4f39-bb88-cc46d14bae20"
+            //}
+
+
+            //mogelijke returns:
+            //als laptijd verwijderd is wordt het model laptijd met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
+
+            CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(lapTijd);
+
+            return new OkObjectResult(customResponse);
+
+
+
+
+        }
+
     }
 }
