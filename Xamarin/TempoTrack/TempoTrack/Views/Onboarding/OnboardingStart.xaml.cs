@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TempoTrack.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,7 +21,7 @@ namespace TempoTrack.Views.Onboarding
 
         private void btnStart_Clicked(object sender, EventArgs e)
         {
-            //Navigation.PushAsync();
+            Navigation.PushAsync(new Login.LoginPage());
             Console.WriteLine("Started");
         }
     }
