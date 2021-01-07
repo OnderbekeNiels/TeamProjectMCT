@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "7Xf5QY89hqVoFeO5FldOvhk2miRasv9ZxxGjkOhvFgbP3SOCjR++kSCHGK5LTSStOEiEGc6+Wgth/FoWleRE4g==",
+=======
+  "dgSpecHash": "2Ex72orskefX91KTU8A6d4jNw3eO7TCYl12sPErXOuhGZSeHqyyh2cVv8JHYVU2pij4f+mdwS1RoQbmHylOk7Q==",
+>>>>>>> GPSTracking
   "success": true,
   "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
   "expectedPackageFiles": [
