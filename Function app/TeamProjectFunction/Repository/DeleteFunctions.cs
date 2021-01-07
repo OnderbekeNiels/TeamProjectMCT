@@ -78,5 +78,26 @@ namespace TeamProjectFunction.Repository
      
             }
         }
+
+        public static async Task<CustomResponse> DelDeelnemerFromRonde(Guid deelnemer)
+        {
+            string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+            {
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
+                    sqlCommandDel.Connection = sqlConnectionDel;
+                    sqlCommandDel.CommandText = "DELETE FROM Deelnemers WHERE deelnemerId = @deelnemerId";
+                    sqlCommandDel.Parameters.AddWithValue("@deelnemerId", deelnemer);
+
+                    await sqlCommandDel.ExecuteNonQueryAsync();
+                    CustomResponse customResponse = new CustomResponse();
+                    customResponse.Succes = true;
+                    return customResponse;
+
+                }
+            }
+        }
     }
 }

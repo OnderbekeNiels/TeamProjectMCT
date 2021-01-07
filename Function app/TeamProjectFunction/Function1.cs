@@ -622,41 +622,11 @@ namespace TeamProjectFunction
 
         [FunctionName("DelDeelnemerfromRonde")]
         public static async Task<IActionResult> DelDeelnemerfromRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del")] HttpRequest req,
-          ILogger log)
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del/{DeelnemerId}")] HttpRequest req,
+          ILogger log, Guid DeelnemerId)
         {
 
-            //{
-            //    "deelnemerId": "f0429da0-f5cd-4f39-bb88-cc46d14bae20"
-            //}
-
-
-            //mogelijke returns:
-            //als ronde verwijderd is wordt het model deelnemer met alle params terug gestuurd
-
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
-
-
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
-            {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
-                {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "DELETE FROM Deelnemers WHERE deelnemerId = @deelnemerId";
-                    sqlCommandInsert.Parameters.AddWithValue("@deelnemerId", deelnemer.DeelnemerId);
-
-
-
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
-
-                    return new OkObjectResult(deelnemer);
-
-                }
-            }
+            return new OkObjectResult(await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId));
 
         }
 
@@ -869,6 +839,8 @@ namespace TeamProjectFunction
 
 
         }
+
+
 
     }
 }
