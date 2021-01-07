@@ -21,8 +21,12 @@ namespace TempoTrack.Views.Login
         public LoginPage()
         {
             InitializeComponent();
+            imgLogo.Source = ImageSource.FromResource("TempoTrack.Assets.Images.LogoOnboarding.png");
+            imgGoogle.Source = ImageSource.FromResource("TempoTrack.Assets.Images.GoogleLogo.png");
 
-            btnLogin.Clicked += BtnLogin_Clicked;
+            TapGestureRecognizer recog = new TapGestureRecognizer();
+            recog.Tapped += BtnLogin_Clicked;
+            btnLogin.GestureRecognizers.Add(recog);
         }
 
         private void BtnLogin_Clicked(object sender, EventArgs e)

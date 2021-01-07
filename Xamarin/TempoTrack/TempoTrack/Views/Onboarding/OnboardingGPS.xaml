@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.Onboarding.OnboardingGPS"
              NavigationPage.HasNavigationBar="False" 
-             BackgroundColor="#2D2D2D"
+             BackgroundColor="#EFEFEF"
              >
     <ContentPage.Content>
         <StackLayout Spacing="0" Padding="16,50,16,16">
-            <Label Text="GPS-Tracking" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" />
+            <Label Text="GPS-Tracking" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#2D2D2D" />
             <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="160" />
 
-            <Label Text="Door het Toestaan van GPS-tracking kunnen wij u laten deelnemen aan virtuele etappes" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="56,0,56,80"/>
+            <Label Text="Door het Toestaan van GPS-tracking kunnen wij u laten deelnemen aan virtuele etappes" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="56,0,56,80"/>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,64">
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
@@ -19,7 +19,7 @@
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button x:Name="btnReturn" Text="Return" BackgroundColor="Transparent" FontFamily="DIN2014-Regular" TextColor="#FFFFFF" Margin="16,8,8,8" HeightRequest="40" Padding="0" />
+                <Button x:Name="btnReturn" Text="Return" BackgroundColor="Transparent" FontFamily="DIN2014-Regular" TextColor="#666666" Margin="16,8,8,8" HeightRequest="40" Padding="0" />
                 <Button x:Name="btnToestaan" Text="Toestaan"  BackgroundColor="#016FB7" FontFamily="DIN2014-Regular" CornerRadius="20" TextColor="#FFFFFF" Margin="96,8,8,8" HeightRequest="40" WidthRequest="136" Padding="0" />
             </StackLayout>
         </StackLayout>

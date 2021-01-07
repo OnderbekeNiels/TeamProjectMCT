@@ -8284,18 +8284,30 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\niels\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\robbe\\.nuget\\packages\\": {},
+>>>>>>> LoginDesign
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
       "projectName": "TempoTrack.UWP",
       "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
       "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
       "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
+=======
+      "projectUniqueName": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+      "projectName": "TempoTrack.UWP",
+      "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+      "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
+      "outputPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
+>>>>>>> LoginDesign
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -8303,7 +8315,11 @@
         "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> LoginDesign
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -8317,8 +8333,13 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
+<<<<<<< HEAD
             "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
               "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+=======
+            "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+>>>>>>> LoginDesign
             }
           }
         }

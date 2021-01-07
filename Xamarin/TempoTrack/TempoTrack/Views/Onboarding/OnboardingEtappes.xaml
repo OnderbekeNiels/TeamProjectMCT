@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.Onboarding.OnboardingEtappes" 
              NavigationPage.HasNavigationBar="False" 
-             BackgroundColor="#2D2D2D"
+             BackgroundColor="#EFEFEF"
              >
     <ContentPage.Content>
         <StackLayout Spacing="0" Padding="16,50,16,16">
-            <Label Text="Virtueële Etappes" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" />
+            <Label Text="Virtueële Etappes" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#2D2D2D" />
             <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="160" />
 
-            <Label Text="Creëer jouw eigen Tour De France op de wielerpiste in Brugge" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="56,0,56,80"/>
+            <Label Text="Creëer jouw eigen Tour De France op de wielerpiste in Brugge" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="56,0,56,80"/>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,64">
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="#016FB7" BorderColor="#016FB7" />

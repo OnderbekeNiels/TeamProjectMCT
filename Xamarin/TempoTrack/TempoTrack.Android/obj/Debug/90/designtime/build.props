@@ -25,10 +25,14 @@ os=windows_nt
 androidincludedebugsymbols=true
 androidpackagenamingpolicy=lowercasecrc64
 <<<<<<< HEAD
+<<<<<<< HEAD
 _nugetassetstimestamp=637456285838566419
 =======
 _nugetassetstimestamp=637456232878263467
 >>>>>>> GPSTracking
+=======
+_nugetassetstimestamp=637456240435053773
+>>>>>>> LoginDesign
 typemapkind=strings-asm
 androidsupportedabis=arm64-v8a
 armeabi-v7a
