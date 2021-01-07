@@ -48,16 +48,18 @@ namespace TeamProjectFunction.Repository
 
                     SqlDataReader reader = await sqlCommandDel.ExecuteReaderAsync();
 
-                }
+                    while (reader.Read())
+                    {
+                        LapTijd lapTijdDel = new LapTijd();
+                        lapTijdDel.LapTijdId = Guid.Parse(reader["LapTijdId"].ToString());
+
+                        await DelLapTijdFunction(lapTijdDel);
+                    }
 
 
-
-                using (SqlCommand sqlCommandDel = new SqlCommand())
-                {
                     sqlCommandDel.Connection = sqlConnectionDel;
                     sqlCommandDel.CommandText = "DELETE FROM Etappes WHERE EtappeId = @EtappeId";
                     sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
-
 
 
                     await sqlCommandDel.ExecuteNonQueryAsync();
@@ -65,8 +67,12 @@ namespace TeamProjectFunction.Repository
                     customResponse.Succes = true;
                     return customResponse;
 
-                    //}
+                    
                 }
+
+
+
+                
             }
         }
     }
