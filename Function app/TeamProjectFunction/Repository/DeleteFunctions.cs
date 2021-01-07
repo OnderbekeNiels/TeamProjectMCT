@@ -9,7 +9,7 @@ namespace TeamProjectFunction.Repository
 {
     public class DeleteFunctions
     {
-        public static async Task<CustomResponse> DelLapTijdFunction(LapTijd lapTijd)
+        public static async Task<CustomResponse> DelLapTijdFunction(Guid lapTijd)
         {
             string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
             using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
@@ -19,7 +19,7 @@ namespace TeamProjectFunction.Repository
                 {
                     sqlCommandDel.Connection = sqlConnectionDel;
                     sqlCommandDel.CommandText = "DELETE FROM LapTijden WHERE LapTijdId = @LapTijdId";
-                    sqlCommandDel.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                    sqlCommandDel.Parameters.AddWithValue("@LapTijdId", lapTijd);
 
 
 
@@ -33,10 +33,10 @@ namespace TeamProjectFunction.Repository
 
         }
 
-        public static async Task<CustomResponse> DelEtappeFunction(Etappe etappe)
+        public static async Task<CustomResponse> DelEtappeFunction(Guid etappe)
         {
             // eerst controleren als er nog laptijden betsaan van deze etappe
-            List<LapTijd> lapTijden = new List<LapTijd>();
+            List<Guid> lapTijden = new List<Guid>();
             string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
             using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
             {
@@ -45,19 +45,17 @@ namespace TeamProjectFunction.Repository
                 {
                     sqlCommandDel.Connection = sqlConnectionDel;
                     sqlCommandDel.CommandText = "SELECT * FROM LapTijden WHERE EtappeId = @EtappeId";
-                    sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                    sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe);
 
                     SqlDataReader reader = await sqlCommandDel.ExecuteReaderAsync();
 
                     while (reader.Read())
                     {
-                        LapTijd lapTijdDel = new LapTijd();
-                        lapTijdDel.LapTijdId = Guid.Parse(reader["LapTijdId"].ToString());
-                        lapTijden.Add(lapTijdDel);
+                        lapTijden.Add(Guid.Parse(reader["LapTijdId"].ToString()));
                     }
 
                 }
-                foreach (LapTijd lapTijd in lapTijden)
+                foreach (Guid lapTijd in lapTijden)
                 {
                     await DelLapTijdFunction(lapTijd);
                 }
@@ -69,7 +67,7 @@ namespace TeamProjectFunction.Repository
                 {
                     sqlCommandDel.Connection = sqlConnectionDel;
                     sqlCommandDel.CommandText = "DELETE FROM Etappes WHERE EtappeId = @EtappeId";
-                    sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                    sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe);
 
 
                     await sqlCommandDel.ExecuteNonQueryAsync();

@@ -821,8 +821,8 @@ namespace TeamProjectFunction
 
         [FunctionName("DelLapTijd")]
         public static async Task<IActionResult> DelLapTijd(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/del")] HttpRequest req,
-          ILogger log)
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/del/{LaptijdId}")] HttpRequest req,
+          ILogger log, Guid LaptijdId)
         {
 
             //{
@@ -837,7 +837,7 @@ namespace TeamProjectFunction
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
 
-            CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(lapTijd);
+            CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(LaptijdId);
 
             return new OkObjectResult(customResponse);
 
@@ -849,8 +849,8 @@ namespace TeamProjectFunction
 
         [FunctionName("DelEtappe")]
         public static async Task<IActionResult> DelEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/del")] HttpRequest req,
-          ILogger log)
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/del/{EtappeId}")] HttpRequest req,
+          ILogger log, Guid EtappeId)
         {
 
             //{
@@ -861,7 +861,7 @@ namespace TeamProjectFunction
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
 
-            CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(etappe);
+            CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
 
             return new OkObjectResult(customResponse);
 
