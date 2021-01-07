@@ -818,7 +818,32 @@ namespace TeamProjectFunction
 
         }
 
+        [FunctionName("DelLapTijd")]
+        public static async Task<IActionResult> DelLapTijd(
+          [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "laptijden/del")] HttpRequest req,
+          ILogger log)
+        {
 
+            //{
+            //    "laptijdid": "f0429da0-f5cd-4f39-bb88-cc46d14bae20"
+            //}
+
+
+            //mogelijke returns:
+            //als laptijd verwijderd is wordt het model laptijd met alle params terug gestuurd
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
+
+            CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(lapTijd);
+
+            return new OkObjectResult(customResponse);
+
+
+
+
+        }
 
     }
 }
