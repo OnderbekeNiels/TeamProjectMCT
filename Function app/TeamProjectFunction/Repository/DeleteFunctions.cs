@@ -36,6 +36,7 @@ namespace TeamProjectFunction.Repository
         public static async Task<CustomResponse> DelEtappeFunction(Etappe etappe)
         {
             // eerst controleren als er nog laptijden betsaan van deze etappe
+            List<LapTijd> lapTijden = new List<LapTijd>();
             string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
             using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
             {
@@ -52,11 +53,20 @@ namespace TeamProjectFunction.Repository
                     {
                         LapTijd lapTijdDel = new LapTijd();
                         lapTijdDel.LapTijdId = Guid.Parse(reader["LapTijdId"].ToString());
-
-                        await DelLapTijdFunction(lapTijdDel);
+                        lapTijden.Add(lapTijdDel);
                     }
 
-
+                }
+                foreach (LapTijd lapTijd in lapTijden)
+                {
+                    await DelLapTijdFunction(lapTijd);
+                }
+            }
+            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+            {
+                await sqlConnectionDel.OpenAsync();
+                using (SqlCommand sqlCommandDel = new SqlCommand())
+                {
                     sqlCommandDel.Connection = sqlConnectionDel;
                     sqlCommandDel.CommandText = "DELETE FROM Etappes WHERE EtappeId = @EtappeId";
                     sqlCommandDel.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
@@ -66,13 +76,8 @@ namespace TeamProjectFunction.Repository
                     CustomResponse customResponse = new CustomResponse();
                     customResponse.Succes = true;
                     return customResponse;
-
-                    
                 }
-
-
-
-                
+     
             }
         }
     }

@@ -846,5 +846,29 @@ namespace TeamProjectFunction
 
         }
 
+
+        [FunctionName("DelEtappe")]
+        public static async Task<IActionResult> DelEtappe(
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/del")] HttpRequest req,
+          ILogger log)
+        {
+
+            //{
+            //    "etappeId": "6b2c2be0-c30c-4742-8ed2-83a14b4fe066"
+            //}
+
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+
+            CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(etappe);
+
+            return new OkObjectResult(customResponse);
+
+
+
+
+        }
+
     }
 }
