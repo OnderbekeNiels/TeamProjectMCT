@@ -13,6 +13,8 @@
   <ItemGroup>
     <None Remove="Assets\Fonts\DIN2014-Light.ttf" />
     <None Remove="Assets\Fonts\DIN2014-Regular.ttf" />
+    <None Remove="Assets\Images\Google.png" />
+    <None Remove="Assets\Images\GoogleLogo.png" />
     <None Remove="Assets\LogoOnboarding.png" />
     <None Remove="Assets\LogoOnboarding.svg" />
   </ItemGroup>
@@ -20,8 +22,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\Fonts\DIN2014-Light.ttf" />
     <EmbeddedResource Include="Assets\Fonts\DIN2014-Regular.ttf" />
+    <EmbeddedResource Include="Assets\Images\GoogleLogo.png" />
+    <Resource Include="Assets\Images\Google.png" />
     <EmbeddedResource Include="Assets\Images\LogoOnboarding.png" />
-    <EmbeddedResource Include="Assets\Images\LogoOnboarding.svg" />
+    <Resource Include="Assets\Images\LogoOnboarding.svg" />
   </ItemGroup>
 
   <ItemGroup>

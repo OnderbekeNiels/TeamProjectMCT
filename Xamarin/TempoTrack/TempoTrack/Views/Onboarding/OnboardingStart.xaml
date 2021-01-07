@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.Onboarding.OnboardingStart"             
              NavigationPage.HasNavigationBar="False" 
-             BackgroundColor="#2D2D2D">
+             BackgroundColor="#EFEFEF">
     
     <ContentPage.Content>
         <StackLayout Spacing="0" Padding="16,50,16,16">
-            <Label Text="Tempo Track" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" />
+            <Label Text="Tempo Track" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666" />
             <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="160" />
 
-            <Label Text="Start jouw eigen Tour de France" FontSize="20" FontFamily="DIN2014-Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="40,0,40,24"/>
-            <Label Text="Alles is in orde en klaar voor jouw Tour!" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="56,0,56,32"/>
+            <Label Text="Start jouw eigen Tour de France" FontSize="20" FontFamily="DIN2014-Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="40,0,40,24"/>
+            <Label Text="Alles is in orde en klaar voor jouw Tour!" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="56,0,56,32"/>
 
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,56">

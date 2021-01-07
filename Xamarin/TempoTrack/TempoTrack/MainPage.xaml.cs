@@ -30,6 +30,7 @@ namespace TempoTrack
             }
             else
             {
+                //Naar login sturen
                 Navigation.PushAsync(new Views.Login.LoginPage());
             }
         }
