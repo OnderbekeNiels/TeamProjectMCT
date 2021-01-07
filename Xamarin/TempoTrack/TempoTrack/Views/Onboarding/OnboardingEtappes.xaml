@@ -1,27 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TempoTrack.Views.Onboarding.OnboardingEteppes">
+             x:Class="TempoTrack.Views.Onboarding.OnboardingEtappes" 
+             NavigationPage.HasNavigationBar="False" 
+             BackgroundColor="#2D2D2D"
+             >
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions> <!-- 6 row difinitions-->
-                <RowDefinition /> <!-- Titel -->
-                <RowDefinition /> <!-- SVG -->
-                <RowDefinition /> <!-- Tussen titel-->
-                <RowDefinition /> <!-- omschrijving-->
-                <RowDefinition /> <!-- Carousel bollekes -->
-                <RowDefinition /> <!-- buttons -->
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions> <!-- 2 columns (buttons) -->
-                <ColumnDefinition /> <!-- return button -->
-                <ColumnDefinition /> <!-- next button -->
-            </Grid.ColumnDefinitions>
-            <Label Grid.ColumnSpan="2"  Text="Tempo Track" Font="35" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
-            <Image Grid.ColumnSpan="2" Grid.Row="1" x:Name="imgLogo" Source="TempoTrack/Assets/LogoOnboarding.png" />
-            <Label Grid.ColumnSpan="2" Grid.Row="2" Text="Virtueële Etappes" Font="Bold,24" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
-            <Label Grid.ColumnSpan="2" Grid.Row="3" Text="Creëer jouw eigen Tour De France op de wielerpiste in Brugge" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
-            <Label Grid.ColumnSpan="2" Grid.Row="4" Text="Bollekes komen hier" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
-            <Button x:Name="btnContinue" Grid.Row="5" Grid.Column="1" Text="Continue" BackgroundColor="Transparent" />
-        </Grid>
+        <StackLayout Spacing="0" Padding="16,50,16,16">
+            <Label Text="Virtueële Etappes" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" />
+            <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="160" />
+
+            <Label Text="Creëer jouw eigen Tour De France op de wielerpiste in Brugge" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White"  Margin="56,0,56,80"/>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,64">
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="#016FB7" BorderColor="#016FB7" />
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Button x:Name="btnContinue" Text="Continue" BackgroundColor="#016FB7" FontFamily="DIN2014-Regular" CornerRadius="20" TextColor="#FFFFFF" Margin="0,8,8,8" HeightRequest="40" WidthRequest="136" Padding="0" />
+            </StackLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
