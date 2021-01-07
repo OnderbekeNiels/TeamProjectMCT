@@ -1,6 +1,19 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
+    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {}
+  },
+  "projects": {
+    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+        "projectName": "TempoTrack.Android",
+        "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+        "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
+        "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
+=======
     "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {}
   },
   "projects": {
@@ -12,13 +25,18 @@
         "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
         "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
         "outputPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
+>>>>>>> LoginDesign
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
+          "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
           "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> LoginDesign
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -32,8 +50,13 @@
         "frameworks": {
           "monoandroid90": {
             "projectReferences": {
+<<<<<<< HEAD
+              "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+                "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+=======
               "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
                 "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+>>>>>>> LoginDesign
               }
             }
           }
@@ -54,6 +77,16 @@
         }
       }
     },
+<<<<<<< HEAD
+    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectName": "TempoTrack",
+        "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
+        "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
+=======
     "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -62,13 +95,18 @@
         "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
         "outputPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
+>>>>>>> LoginDesign
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
+          "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
           "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> LoginDesign
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],

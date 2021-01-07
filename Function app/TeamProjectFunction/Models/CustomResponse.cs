@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamProjectFunction.Models
 {
-    class CustomResponse
+    public class CustomResponse
     {
         public bool Succes { get; set; }
         public string Message { get; set; }

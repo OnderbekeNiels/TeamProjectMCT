@@ -1,10 +1,22 @@
 {
   "version": 2,
+<<<<<<< HEAD
+<<<<<<< HEAD
+  "dgSpecHash": "7Xf5QY89hqVoFeO5FldOvhk2miRasv9ZxxGjkOhvFgbP3SOCjR++kSCHGK5LTSStOEiEGc6+Wgth/FoWleRE4g==",
+=======
+  "dgSpecHash": "2Ex72orskefX91KTU8A6d4jNw3eO7TCYl12sPErXOuhGZSeHqyyh2cVv8JHYVU2pij4f+mdwS1RoQbmHylOk7Q==",
+>>>>>>> GPSTracking
+  "success": true,
+  "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\niels\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+=======
   "dgSpecHash": "R2vMoouNsOTmtvSHhGMr9h/LHVZtgEyeMl3zNnr/uyx8NPsJiz7D+holy9thvDdVoxPMrfcHp5049U2gGc3EmA==",
   "success": true,
   "projectFilePath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\robbe\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+>>>>>>> LoginDesign
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.arch.core.common\\1.1.1.3\\xamarin.android.arch.core.common.1.1.1.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.arch.core.runtime\\1.1.1.3\\xamarin.android.arch.core.runtime.1.1.1.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.arch.lifecycle.common\\1.1.1.3\\xamarin.android.arch.lifecycle.common.1.1.1.3.nupkg.sha512",
@@ -42,7 +54,11 @@
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.support.vector.drawable\\28.0.0.3\\xamarin.android.support.vector.drawable.28.0.0.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.support.versionedparcelable\\28.0.0.3\\xamarin.android.support.versionedparcelable.28.0.0.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.support.viewpager\\28.0.0.3\\xamarin.android.support.viewpager.28.0.0.3.nupkg.sha512",
+<<<<<<< HEAD
+    "C:\\Users\\niels\\.nuget\\packages\\xamarin.auth\\1.7.0\\xamarin.auth.1.7.0.nupkg.sha512",
+=======
     "C:\\Users\\robbe\\.nuget\\packages\\xamarin.auth\\1.7.0\\xamarin.auth.1.7.0.nupkg.sha512",
+>>>>>>> LoginDesign
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
   ],

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TeamProject_LocationTrigger.MainPage"
+             BackgroundColor="LightGray">
+
+    <StackLayout>
+        <Entry x:Name="lblCoordinate" TextColor="Red" FontSize="20"></Entry>
+        <Label x:Name="lblPassed" TextColor="DarkBlue"></Label>
+        <Label x:Name="lblLap" TextColor="DarkBlue"></Label>
+        <Label x:Name="lblDistanceFromLine" TextColor="DarkBlue"></Label>
+        <Button x:Name="btnStart" Text="start"></Button>
+        <Button x:Name="btnStop" Text="stop"></Button>
+    </StackLayout>
+
+</ContentPage>

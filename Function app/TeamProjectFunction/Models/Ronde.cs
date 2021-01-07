@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamProjectFunction.Models
 {
-    class Ronde
+    public class Ronde
     {
         public Guid RondeId { get; set; }
         public string Naam { get; set; }

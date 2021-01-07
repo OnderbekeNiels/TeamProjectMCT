@@ -8,6 +8,6 @@ namespace TempoTrack.Models
     {
         public Guid GebruikerId { get; set; }
         public string Email { get; set; }
-        public string GebruikersNaam { get; set; }
+        public string name { get; set; }
     }
 }
