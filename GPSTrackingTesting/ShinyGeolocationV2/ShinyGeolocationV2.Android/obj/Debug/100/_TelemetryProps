@@ -23,6 +23,10 @@ AndroidDexTool=d8
 AndroidLinkTool=
 AndroidEnableProfiledAot=
 AndroidInstallAfterBuild=True
+<<<<<<< HEAD
 AndroidSessionId=ec1a96a4-83e2-4f32-af6a-dc0c79f5a00d
+=======
+AndroidSessionId=f2f7fe97-a4a1-43cd-8582-fabc9362e0b0
+>>>>>>> GPSTrackingWithShiny
 BuildConfiguration=Debug
 TemplateName={c9e5eea5-ca05-42a1-839b-61506e0a37df}

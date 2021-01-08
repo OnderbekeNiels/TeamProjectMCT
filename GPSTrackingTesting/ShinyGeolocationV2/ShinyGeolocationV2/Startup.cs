@@ -17,10 +17,15 @@ namespace ShinyGeolocationV2
 
             //// register all of the acr stuff you want to use
             //builder.UseGpsBackground<>();
+<<<<<<< HEAD
             builder.AddSingleton<AppNotifications>();
             builder.AddSingleton<CoreDelegateServices>();
             builder.UseGeofencing<MyGeofenceDelegate>();
             builder.UseNotifications(true);
+=======
+            builder.UseGeofencing<MyGeofenceDelegate>();
+            builder.UseNotifications();
+>>>>>>> GPSTrackingWithShiny
         }
     }
 }

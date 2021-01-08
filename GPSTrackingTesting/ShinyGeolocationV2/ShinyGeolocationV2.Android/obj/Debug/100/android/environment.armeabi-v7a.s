@@ -92,7 +92,11 @@ mono_aot_mode_name:
 	.section	.rodata.env.str.8,"aMS",%progbits,1
 	.type	.L.env.str.8, %object
 .L.env.str.8:
+<<<<<<< HEAD
 	.asciz	"37e34cbb-56cc-42e0-8f72-55397eccb410"
+=======
+	.asciz	"1d2c189e-12eb-4bea-a7ab-810965952f4c"
+>>>>>>> GPSTrackingWithShiny
 	.size	.L.env.str.8, 37
 	.section	.rodata.env.str.9,"aMS",%progbits,1
 	.type	.L.env.str.9, %object

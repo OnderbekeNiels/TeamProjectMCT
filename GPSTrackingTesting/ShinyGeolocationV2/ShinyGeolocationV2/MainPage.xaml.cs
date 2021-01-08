@@ -1,7 +1,10 @@
 ﻿using Shiny;
 using Shiny.Locations;
 using Shiny.Notifications;
+<<<<<<< HEAD
 using ShinyGeolocationV2.Models;
+=======
+>>>>>>> GPSTrackingWithShiny
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,10 +32,15 @@ namespace ShinyGeolocationV2
             var geofences = ShinyHost.Resolve<IGeofenceManager>();
             var notifications = ShinyHost.Resolve<INotificationManager>();
 
+<<<<<<< HEAD
             //MyGeofenceDelegate objectToSubscribeTo = new MyGeofenceDelegate();
             //objectToSubscribeTo.Entered += EnteredGeofence;
 
 
+=======
+
+           
+>>>>>>> GPSTrackingWithShiny
             Register = new Command(async () =>
             {
 
@@ -45,8 +53,13 @@ namespace ShinyGeolocationV2
                     {
                         await geofences.StartMonitoring(new GeofenceRegion(
                             "Home",
+<<<<<<< HEAD
                             new Position(50.916186692014556, 3.6510653463806473),
                             Distance.FromMeters(30))
+=======
+                            new Position(50.91510937218809, 3.6512293828729945),
+                            Distance.FromMeters(10))
+>>>>>>> GPSTrackingWithShiny
                         {
                             NotifyOnEntry = true,
                             NotifyOnExit = true,
@@ -54,7 +67,10 @@ namespace ShinyGeolocationV2
                         });
                         Debug.WriteLine("Started Monitoring");
                         lblMessage.Text = "Started Monitoring";
+<<<<<<< HEAD
                         TriggerAsync();
+=======
+>>>>>>> GPSTrackingWithShiny
                     }
                 }
                 catch (Exception ex)
@@ -70,7 +86,10 @@ namespace ShinyGeolocationV2
                 {
                         await geofences.StopAllMonitoring();
                         lblMessage.Text = "Stopped Monitoring";
+<<<<<<< HEAD
                          raceGoing = false;
+=======
+>>>>>>> GPSTrackingWithShiny
                 }
                 catch (Exception ex)
                 {
@@ -81,10 +100,17 @@ namespace ShinyGeolocationV2
 
         }
 
+<<<<<<< HEAD
         //public void EnteredGeofence(object sender, EventArgs e)
         //{
         //    lblMessage.Text = "ENTERED";
         //}
+=======
+        public void NotifyMe()
+        {
+            lblMessage.Text = "ENTERED";
+        }
+>>>>>>> GPSTrackingWithShiny
 
         private void BtnStop_Clicked(object sender, EventArgs e)
         {
@@ -110,6 +136,7 @@ namespace ShinyGeolocationV2
             }
         }
 
+<<<<<<< HEAD
 
 
         public ICommand Register { get; }
@@ -183,6 +210,10 @@ namespace ShinyGeolocationV2
 
 
 
+=======
+        public ICommand Register { get; }
+        public ICommand Stop { get; }
+>>>>>>> GPSTrackingWithShiny
     }
 
 }
