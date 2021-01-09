@@ -71,9 +71,11 @@ namespace TempoTrack.Views.Login
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
                         Debug.WriteLine($"Email:{gebruikerInfo.Email}, Gebruikersnaam: {gebruikerInfo.name}, GebruikersId: {gebruikerInfo.GebruikerId}");
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
+
                     }
                     else
                     {
+                        Navigation.PopAsync();
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
                         Debug.WriteLine("Failed for some reason");
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
