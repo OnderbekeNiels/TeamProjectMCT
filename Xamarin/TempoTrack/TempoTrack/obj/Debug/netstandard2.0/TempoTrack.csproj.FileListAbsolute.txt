@@ -73,3 +73,4 @@ D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingGPS.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingKlassement.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingStart.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\CreateRondePage.xaml.g.cs
