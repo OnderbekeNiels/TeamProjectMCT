@@ -7,10 +7,14 @@
 
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="./css/rankings.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <script src="./app/rankings.js"></script>
+    <meta name="google-signin-client_id" content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com">
   </head>
   <body>
     <header class="c-header">
+      <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="c-header__logo"
@@ -85,7 +89,7 @@
       </svg>
       <div class="c-header__action">
         <p class="c-header__user">Niels</p>
-        <button class="c-header__logoutBtn o-button-reset">Logout</button>
+        <button class="c-header__logoutBtn o-button-reset" onclick="signOut();">Logout</button>
       </div>
     </header>
     <h1 class="c-page-title">Ronde overzicht</h1>
