@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.RondePaginas.RondeOverzichtPage"
+             Title="TempoTracking" BackgroundColor="#016FB7">
+    <ContentPage.Content>
+        <!--<StackLayout BackgroundColor="#EFEFEF">
+            <Label Text="Recent gereden rondes" VerticalOptions="Start" HorizontalOptions="Start" Margin="16,16,0,12" FontSize="16" TextColor="#707070"/>
+
+            <ListView x:Name="lvwRondes" RowHeight="40" SeparatorColor="White" BackgroundColor="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="White">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding StartDatum}' TextColor="Black"/>
+                                    <Label Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"  Text='{Binding RondeNaam}' TextColor="Black"/>
+                                    <Label Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,0,16" Text='{Binding Ranking}' TextColor="Black"/>
+
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Text="Recent gereden rondes" VerticalOptions="Start" HorizontalOptions="Start" Margin="16,16,0,12" />
+
+            <ListView Grid.Row="1" x:Name="lvwRondes" RowHeight="100" SeparatorColor="White" BackgroundColor="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="White">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding StartDatum}' TextColor="Black"/>
+                                    <Label Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center"  Text='{Binding RondeNaam}' TextColor="Black"/>
+                                    <Label Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,16" Text='{Binding Ranking}' TextColor="Black"/>
+
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
