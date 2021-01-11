@@ -8,6 +8,7 @@ const getRounds = async function () {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
+    console.log(data);
     showTable(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
@@ -16,6 +17,5 @@ const getRounds = async function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
-
   getRounds();
 });
