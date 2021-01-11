@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.companyname.shinygeolocationv2" android:versionCode="1" android:versionName="1.0">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="29" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.BATTERY_STATS" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+<<<<<<< HEAD
+  <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+=======
+>>>>>>> GPSTrackingWithShiny
+  <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <application android:name="crc6453262554876aa1fc.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:icon="@mipmap/icon" android:label="ShinyGeolocationV2.Android" android:theme="@style/MainTheme">
+    <uses-library android:name="org.apache.http.legacy" android:required="false" />
+    <activity android:name="crc6453262554876aa1fc.MainActivity" android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/icon" android:label="GeofencingShinyFramework" android:theme="@style/MainTheme">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <receiver android:name="com.shiny.locations.GeofenceBroadcastReceiver" android:enabled="true" android:exported="true">
+      <intent-filter>
+        <action android:name="com.shiny.locations.GeofenceBroadcastReceiver.INTENT_ACTION" />
+        <action android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="com.shiny.locations.GpsBroadcastReceiver" android:enabled="true" android:exported="true">
+      <intent-filter>
+        <action android:name="com.shiny.locations.GpsBroadcastReceiver.INTENT_ACTION" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="com.shiny.locations.MotionActivityBroadcastReceiver" android:enabled="true" android:exported="true">
+      <intent-filter>
+        <action android:name="com.shiny.locations.MotionActivityBroadcastReceiver.INTENT_ACTION" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="com.shiny.notifications.NotificationBroadcastReceiver" android:enabled="true" android:exported="false">
+      <intent-filter>
+        <action android:name="com.shiny.notifications.NotificationBroadcastReceiver.INTENT_ACTION" />
+      </intent-filter>
+    </receiver>
+    <service android:name="crc64396a3fe5f8138e3f.KeepAliveService" />
+    <receiver android:name="crc64a0e0a82d0db9a07d.BatteryBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Battery Broadcast Receiver" />
+    <receiver android:name="crc64a0e0a82d0db9a07d.EnergySaverBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Energy Saver Broadcast Receiver" />
+    <receiver android:name="crc64a0e0a82d0db9a07d.ConnectivityBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Connectivity Broadcast Receiver" />
+    <activity android:name="crc64a0e0a82d0db9a07d.IntermediateActivity" android:configChanges="orientation|screenSize" />
+    <provider android:name="xamarin.essentials.fileProvider" android:authorities="com.companyname.shinygeolocationv2.fileProvider" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/xamarin_essentials_fileprovider_file_paths" />
+    </provider>
+    <activity android:name="crc64a0e0a82d0db9a07d.WebAuthenticatorIntermediateActivity" android:configChanges="orientation|screenSize" />
+    <receiver android:name="crc643f46942d9dd1fff9.PowerSaveModeBroadcastReceiver" android:enabled="true" android:exported="false" />
+    <provider android:name="mono.MonoRuntimeProvider" android:authorities="com.companyname.shinygeolocationv2.mono.MonoRuntimeProvider.__mono_init__" android:exported="false" android:initOrder="1999999999" />
+    <!-- suppress ExportedReceiver -->
+    <receiver android:name="mono.android.Seppuku">
+      <intent-filter>
+        <action android:name="mono.android.intent.action.SEPPUKU" />
+        <category android:name="mono.android.intent.category.SEPPUKU.com.companyname.shinygeolocationv2" />
+      </intent-filter>
+    </receiver>
+    <service android:name="androidx.room.MultiInstanceInvalidationService" android:directBootAware="true" android:exported="false" />
+    <provider android:name="androidx.work.impl.WorkManagerInitializer" android:authorities="com.companyname.shinygeolocationv2.workmanager-init" android:directBootAware="false" android:exported="false" android:multiprocess="true" tools:targetApi="n" />
+    <service android:name="androidx.work.impl.background.systemalarm.SystemAlarmService" android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" tools:targetApi="n" />
+    <service android:name="androidx.work.impl.background.systemjob.SystemJobService" android:directBootAware="false" android:enabled="@bool/enable_system_job_service_default" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" tools:targetApi="n" />
+    <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:directBootAware="false" android:enabled="@bool/enable_system_foreground_service_default" android:exported="false" tools:targetApi="n" />
+    <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" android:directBootAware="false" android:enabled="true" android:exported="false" tools:targetApi="n" />
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.BATTERY_OKAY" />
+        <action android:name="android.intent.action.BATTERY_LOW" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+        <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.TIME_SET" />
+        <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver" android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+      </intent-filter>
+    </receiver>
+    <activity android:name="com.google.android.gms.common.api.GoogleApiActivity" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+  </application>
+</manifest>

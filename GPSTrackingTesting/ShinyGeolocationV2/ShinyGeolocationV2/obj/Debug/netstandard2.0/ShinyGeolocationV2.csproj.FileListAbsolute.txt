@@ -1,0 +1,14 @@
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\bin\Debug\netstandard2.0\ShinyGeolocationV2.deps.json
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\bin\Debug\netstandard2.0\ShinyGeolocationV2.dll
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ShinyGeolocationV2.csprojAssemblyReference.cache
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ShinyGeolocationV2.AssemblyInfoInputs.cache
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ShinyGeolocationV2.AssemblyInfo.cs
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\bin\Debug\netstandard2.0\ref\ShinyGeolocationV2.dll
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\bin\Debug\netstandard2.0\ShinyGeolocationV2.pdb
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ShinyGeolocationV2.csproj.CoreCompileInputs.cache
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ShinyGeolocationV2.dll
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ref\ShinyGeolocationV2.dll
+C:\Xamarin\ShinyGeolocationV2\ShinyGeolocationV2\obj\Debug\netstandard2.0\ShinyGeolocationV2.pdb
