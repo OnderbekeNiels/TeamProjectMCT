@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.RondePaginas;
 
 namespace TempoTrack.Views.Login
 {
@@ -31,6 +32,7 @@ namespace TempoTrack.Views.Login
 
         private void BtnLogin_Clicked(object sender, EventArgs e)
         {
+            /*
             var authenticator = new OAuth2Authenticator
                          (
                            "623999391750-8cep3ajgrnh26gdnmlbjq3376im2gcui.apps.googleusercontent.com",
@@ -71,9 +73,11 @@ namespace TempoTrack.Views.Login
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
                         Debug.WriteLine($"Email:{gebruikerInfo.Email}, Gebruikersnaam: {gebruikerInfo.name}, GebruikersId: {gebruikerInfo.GebruikerId}");
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
+
                     }
                     else
                     {
+                        Navigation.PopAsync();
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
                         Debug.WriteLine("Failed for some reason");
                         Debug.WriteLine("-----------------------------------------------------------------------------------------");
@@ -85,7 +89,13 @@ namespace TempoTrack.Views.Login
                     // write the code to handle when auth failed
                 }
             };
-            authenticator.Error += onAuthError;
+            authenticator.Error += onAuthError;*/
+            GebruikerV2 gebruikerInfo = new GebruikerV2();
+            gebruikerInfo.GebruikerId = Guid.Parse("547f309b-8596-4dbe-9439-333a7c9e79de");
+            gebruikerInfo.Email = "niels@email.com";
+            gebruikerInfo.name = "Niels";
+
+            Navigation.PushAsync(new CreateRondePage(gebruikerInfo));
         }
 
         private void onAuthError(object sender, AuthenticatorErrorEventArgs e)

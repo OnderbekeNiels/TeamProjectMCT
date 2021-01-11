@@ -15,7 +15,12 @@ namespace TempoTrack
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage())
+            {
+                //Colors navbar
+                BarBackgroundColor = Color.FromHex("#016FB7"),
+                BarTextColor = Color.White,
+            };
         }
 
         protected override void OnStart()
