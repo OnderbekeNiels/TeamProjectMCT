@@ -2012,40 +2012,24 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\niels\\.nuget\\packages\\": {},
-=======
-    "C:\\Users\\robbe\\.nuget\\packages\\": {},
->>>>>>> LoginDesign
+    "C:\\Users\\jelle\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "projectUniqueName": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
       "projectName": "TempoTrack.Android",
-      "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
-      "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-      "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
-=======
-      "projectUniqueName": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
-      "projectName": "TempoTrack.Android",
-      "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
-      "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
-      "outputPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
->>>>>>> LoginDesign
+      "projectPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "packagesPath": "C:\\Users\\jelle\\.nuget\\packages\\",
+      "outputPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-<<<<<<< HEAD
-        "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-        "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> LoginDesign
+        "C:\\Users\\jelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -2059,13 +2043,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-<<<<<<< HEAD
-            "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-              "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
-=======
-            "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-              "projectPath": "D:\\howest\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
->>>>>>> LoginDesign
+            "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
             }
           }
         }
@@ -2085,5 +2064,13 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
