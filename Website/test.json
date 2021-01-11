@@ -1,0 +1,32 @@
+[
+    {
+        "gebruikersId": "547f309b-8596-4dbe-9439-333a7c9e79de",
+        "startDatum": "2021-01-05T15:00:00",
+        "rondeNaam": "tdf",
+        "rondeId": "5f4266b2-d77e-46e9-95fe-0b76779b737e",
+        "plaats": 2,
+        "totaalTijd": 162,
+        "aantalEtappes": 11,
+        "aantalDeelnemers": 0
+    },
+    {
+        "gebruikersId": "547f309b-8596-4dbe-9439-333a7c9e79de",
+        "startDatum": "2021-01-05T15:00:00",
+        "rondeNaam": "vuelta",
+        "rondeId": "32ca1c19-e7ba-40db-9e1b-b3c64c5bac20",
+        "plaats": 0,
+        "totaalTijd": 0,
+        "aantalEtappes": 10,
+        "aantalDeelnemers": 0
+    },
+    {
+        "gebruikersId": "547f309b-8596-4dbe-9439-333a7c9e79de",
+        "startDatum": "2021-01-05T15:00:00",
+        "rondeNaam": "rond van brugge",
+        "rondeId": "4dca58c9-7e62-4bcb-8b05-b81b15a1ba75",
+        "plaats": 0,
+        "totaalTijd": 0,
+        "aantalEtappes": 0,
+        "aantalDeelnemers": 0
+    }
+]

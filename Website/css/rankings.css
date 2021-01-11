@@ -381,13 +381,14 @@ input:disabled {
 .c-ranking-table__header{
   text-align: left;
   padding: var(--global-whitespace-sm);
-  border-bottom: solid 2px black;
+  color: var(--global-color-neutral-xxxx-light);
+  background-color: var(--global-color-alpha);
+  font-size: 1.125rem;
 }
 
 .c-ranking-table__item{
   text-align: left;
   padding: var(--global-whitespace-sm);
-  border-bottom: solid 1px black;
 }
 
 
