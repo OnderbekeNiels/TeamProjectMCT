@@ -417,6 +417,7 @@ namespace TeamProjectFunction
             // genereer nieuwe invite code
             ronde.RondeId = Guid.NewGuid();
             ronde.EindDatum = DateTime.ParseExact("9999-12-31 11:59:59", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            ronde.StartDatum = DateTime.Now;
             string inviteCode = RandomCharGen.RandomString(8);
             bool inviteIsValid = false;
 
