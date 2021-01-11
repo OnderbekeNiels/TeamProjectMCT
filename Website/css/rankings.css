@@ -353,7 +353,43 @@ input:disabled {
   line-height: 4rem;
   font-size: 3rem;
   text-align: center;
+  margin-bottom: var(--global-whitespace-xxxl);
 }
+
+/*
+    Components: ranking container
+    ---
+*/
+
+.c-ranking-container{
+  margin: var(--global-whitespace-xxxl);
+}
+
+/*
+    Components: ranking table
+    ---
+*/
+
+.c-ranking-table {
+  width: 100%;
+}
+
+.c-ranking-table--rounds{
+
+}
+
+.c-ranking-table__header{
+  text-align: left;
+  padding: var(--global-whitespace-sm);
+  border-bottom: solid 2px black;
+}
+
+.c-ranking-table__item{
+  text-align: left;
+  padding: var(--global-whitespace-sm);
+  border-bottom: solid 1px black;
+}
+
 
 
 
