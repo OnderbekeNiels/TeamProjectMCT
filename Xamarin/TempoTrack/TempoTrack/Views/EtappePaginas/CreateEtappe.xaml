@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.EtappePaginas.CreateEtappe"
+             NavigationPage.HasNavigationBar="True"
+             BackgroundColor="#EFEFEF">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label FontAttributes="Bold" Text="Etappe aanmaken" FontSize="24" TextColor="#016FB7" Margin="16,8,0,0" />
+
+            <Grid x:Name="btnLogin" Margin="16,0,16,0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition  />
+                    <RowDefinition  />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="15" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.RowSpan="2" Grid.Column="0" Text="Aantal Rondes" FontFamily="DIN2014-Regular" FontSize="16" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="#707070" />
+                <Label Grid.RowSpan="2" Grid.Column="1" x:Name="lblAantalRondes" VerticalOptions="Center" FontSize="16" HorizontalOptions="EndAndExpand" Text="0" TextColor="#016FB7"/>
+                <Button Grid.Row="0" Grid.Column="2" x:Name="btnUp" Text="˄" VerticalOptions="End" HorizontalOptions="End" HeightRequest="15" FontSize="15" TextColor="#016FB7" BackgroundColor="Transparent" Padding="0"/>
+                <Button Grid.Row="1" Grid.Column="2" x:Name="btnDown" Text="˅" VerticalOptions="Start" TextColor="#6D9FC0" HorizontalOptions="End" HeightRequest="15" FontSize="15" BackgroundColor="Transparent" Padding="-4"/>
+
+            </Grid>
+
+            <Button x:Name="btnCreate" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16" HeightRequest="40" Text="Etappe Aanmaken" BackgroundColor="#016FB7" TextColor="White"/>
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>
