@@ -398,7 +398,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateRonde")]
         public static async Task<IActionResult> CreateRonde(
-           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "rondes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "rondes")] HttpRequest req,
            ILogger log)
         {
 
@@ -489,7 +489,7 @@ namespace TeamProjectFunction
 
         [FunctionName("UpdateRonde")]
         public static async Task<IActionResult> UpdateRonde(
-           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "rondes/update")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "rondes")] HttpRequest req,
            ILogger log)
         {
 
@@ -539,7 +539,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AddDeelnemerToRonde")]
         public static async Task<IActionResult> AddDeelnemerToRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "deelnemer/add")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "deelnemer")] HttpRequest req,
           ILogger log)
         {
 
@@ -626,7 +626,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelDeelnemerfromRonde")]
         public static async Task<IActionResult> DelDeelnemerfromRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del/{DeelnemerId}")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
           ILogger log, Guid DeelnemerId)
         {
             CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
@@ -638,7 +638,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateEtappe")]
         public static async Task<IActionResult> CreateEtappe(
-           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "etappes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "etappes")] HttpRequest req,
            ILogger log)
         {
 
@@ -691,7 +691,7 @@ namespace TeamProjectFunction
 
         [FunctionName("UpdateEtappe")]
         public static async Task<IActionResult> UpdateEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/update")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe")] HttpRequest req,
           ILogger log)
         {
 
@@ -743,7 +743,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AddLaptijd")]
         public static async Task<IActionResult> AddLaptijd(
-           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "laptijden/add")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "laptijden")] HttpRequest req,
            ILogger log)
         {
 
@@ -791,7 +791,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelLapTijd")]
         public static async Task<IActionResult> DelLapTijd(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/del/{LaptijdId}")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/{LaptijdId}")] HttpRequest req,
           ILogger log, Guid LaptijdId)
         {
             CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(LaptijdId);
@@ -802,7 +802,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelEtappe")]
         public static async Task<IActionResult> DelEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/del/{EtappeId}")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
             CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
@@ -813,7 +813,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelRonde")]
         public static async Task<IActionResult> DelRonde(
-         [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/del/{RondeId}")] HttpRequest req,
+         [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/{RondeId}")] HttpRequest req,
          ILogger log, Guid RondeId)
         {
             CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
