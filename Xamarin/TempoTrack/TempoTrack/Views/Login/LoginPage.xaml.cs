@@ -12,6 +12,7 @@ using System.Net.Http;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
 using TempoTrack.Views.RondePaginas;
+using TempoTrack.Views.EtappePaginas;
 
 namespace TempoTrack.Views.Login
 {
@@ -94,8 +95,11 @@ namespace TempoTrack.Views.Login
             gebruikerInfo.GebruikerId = Guid.Parse("547f309b-8596-4dbe-9439-333a7c9e79de");
             gebruikerInfo.Email = "niels@email.com";
             gebruikerInfo.name = "Niels";
+            //Navigation.PushAsync(new CreateRondePage(gebruikerInfo));
 
-            Navigation.PushAsync(new CreateRondePage(gebruikerInfo));
+            Ronde ronde = new Ronde();
+            ronde.RondeId = Guid.Parse("3A8CC923-EEAA-49CA-9E95-07687F7ADC3E");
+            Navigation.PushAsync(new CreateEtappePage(ronde.RondeId));
         }
 
         private void onAuthError(object sender, AuthenticatorErrorEventArgs e)

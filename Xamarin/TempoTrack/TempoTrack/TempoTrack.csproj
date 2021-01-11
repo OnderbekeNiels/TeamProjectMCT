@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\DIN2014-Bold.ttf" />
     <None Remove="Assets\Fonts\DIN2014-Light.ttf" />
     <None Remove="Assets\Fonts\DIN2014-Regular.ttf" />
     <None Remove="Assets\Images\GoogleLogo.png" />
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Fonts\DIN2014-Bold.ttf" />
     <EmbeddedResource Include="Assets\Fonts\DIN2014-Light.ttf" />
     <EmbeddedResource Include="Assets\Fonts\DIN2014-Regular.ttf" />
     <EmbeddedResource Include="Assets\Images\GoogleLogo.png" />
@@ -43,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\EtappePaginas\CreateEtappe.xaml">
+    <EmbeddedResource Update="Views\EtappePaginas\CreateEtappePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Login\LoginPage.xaml">

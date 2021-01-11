@@ -10,7 +10,7 @@ namespace TempoTrack.Repositories
 {
     public class RondeRepository
     {
-        private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api/rondes/create";
+        private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api/rondes";
         private const string _FUNCTIONKEY = "WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==";
         public static HttpClient GetHttpClient()
         {
