@@ -1,25 +1,24 @@
 let userId;
 
-userId = '547F309B-8596-4DBE-9439-333A7C9E79DE';
-
+userId = "547F309B-8596-4DBE-9439-333A7C9E79DE";
 
 const showTable = function (data) {
   console.table(data);
-  const table = document.querySelector('.js-rounds-table');
+  const table = document.querySelector(".js-rounds-table");
   let htmlString = `<tr>
   <th class="c-ranking-table__header">Datum</th>
   <th class="c-ranking-table__header">Ronde</th>
   <th class="c-ranking-table__header">Totale Tijd</th>
   <th class="c-ranking-table__header">Positie</th>
-</tr>`
-  for(const item of data){
-    let startDatum = new Date(item.startDatum)
+</tr>`;
+  for (const item of data) {
+    let startDatum = new Date(item.startDatum);
     htmlString += `<tr>
     <td class="c-ranking-table__item">${startDatum.getDate()}/${startDatum.getMonth()}/${startDatum.getFullYear()}</td>
     <td class="c-ranking-table__item">${item.rondeNaam}</td>
     <td class="c-ranking-table__item">n/a</td>
     <td class="c-ranking-table__item">n/a</td>
-  </tr>`
+  </tr>`;
   }
   table.innerHTML = htmlString;
 };
