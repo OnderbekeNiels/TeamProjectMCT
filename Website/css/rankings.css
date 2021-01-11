@@ -12,7 +12,7 @@
 
   /* colors */
 
-  --global-color-alpha: #4e00ea;
+  --global-color-alpha: #016FB7;
   --global-color-alpha-light: #6a00fd;
   --global-color-alpha-x-light: #8b33fb;
 
@@ -42,7 +42,7 @@
 
   /* borders */
 
-  --global-border-borderRadius: 16px;
+  --global-border-button-borderRadius: 10px;
 
   /* transitions */
 
@@ -298,6 +298,63 @@ input:disabled {
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
+
+
+/*
+    Components: header
+    ---
+*/
+
+.c-header{
+  height: 6rem;
+  width: 100%;
+  background-color: var(--global-color-neutral);
+  padding: 0 var(--global-whitespace-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--global-whitespace-lg);
+}
+
+.c-header__logo{
+  width: 5rem;
+}
+
+.c-header__action{
+  display: flex;
+  align-items: center;
+}
+
+.c-header__user{
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--global-color-neutral-xxxx-light);
+  margin: 0 var(--global-whitespace-md);
+}
+
+.c-header__logoutBtn{
+  background-color: var(--global-color-alpha);
+  padding: var(--global-whitespace-sm) var(--global-whitespace-md);
+  border-radius: var(--global-border-button-borderRadius);
+  color: var(--global-color-neutral-xxxx-light);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+
+/*
+    Components: page
+    ---
+*/
+
+.c-page-title{
+  line-height: 4rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
 
 
 /*
