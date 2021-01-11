@@ -395,7 +395,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateRonde")]
         public static async Task<IActionResult> CreateRonde(
-           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "rondes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "rondes")] HttpRequest req,
            ILogger log)
         {
 
@@ -485,7 +485,7 @@ namespace TeamProjectFunction
 
         [FunctionName("UpdateRonde")]
         public static async Task<IActionResult> UpdateRonde(
-           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "rondes/update")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "rondes")] HttpRequest req,
            ILogger log)
         {
 
@@ -535,7 +535,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AddDeelnemerToRonde")]
         public static async Task<IActionResult> AddDeelnemerToRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "deelnemer/add")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "deelnemer")] HttpRequest req,
           ILogger log)
         {
 
@@ -622,7 +622,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelDeelnemerfromRonde")]
         public static async Task<IActionResult> DelDeelnemerfromRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/del/{DeelnemerId}")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
           ILogger log, Guid DeelnemerId)
         {
             CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
@@ -634,7 +634,7 @@ namespace TeamProjectFunction
 
         [FunctionName("CreateEtappe")]
         public static async Task<IActionResult> CreateEtappe(
-           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "etappes/create")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "etappes")] HttpRequest req,
            ILogger log)
         {
 
@@ -687,7 +687,7 @@ namespace TeamProjectFunction
 
         [FunctionName("UpdateEtappe")]
         public static async Task<IActionResult> UpdateEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/update")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe")] HttpRequest req,
           ILogger log)
         {
 
@@ -739,7 +739,7 @@ namespace TeamProjectFunction
 
         [FunctionName("AddLaptijd")]
         public static async Task<IActionResult> AddLaptijd(
-           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "laptijden/add")] HttpRequest req,
+           [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "laptijden")] HttpRequest req,
            ILogger log)
         {
 
@@ -791,7 +791,7 @@ namespace TeamProjectFunction
 
         [FunctionName("DelLapTijd")]
         public static async Task<IActionResult> DelLapTijd(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/del/{LaptijdId}")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/{LaptijdId}")] HttpRequest req,
           ILogger log, Guid LaptijdId)
         {
 
@@ -808,13 +808,24 @@ namespace TeamProjectFunction
 
         [FunctionName("DelEtappe")]
         public static async Task<IActionResult> DelEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/del/{EtappeId}")] HttpRequest req,
+          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
 
 
 
+<<<<<<< HEAD
             CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
+=======
+        [FunctionName("DelRonde")]
+        public static async Task<IActionResult> DelRonde(
+         [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/{RondeId}")] HttpRequest req,
+         ILogger log, Guid RondeId)
+        {
+            CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
+            return new OkObjectResult(customResponse);
+        }
+>>>>>>> develop
 
             return new OkObjectResult(customResponse);
 
@@ -829,6 +840,42 @@ namespace TeamProjectFunction
          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/del/{RondeId}")] HttpRequest req,
          ILogger log, Guid RondeId)
         {
+<<<<<<< HEAD
+=======
+            try
+            {
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                List<KlassementRonde> rondes = new List<KlassementRonde>();
+
+                using (SqlConnection connection = new SqlConnection(connectionStringInsert))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam as 'RondeNaam', Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where e.RondeId = @rondeId group by l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam order by Sum(l.TijdLap);";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@rondeId", RondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            KlassementRonde data = new KlassementRonde();
+                            data.Plaats = int.Parse(reader["Plaats"].ToString());
+                            data.GebruikersId = Guid.Parse(reader["GebruikerId"].ToString());
+                            data.GebruikersNaam = reader["GebruikersNaam"].ToString();
+                            data.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            data.RondeNaam = reader["RondeNaam"].ToString();
+                            data.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
+                            rondes.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(rondes);
+            }
+            catch (Exception ex)
+            {
+>>>>>>> develop
 
             CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
             return new OkObjectResult(customResponse);
