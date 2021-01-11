@@ -21,8 +21,6 @@ D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingEtappes.xaml.g.cs
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.AssemblyInfoInputs.cache
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.AssemblyInfo.cs
-D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
-D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
@@ -74,3 +72,5 @@ D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingKlassement.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingStart.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\CreateRondePage.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
