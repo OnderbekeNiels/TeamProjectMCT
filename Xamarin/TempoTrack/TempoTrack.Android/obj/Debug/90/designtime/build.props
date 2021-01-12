@@ -24,23 +24,7 @@ androidgeneratejnimarshalmethods=false
 os=windows_nt
 androidincludedebugsymbols=true
 androidpackagenamingpolicy=lowercasecrc64
-<<<<<<< HEAD
-<<<<<<< HEAD
-_nugetassetstimestamp=637458817348988986
-=======
-<<<<<<< HEAD
-_nugetassetstimestamp=637459703308529444
-=======
-<<<<<<< HEAD
-_nugetassetstimestamp=637458817348988986
-=======
-_nugetassetstimestamp=637459701517606772
->>>>>>> develop
->>>>>>> develop
->>>>>>> develop
-=======
 _nugetassetstimestamp=637459728097837616
->>>>>>> CreateEtappe
 typemapkind=strings-asm
 androidsupportedabis=arm64-v8a
 armeabi-v7a
