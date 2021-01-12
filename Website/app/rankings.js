@@ -22,37 +22,45 @@ const datetimeToDateNotation = function(date){
 const showTable = function (data) {
   console.table(data);
   const table = document.querySelector(".js-rounds-table");
-  let htmlString = `<tr>
-  <th class="c-ranking-table__header">Datum</th>
-  <th class="c-ranking-table__header">Ronde</th>
-  <th class="c-ranking-table__header">Totale Tijd</th>
-  <th class="c-ranking-table__header">Positie</th>
-</tr>`;
+  let htmlString = `      <div class="c-ranking-table__header">
+  <p class="c-ranking-table__header-item">
+    Startdatum
+  </p>
+  <p class="c-ranking-table__header-item u-text-align--left">
+    Ronde naam
+  </p>
+  <p class="c-ranking-table__header-item">
+    Totale tijd
+  </p>
+  <p class="c-ranking-table__header-item">
+    Positie
+  </p>
+</div>`;
   for (const item of data) {
-    //filter op gereden rondes
-  //   if(item.plaats != 0 && item.aantalEtappes !=0){
-  //   htmlString += `<tr>
-  //   <td class="c-ranking-table__item">${datetimeToDateNotation(item.startDatum)}</td>
-  //   <td class="c-ranking-table__item">${item.rondeNaam} (${item.aantalEtappes} etappes)</td>
-  //   <td class="c-ranking-table__item">${secToTimeNotation(item.totaalTijd)}</td>
-  //   <td class="c-ranking-table__item">#${item.plaats}</td>
-  // </tr>`;
-  //   }
-    htmlString += `<tr>
-    <td class="c-ranking-table__item">${datetimeToDateNotation(item.startDatum)}</td>
-    <td class="c-ranking-table__item">${item.rondeNaam} (${item.aantalEtappes} etappes)</td>
-    <td class="c-ranking-table__item">${secToTimeNotation(item.totaalTijd)}</td>
-    <td class="c-ranking-table__item">#${item.plaats}</td>
-  </tr>`;
+    htmlString += `
+    <div class="c-ranking-table__row">
+        <p class="c-ranking-table__row-item">
+        ${datetimeToDateNotation(item.startDatum)}
+        </p>
+        <div class="c-ranking-table__row-item c-ranking-table__row-item--round-name u-text-align--left">
+          <p class="c-ranking-table__row-item--top">${item.rondeNaam}</p>
+          <p class="c-ranking-table__row-item--sub">${item.aantalEtappes} etappes</p>
+        </div>
+        <p class="c-ranking-table__row-item">
+        ${secToTimeNotation(item.totaalTijd)}
+        </p>
+        <p class="c-ranking-table__row-item">
+        #${item.plaats}
+        </p>
+      </div>`;
   }
   table.innerHTML = htmlString;
 };
 
 const getRounds = async function () {
-  let localEndpoint = `http://localhost:7071/api/gebruikers/ronde/${userId}`
   let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruikers/ronde/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
-    const response = await fetch('test.json');
+    const response = await fetch(endpoint);
     const data = await response.json();
     console.log(data);
     showTable(data);
