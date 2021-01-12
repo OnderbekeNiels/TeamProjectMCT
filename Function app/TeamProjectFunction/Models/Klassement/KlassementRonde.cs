@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamProjectFunction.Models.Klassement
 {
-    class KlassementRonde
+    public class KlassementRonde
     {
         public int Plaats { get; set; }
         public Guid GebruikersId { get; set; }
