@@ -15,12 +15,14 @@ namespace TempoTrack.Views.RondePaginas
     public partial class RondeOverzichtPage : ContentPage
     {
         public static GebruikerV2 GebruikersInfo { get; set; }
+
         public RondeOverzichtPage(GebruikerV2 gebruikersInfo)
         {
             GebruikersInfo = gebruikersInfo;
             InitializeComponent();
             lvwRondes.ItemSelected += LvwRondes_ItemSelected;
             btnCreate.Clicked += btnCreate_Clicked;
+            btnDeelnemen.Clicked += btnDeelnemen_Clicked;
             LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
         }
 
@@ -73,6 +75,45 @@ namespace TempoTrack.Views.RondePaginas
                 Navigation.PushAsync(new EtappeOverzichtPage(ronde));
                 lvwRondes.SelectedItem = null;
             }*/
+        }
+
+        //Deelnemen aan een ronde
+        private void btnDeelnemen_Clicked(object sender, EventArgs e)
+        {
+            askInviteCode();
+
+        }
+
+        //Invite code opvragen
+        private async Task askInviteCode() 
+        {
+            string inviteCode = await DisplayPromptAsync("Deelnemen aan Ronde", "Voer de code van de ronde in waar je aan wilt deelnemen");
+
+            if (inviteCode.Length == 8)
+            {
+                Guid gebruikersId = GebruikersInfo.GebruikerId;
+                //Deelnemer toevoegen in database
+                Deelnemer deelnemer = new Deelnemer();
+                deelnemer.InviteCode = inviteCode;
+                deelnemer.GebruikerId = gebruikersId;
+                Debug.Write(deelnemer.GebruikerId);
+                Deelnemer deelnemerResponse = await RondeRepository.AddDeelnemer(deelnemer);
+                if (deelnemerResponse == null)
+                {
+                    await DisplayAlert("Foutmedling", "Foute invite code", "OK");
+                }
+                else
+                {
+                    //doorsturen naar ronde pagina
+                    //Navigation.PushAsync(new EtappeOverzichtPage(deelnemerResponse.RondeId));
+                }
+
+            }
+            else
+            {
+                //Code kan maar 8 tekens lang zijn
+                await DisplayAlert("Foutmedling", "Foute invite code", "OK");
+            }
         }
 
         //Navigeren naar create ronde pagina
