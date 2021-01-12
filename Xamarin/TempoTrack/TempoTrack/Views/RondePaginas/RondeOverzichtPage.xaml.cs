@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.EtappePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -70,11 +71,11 @@ namespace TempoTrack.Views.RondePaginas
         {
             RondesGebruiker ronde = lvwRondes.SelectedItem as RondesGebruiker;
 
-            /*if (ronde != null)
+            if (ronde != null)
             {
                 Navigation.PushAsync(new EtappeOverzichtPage(ronde));
                 lvwRondes.SelectedItem = null;
-            }*/
+            }
         }
 
         //Deelnemen aan een ronde
