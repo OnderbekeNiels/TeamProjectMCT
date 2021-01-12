@@ -9,5 +9,6 @@ namespace TempoTrack.Models
         public Guid GebruikerId { get; set; }
         public Guid RondeId { get; set; }
         public Guid DeelnemerId { get; set; }
+        public string InviteCode { get; set; }
     }
 }
