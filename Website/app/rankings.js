@@ -2,6 +2,8 @@ let userId;
 
 userId = "547F309B-8596-4DBE-9439-333A7C9E79DE";
 
+//#region *** Global Functions ***
+
 const secToTimeNotation = function (seconds) {
   let time = new Date(seconds * 1000).toISOString().substr(11, 8);
   return time;
@@ -21,7 +23,11 @@ const datetimeToDateNotation = function (date) {
   return `${day}/${month}/${year}`;
 };
 
-const showTable = function (data) {
+//#endregion
+
+//#region *** Show Data Functions ***
+
+const showRounds = function (data) {
   console.table(data);
   data.sort((a, b) => (a.startDatum < b.startDatum) ? 1 : -1)
   const table = document.querySelector(".js-rounds-table");
@@ -62,17 +68,108 @@ const showTable = function (data) {
   table.innerHTML = htmlString;
 };
 
+const showEtappes = function (data) {
+  console.table(data);
+  data.sort((a, b) => (a.startTijd < b.startTijd) ? 1 : -1)
+  const table = document.querySelector(".js-etappes-table");
+  let htmlString = `<div class="c-ranking-table__header">
+  <p class="c-ranking-table__header-item">
+    Startdatum
+  </p>
+  <p class="c-ranking-table__header-item u-text-align--left">
+    Ronde
+  </p>
+  <p class="c-ranking-table__header-item">
+    Totale tijd
+  </p>
+  <p class="c-ranking-table__header-item">
+    Positie
+  </p>
+</div>`;
+  let Etappe = data.length;
+  for (const item of data) {
+    htmlString += `
+        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${item.rondeId}'>
+      <p class="c-ranking-table__row-item">
+      ${datetimeToDateNotation(item.startTijd)}
+      </p>
+      <p class="c-ranking-table__row-item u-text-align--left">Etappe 
+      ${Etappe}
+      </p>
+      <p class="c-ranking-table__row-item">
+      ${secToTimeNotation(item.totaalTijd)}
+      </p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha ">
+      #${item.plaats}
+      </p>
+    </div>`;
+    Etappe--;
+  }
+  table.innerHTML = htmlString;
+};
+
+//#endregion
+
+const listenToToggle = function () {
+  const etappeInput = document.querySelector(".js-option-etappe"),
+    roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
+    inputs = document.querySelectorAll(".js-option"),
+    rankingContainer = document.querySelector(".c-ranking-container");
+  for (const input of inputs) {
+    input.addEventListener("change", function () {
+      if (etappeInput.checked) {
+        rankingContainer.classList.remove("c-rounds-ranking--visible");
+        getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
+      }
+      if (roundsRankingInput.checked) {
+        rankingContainer.classList.add("c-rounds-ranking--visible");
+        //getTable();
+      }
+    });
+  }
+};
+
+//#region *** Get Data Functions ***
+
 const getRounds = async function () {
   let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
     console.log(data);
-    showTable(data);
+    showRounds(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
 };
+
+const getEtappes = async function (rondeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/ronde/etappes/${rondeId}/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.log(data);
+    showEtappes(data);
+  } catch (error) {
+    console.error("An error occured, we handled it.", error);
+  }
+};
+
+const getRoundsRanking = async function () {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.log(data);
+    showRounds(data);
+  } catch (error) {
+    console.error("An error occured, we handled it.", error);
+  }
+};
+
+//#endregion
+
+//#region *** Google Authentication ***
 
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -90,6 +187,8 @@ function signOut() {
   });
 }
 
+//#endregion
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
@@ -98,7 +197,9 @@ document.addEventListener("DOMContentLoaded", function () {
     getRounds();
   }
   if(document.querySelector('.etappesoverview')){
-    console.log('Getting data etappa page');
+    listenToToggle();
+    //getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
+    //getRoundsRanking();
   }
   
 });

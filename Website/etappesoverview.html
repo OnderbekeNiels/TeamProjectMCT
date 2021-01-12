@@ -110,16 +110,85 @@
       </div>
     </header>
     <div class="c-main-container">
-      <h1 class="c-page-title">Etappe overzicht</h1>
-      <p class="c-page-subtitle">
-        Dit zijn de etappes waaraan u heeft deelgenomen.
-      </p>
-      <div class="c-ranking-table js-rounds-table">
-        <div class="c-ranking-table__header">
-          <p class="c-ranking-table__header-item">Startdatum</p>
-          <p class="c-ranking-table__header-item u-text-align--left">Ronde</p>
-          <p class="c-ranking-table__header-item">Totale tijd</p>
-          <p class="c-ranking-table__header-item">Positie</p>
+      <h1 class="c-page-title js-round-name">Ronde naam</h1>
+      <div class="c-toggle">
+        <input
+          class="c-toggle-option__input o-hide-accessible js-option-etappe js-option"
+          type="radio"
+          name="toggle"
+          checked
+          id="etappe"
+        />
+        <label
+          class="c-toggle-option__label c-toggle-option__label--left"
+          for="etappe"
+          >Etappes</label
+        >
+        <input
+          class="c-toggle-option__input js-option-rounds-ranking js-option o-hide-accessible"
+          type="radio"
+          name="toggle"
+          id="ranking"
+        />
+        <label
+          class="c-toggle-option__label c-toggle-option__label--right"
+          for="ranking"
+          >Klassement</label
+        >
+      </div>
+    </div>
+    <div class="c-data">
+      <div class="c-ranking-container">
+        <div class="c-ranking-container__item">
+          <div class="c-ranking-table js-etappes-table">
+            <div class="c-ranking-table__header">
+              <p class="c-ranking-table__header-item">Startdatum</p>
+              <p class="c-ranking-table__header-item u-text-align--left">
+                Etappe
+              </p>
+              <p class="c-ranking-table__header-item">Totale tijd</p>
+              <p class="c-ranking-table__header-item">Positie</p>
+            </div>
+            <div class="o-data-loading">
+              <svg class="o-circular-loader" viewBox="25 25 50 50">
+                <circle
+                  class="o-loader-path"
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  stroke="#016fb7"
+                  stroke-width="2"
+                />
+              </svg>
+              We halen uw data op.
+            </div>
+          </div>
+        </div>
+        <div class="c-ranking-container__item">
+          <div class="c-ranking-table js-rounds-ranking-table">
+            <div class="c-ranking-table__header">
+              <p class="c-ranking-table__header-item">Positie</p>
+              <p class="c-ranking-table__header-item u-text-align--left">
+                Deelnemer
+              </p>
+              <p class="c-ranking-table__header-item">Totale tijd</p>
+            </div>
+            <div class="o-data-loading">
+              <svg class="o-circular-loader" viewBox="25 25 50 50">
+                <circle
+                  class="o-loader-path"
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  stroke="#016fb7"
+                  stroke-width="2"
+                />
+              </svg>
+              We halen uw data op.
+            </div>
+          </div>
         </div>
       </div>
     </div>
