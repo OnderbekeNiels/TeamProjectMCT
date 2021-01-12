@@ -1,4 +1,4 @@
-var userId;
+var userId, userName;
 
 function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
@@ -11,7 +11,8 @@ function onSignIn(googleUser) {
 
 const GetUserId = async function(profile){
   let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruikers/login?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
-  let data  = {"name": `${profile.getName}`, "email": `${profile.getEmail}`};
+  let data  = {"name": `${profile.getName()}`, "email": `${profile.getEmail()}`};
+  console.log(data);
 
   fetch(endpoint, {
     method: 'POST',
@@ -23,11 +24,14 @@ const GetUserId = async function(profile){
   .then((response) => response.json())
   //Then with the data from the response in JSON...
   .then((data) => {
-    //console.log('Success:', data);
+    console.log('Success:', data);
     userId = data["gebruikerId"];
     console.log(userId);
     sessionStorage.setItem("gebruikerId", userId);
-    window.location.pathname = '/roundsoverview.html'
+    userName = data["name"];
+    console.log(userName);
+    sessionStorage.setItem("name", userName);
+    //window.location.pathname = '/roundsoverview.html'
   })
   //Then with the error genereted...
   .catch((error) => {
