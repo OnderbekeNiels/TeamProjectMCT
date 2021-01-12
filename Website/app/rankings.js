@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // get userid from user:
   // userId = sessionStorage.getItem("gebruikerId");
   if(document.querySelector('.roundsoverview')){
-    getRounds();
+    //getRounds();
   }
   if(document.querySelector('.etappesoverview')){
     console.log('Getting data etappa page');
