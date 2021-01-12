@@ -16,6 +16,54 @@ namespace TempoTrack.Models
         public int SnelsteTijd { get; set; }
         public int Plaats { get; set; }
 
+        public string Ranking
+        {
+            get
+            {
+                return $"#{Plaats}";
+            }
+        }
+        public string EtappeNaam { get; set; }
+        public string VerschilTijd
+        {
+            get
+            {
+                string secondenTekst = "";
+                string minutenTekst = "";
+
+                int verschil = TotaalTijd - SnelsteTijd;
+
+                int seconden = verschil % 60;
+                if (seconden < 10)
+                {
+                    secondenTekst = $"0{seconden}";
+                }
+                else
+                {
+                    secondenTekst = Convert.ToString(seconden);
+                }
+
+                int minuten = verschil / 60;
+                if (minuten < 10)
+                {
+                    minutenTekst = $"0{minuten}";
+                }
+                else
+                {
+                    minutenTekst = Convert.ToString(minuten);
+                }
+                return $"+{minutenTekst}:{secondenTekst}";
+            }
+        }
+
+        public string EtappeTijd
+        {
+            get
+            {
+                return TimeSpan.FromSeconds(TotaalTijd).ToString();
+            }
+        }
+
         public override string ToString()
         {
             return $"EtappeId: {EtappeId}, GebruikersId: {GebruikersId}, TotaalTijd: {TotaalTijd}, Plaats: {Plaats}";

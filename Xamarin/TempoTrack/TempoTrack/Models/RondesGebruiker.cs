@@ -34,6 +34,8 @@ namespace TempoTrack.Models
 
         public Guid GebruikersId { get; set; }
 
+        public int TotaalTijd { get; set; }
+
         public override string ToString()
         {
             return $"Startdatum: {StartDatum}, RondeNaam: {RondeNaam}, RondeId: {RondeId}, Ranking: {Ranking}";

@@ -55,6 +55,7 @@ namespace TempoTrack.Views.RondePaginas
                 {
                     ronde.Ranking = item.Plaats;
                     ronde.GebruikersId = item.GebruikersId;
+                    ronde.TotaalTijd = item.TotaalTijd;
                     output.Add(ronde);
                 }
             }
@@ -106,7 +107,7 @@ namespace TempoTrack.Views.RondePaginas
                 else
                 {
                     //doorsturen naar ronde pagina
-                    //Navigation.PushAsync(new EtappeOverzichtPage(deelnemerResponse.RondeId));
+                    //Navigation.PushAsync(new EtappeOverzichtPage(deelnemerResponse));
                 }
 
             }
