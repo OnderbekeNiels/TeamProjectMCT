@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.EtappePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,6 +20,7 @@ namespace TempoTrack.Views.RondePaginas
         {
             GebruikersInfo = gebruikersInfo;
             InitializeComponent();
+            lvwRondes.ItemSelected += LvwRondes_ItemSelected;
             LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
         }
 
@@ -30,7 +32,7 @@ namespace TempoTrack.Views.RondePaginas
             foreach (RondesGebruiker item in rondesGebruiker)
             {
                 Debug.WriteLine(item.ToString());
-                //LoadKlassementAsync(item, lvw);
+                LoadKlassementAsync(item, lvw);
             }
 
             lvw.ItemsSource = rondesGebruiker;
@@ -49,6 +51,7 @@ namespace TempoTrack.Views.RondePaginas
                 if (item.GebruikersId == GebruikersInfo.GebruikerId)
                 {
                     ronde.Ranking = item.Plaats;
+                    ronde.GebruikersId = item.GebruikersId;
                     output.Add(ronde);
                 }
             }
@@ -58,8 +61,18 @@ namespace TempoTrack.Views.RondePaginas
                 Debug.WriteLine(item.ToString());
             }
 
-            lvw.ItemsSource = output;
+            //lvw.ItemsSource = output;
+        }
 
+        private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            RondesGebruiker ronde = lvwRondes.SelectedItem as RondesGebruiker;
+
+            if(ronde != null)
+            {
+                Navigation.PushAsync(new EtappeOverzichtPage(ronde));
+                lvwRondes.SelectedItem = null;
+            }
         }
     }
 }

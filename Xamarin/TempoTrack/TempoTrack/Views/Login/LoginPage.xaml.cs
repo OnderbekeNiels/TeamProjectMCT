@@ -95,7 +95,7 @@ namespace TempoTrack.Views.Login
             gebruikerInfo.Email = "niels@email.com";
             gebruikerInfo.name = "Niels";
 
-            Navigation.PushAsync(new CreateRondePage(gebruikerInfo));
+            Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
         }
 
         private void onAuthError(object sender, AuthenticatorErrorEventArgs e)

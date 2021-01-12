@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BRmUGORPqJlEVBEi/uIHKhk5rrIX1UNa1h8CJAPYxw0TLqPNStUfZ+4gvq0T7ieZPBC9WSlmlYRRHx54i1zB2A==",
+  "dgSpecHash": "TxF40kTgZqgZhV56a3tzHAQbQ1a8GvHjFmOGj/+lI8Y/8XjZF4wQKkEnSpenqOphiEN7gv2CL/gBftAVz5Z4Og==",
   "success": true,
   "projectFilePath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
   "expectedPackageFiles": [
@@ -156,12 +156,6 @@
     "C:\\Users\\jelle\\.nuget\\packages\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1605",
       "level": "Warning",
