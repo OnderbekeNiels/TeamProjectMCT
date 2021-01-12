@@ -18,6 +18,7 @@
   --global-color-alpha: #016fb7;
   --global-color-alpha-light: #257db7;
   --global-color-alpha-x-light: #498cb7;
+  --global-color-alpha-xx-light:#EBF7FF;
 
   --global-color-alpha-transparent: #016fb7;
 
@@ -461,15 +462,15 @@ input:disabled {
 }
 
 .c-header__logoutBtn:hover {
-  background-color: var(--global-color-neutral-light);
-  color: var(--global-color-neutral-x-dark);
-  border-color: var(--global-color-neutral-x-dark);
+  background-color: var(--global-color-neutral-x-light);
+  color: var(--global-color-alpha);
 }
 
 .c-header__logoutBtn:active,
 .c-header__logoutBtn:focus {
   outline: none;
-  box-shadow: 2px 4px 3px var(--global-color-neutral-x-light);
+  border-color: var(--global-color-alpha);
+  box-shadow: 0 0 0 3px var(--global-color-neutral-x-light);
 }
 
 /*
@@ -542,20 +543,20 @@ input:disabled {
   align-items: center;
   width: 100%;
   background-color: var(--global-color-neutral-x-light);
-  box-shadow: 0 2px 3px var(--global-color-neutral);
-  font-size: 14px;
+  box-shadow: 0 1px 3px var(--global-color-neutral);
+  font-size: 0.875rem;
   border-radius: var(--global-borderRadius);
   margin-bottom: var(--global-whitespace-sm);
   padding: var(--global-whitespace-xs);
 }
 
 .c-ranking-table__row:hover {
-  background-color: var(--global-color-neutral-light);
+  background-color: var(--global-color-alpha-xx-light);
 }
 
 .c-ranking-table__row:active,
 .c-ranking-table__row:focus {
-  box-shadow: 2px 4px 3px var(--global-color-alpha);
+  box-shadow: 0 0 0 3px var(--global-color-alpha);
 }
 
 .c-ranking-table__row-item {
