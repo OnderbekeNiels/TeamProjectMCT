@@ -333,64 +333,75 @@ namespace TeamProjectFunction
             //geen account gevonden: account wordt aangemaakt en returnd gebruikerv2 met alle params
             //de return values kunnen aangepast worden natuurlijk, deze zijn als vb
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            GebruikerV2 gebruikerLogin = JsonConvert.DeserializeObject<GebruikerV2>(requestBody);
-
-
-            string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            try
             {
-                await sqlConnection.OpenAsync();
-                using (SqlCommand sqlCommand = new SqlCommand())
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                GebruikerV2 gebruikerLogin = JsonConvert.DeserializeObject<GebruikerV2>(requestBody);
+
+
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 {
-                    sqlCommand.Connection = sqlConnection;
-                    sqlCommand.CommandText = "SELECT * FROM Gebruikers WHERE Email = @Email";
-                    sqlCommand.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
-
-                    SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
-                    GebruikerV2 gebruikerDb = new GebruikerV2();
-                    while (reader.Read())
+                    await sqlConnection.OpenAsync();
+                    using (SqlCommand sqlCommand = new SqlCommand())
                     {
-                        gebruikerDb.Email = reader["Email"].ToString();
-                        gebruikerDb.GebruikerId = Guid.Parse(reader["GebruikersId"].ToString());
-                        gebruikerDb.Name = reader["GebruikersNaam"].ToString();
+                        sqlCommand.Connection = sqlConnection;
+                        sqlCommand.CommandText = "SELECT * FROM Gebruikers WHERE Email = @Email";
+                        sqlCommand.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
 
-                    }
-
-                    if (gebruikerDb.Email != null)
-                    {
-                        gebruikerLogin.GebruikerId = gebruikerDb.GebruikerId;
-                        gebruikerLogin.Name = gebruikerDb.Name;
-
-                        return new OkObjectResult(gebruikerLogin);
-                    }
-
-                    else
-                    {
-                        //gebruiker bestond nog niet
-                        gebruikerLogin.GebruikerId = Guid.NewGuid();
-                        using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionString))
+                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                        GebruikerV2 gebruikerDb = new GebruikerV2();
+                        while (reader.Read())
                         {
-                            await sqlConnectionInsert.OpenAsync();
-                            using (SqlCommand sqlCommandInsert = new SqlCommand())
-                            {
-                                sqlCommandInsert.Connection = sqlConnectionInsert;
-                                sqlCommandInsert.CommandText = "INSERT INTO Gebruikers VALUES (@GebruikerId, @GebruikersNaam, @Email)";
-                                sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", gebruikerLogin.GebruikerId);
-                                sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.Name);
-                                sqlCommandInsert.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
+                            gebruikerDb.Email = reader["Email"].ToString();
+                            gebruikerDb.GebruikerId = Guid.Parse(reader["GebruikersId"].ToString());
+                            gebruikerDb.Name = reader["GebruikersNaam"].ToString();
 
-                                await sqlCommandInsert.ExecuteNonQueryAsync();
-                                // return gemaakte gebruiker
-                                return new OkObjectResult(gebruikerLogin);
-                            }
-                            
                         }
 
+                        if (gebruikerDb.Email != null)
+                        {
+                            gebruikerLogin.GebruikerId = gebruikerDb.GebruikerId;
+                            gebruikerLogin.Name = gebruikerDb.Name;
+
+                            return new OkObjectResult(gebruikerLogin);
+                        }
+
+                        else
+                        {
+                            //gebruiker bestond nog niet
+                            gebruikerLogin.GebruikerId = Guid.NewGuid();
+                            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionString))
+                            {
+                                await sqlConnectionInsert.OpenAsync();
+                                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                                {
+                                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                                    sqlCommandInsert.CommandText = "INSERT INTO Gebruikers VALUES (@GebruikerId, @GebruikersNaam, @Email)";
+                                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", gebruikerLogin.GebruikerId);
+                                    sqlCommandInsert.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.Name);
+                                    sqlCommandInsert.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
+
+                                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                                    // return gemaakte gebruiker
+                                    return new OkObjectResult(gebruikerLogin);
+                                }
+
+                            }
+
+                        }
                     }
                 }
+
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+
+            
 
 
 
@@ -414,73 +425,84 @@ namespace TeamProjectFunction
             //mogelijke returns:
             //als ronde gemaakt is wordt het model ronde met alle params terug gestuurd
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
-
-            // genereer nieuwe invite code
-            ronde.RondeId = Guid.NewGuid();
-            ronde.EindDatum = DateTime.ParseExact("9999-12-31 11:59:59", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            ronde.StartDatum = DateTime.Now;
-            string inviteCode = RandomCharGen.RandomString(8);
-            bool inviteIsValid = false;
-
-            string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
-            // check if invitecode doesn't already exist in db
-            while (inviteIsValid is false)
+            try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
+
+                // genereer nieuwe invite code
+                ronde.RondeId = Guid.NewGuid();
+                ronde.EindDatum = DateTime.ParseExact("9999-12-31 11:59:59", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                ronde.StartDatum = DateTime.Now;
+                string inviteCode = RandomCharGen.RandomString(8);
+                bool inviteIsValid = false;
+
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                // check if invitecode doesn't already exist in db
+                while (inviteIsValid is false)
                 {
-                    await sqlConnection.OpenAsync();
-                    using (SqlCommand sqlCommand = new SqlCommand())
+                    using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                     {
-                        sqlCommand.Connection = sqlConnection;
-                        sqlCommand.CommandText = "SELECT * FROM Rondes WHERE InviteCode = @InviteCode";
-                        sqlCommand.Parameters.AddWithValue("@InviteCode", inviteCode);
-
-                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
-                        Ronde rondeDb = new Ronde();
-                        while (reader.Read())
+                        await sqlConnection.OpenAsync();
+                        using (SqlCommand sqlCommand = new SqlCommand())
                         {
-                            rondeDb.InviteCode = reader["InviteCode"].ToString();
+                            sqlCommand.Connection = sqlConnection;
+                            sqlCommand.CommandText = "SELECT * FROM Rondes WHERE InviteCode = @InviteCode";
+                            sqlCommand.Parameters.AddWithValue("@InviteCode", inviteCode);
+
+                            SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                            Ronde rondeDb = new Ronde();
+                            while (reader.Read())
+                            {
+                                rondeDb.InviteCode = reader["InviteCode"].ToString();
+
+                            }
+
+                            if (rondeDb.InviteCode == null)
+                            {
+                                ronde.InviteCode = inviteCode;
+                                inviteIsValid = true;
+                            }
 
                         }
+                    }
+                }
 
-                        if (rondeDb.InviteCode == null)
-                        {
-                            ronde.InviteCode = inviteCode;
-                            inviteIsValid = true;
-                        }
+
+
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                {
+                    await sqlConnectionInsert.OpenAsync();
+                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    {
+                        sqlCommandInsert.Connection = sqlConnectionInsert;
+                        sqlCommandInsert.CommandText = "INSERT INTO Rondes VALUES(@RondeId, @Naam, @Admin , @InviteCode, @StartDatum, @EindDatum)";
+                        sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                        sqlCommandInsert.Parameters.AddWithValue("@Naam", ronde.Naam);
+                        sqlCommandInsert.Parameters.AddWithValue("@Admin", ronde.Admin);
+                        sqlCommandInsert.Parameters.AddWithValue("@InviteCode", ronde.InviteCode);
+                        sqlCommandInsert.Parameters.AddWithValue("@StartDatum", ronde.StartDatum);
+                        sqlCommandInsert.Parameters.AddWithValue("@EindDatum", ronde.EindDatum);
+
+
+
+                        await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                        return new OkObjectResult(ronde);
 
                     }
                 }
+
             }
-
-
-
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            catch (Exception ex)
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
-                {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "INSERT INTO Rondes VALUES(@RondeId, @Naam, @Admin , @InviteCode, @StartDatum, @EindDatum)";
-                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@Naam", ronde.Naam);
-                    sqlCommandInsert.Parameters.AddWithValue("@Admin", ronde.Admin);
-                    sqlCommandInsert.Parameters.AddWithValue("@InviteCode", ronde.InviteCode);
-                    sqlCommandInsert.Parameters.AddWithValue("@StartDatum", ronde.StartDatum);
-                    sqlCommandInsert.Parameters.AddWithValue("@EindDatum", ronde.EindDatum);
 
-
-
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
-
-                    return new OkObjectResult(ronde);
-
-                }
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
             }
+
+            
 
 
 
@@ -506,32 +528,43 @@ namespace TeamProjectFunction
             //mogelijke returns:
             //als ronde gemaakt is wordt het model ronde met alle params terug gestuurd
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
-
-
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            try
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
+
+
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                 {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "UPDATE Rondes SET Naam = @Naam,StartDatum = @StartDatum,EindDatum = @EindDatum WHERE RondeId = @RondeId";
-                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@Naam", ronde.Naam);
-                    sqlCommandInsert.Parameters.AddWithValue("@StartDatum", ronde.StartDatum);
-                    sqlCommandInsert.Parameters.AddWithValue("@EindDatum", ronde.EindDatum);
+                    await sqlConnectionInsert.OpenAsync();
+                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    {
+                        sqlCommandInsert.Connection = sqlConnectionInsert;
+                        sqlCommandInsert.CommandText = "UPDATE Rondes SET Naam = @Naam,StartDatum = @StartDatum,EindDatum = @EindDatum WHERE RondeId = @RondeId";
+                        sqlCommandInsert.Parameters.AddWithValue("@RondeId", ronde.RondeId);
+                        sqlCommandInsert.Parameters.AddWithValue("@Naam", ronde.Naam);
+                        sqlCommandInsert.Parameters.AddWithValue("@StartDatum", ronde.StartDatum);
+                        sqlCommandInsert.Parameters.AddWithValue("@EindDatum", ronde.EindDatum);
 
 
 
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                        await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                    return new OkObjectResult(ronde);
+                        return new OkObjectResult(ronde);
 
+                    }
                 }
+
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+
+            
 
 
 
@@ -545,7 +578,7 @@ namespace TeamProjectFunction
         {
 
             //{
-            //    "invitecode": "4cc9e0df-1ded-4dc6-8000-b4d27fd3027a",
+            //    "invitecode": "azertyui",
             //    "gebruikerId": "986c5f65-cafc-43ce-8fa5-bf4f97921e92"
             //}
 
@@ -553,71 +586,82 @@ namespace TeamProjectFunction
             //mogelijke returns:
             //als ronde gemaakt is wordt het model deelnemer met alle params terug gestuurd
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
-            deelnemer.DeelnemerId = Guid.NewGuid();
-            Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
-
-            //controleren als invitecode bestaat
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnection = new SqlConnection(connectionStringInsert))
+            try
             {
-                await sqlConnection.OpenAsync();
-                using (SqlCommand sqlCommand = new SqlCommand())
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
+                deelnemer.DeelnemerId = Guid.NewGuid();
+                Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
+
+                //controleren als invitecode bestaat
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnection = new SqlConnection(connectionStringInsert))
                 {
-                    sqlCommand.Connection = sqlConnection;
-                    sqlCommand.CommandText = "SELECT * FROM Rondes WHERE InviteCode = @InviteCode";
-                    sqlCommand.Parameters.AddWithValue("@InviteCode", ronde.InviteCode);
-
-                    SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
-                    Ronde rondeDb = new Ronde();
-                    while (reader.Read())
+                    await sqlConnection.OpenAsync();
+                    using (SqlCommand sqlCommand = new SqlCommand())
                     {
+                        sqlCommand.Connection = sqlConnection;
+                        sqlCommand.CommandText = "SELECT * FROM Rondes WHERE InviteCode = @InviteCode";
+                        sqlCommand.Parameters.AddWithValue("@InviteCode", ronde.InviteCode);
 
-                        rondeDb.RondeId = Guid.Parse(reader["RondeId"].ToString());
-
-                    }
-                    if (rondeDb.RondeId != null && rondeDb.RondeId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
-                    {
-                        //invitecode bestaat
-                        deelnemer.RondeId = rondeDb.RondeId;
-
-                        using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                        Ronde rondeDb = new Ronde();
+                        while (reader.Read())
                         {
-                            await sqlConnectionInsert.OpenAsync();
-                            using (SqlCommand sqlCommandInsert = new SqlCommand())
+
+                            rondeDb.RondeId = Guid.Parse(reader["RondeId"].ToString());
+
+                        }
+                        if (rondeDb.RondeId != null && rondeDb.RondeId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                        {
+                            //invitecode bestaat
+                            deelnemer.RondeId = rondeDb.RondeId;
+
+                            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                             {
-                                sqlCommandInsert.Connection = sqlConnectionInsert;
-                                sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
-                                sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
-                                sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
-                                sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+                                await sqlConnectionInsert.OpenAsync();
+                                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                                {
+                                    sqlCommandInsert.Connection = sqlConnectionInsert;
+                                    sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
+                                    sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
+                                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
 
-                                //deelnemer.RondeId = ronde.RondeId;
+                                    //deelnemer.RondeId = ronde.RondeId;
 
-                                await sqlCommandInsert.ExecuteNonQueryAsync();
+                                    await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                                return new OkObjectResult(deelnemer);
+                                    return new OkObjectResult(deelnemer);
 
+                                }
                             }
+
+
+                        }
+
+                        else
+                        {
+                            CustomResponse customResponse = new CustomResponse();
+                            customResponse.Succes = false;
+                            customResponse.Message = "Invitecode betsaat niet";
+                            return new OkObjectResult(customResponse);
                         }
 
 
+
                     }
-
-                    else
-                    {
-                        CustomResponse customResponse = new CustomResponse();
-                        customResponse.Succes = false;
-                        customResponse.Message = "Invitecode betsaat niet";
-                        return new OkObjectResult(customResponse);
-                    }
-
-
-
                 }
+
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+
+            
 
 
 
@@ -630,8 +674,18 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
           ILogger log, Guid DeelnemerId)
         {
-            CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
-            return new OkObjectResult(customResponse);
+            try
+            {
+                CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
+                return new OkObjectResult(customResponse);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+            
 
         }
 
@@ -655,34 +709,45 @@ namespace TeamProjectFunction
             //mogelijke returns:
             //als etappe gemaakt is wordt het model etappe met alle params terug gestuurd
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
-            etappe.EtappeId = Guid.NewGuid();
-            
-
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            try
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+                etappe.EtappeId = Guid.NewGuid();
+
+
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                 {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand)";
-                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
-                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
-                    sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
+                    await sqlConnectionInsert.OpenAsync();
+                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    {
+                        sqlCommandInsert.Connection = sqlConnectionInsert;
+                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand)";
+                        sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                        sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
+                        sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);
+                        sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+                        sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
 
 
 
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                        await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                    return new OkObjectResult(etappe);
+                        return new OkObjectResult(etappe);
 
+                    }
                 }
+
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+
+            
 
 
 
@@ -709,32 +774,42 @@ namespace TeamProjectFunction
             //mogelijke returns:
             //als etappe aangepast is wordt het model etappe met alle params terug gestuurd
 
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
-
-
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            try
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+
+
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                 {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "UPDATE Etappes SET Laps = @Laps, StartTijd = @StartTijd, LapAfstand = @LapAfstand WHERE EtappeId = @EtappeId";
-                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
-                    sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
-                    sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+                    await sqlConnectionInsert.OpenAsync();
+                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    {
+                        sqlCommandInsert.Connection = sqlConnectionInsert;
+                        sqlCommandInsert.CommandText = "UPDATE Etappes SET Laps = @Laps, StartTijd = @StartTijd, LapAfstand = @LapAfstand WHERE EtappeId = @EtappeId";
+                        sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
+                        sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
+                        sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
+                        sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
 
 
 
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                        await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                    return new OkObjectResult(etappe);
+                        return new OkObjectResult(etappe);
 
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+
+            
 
 
 
@@ -759,35 +834,44 @@ namespace TeamProjectFunction
 
             //mogelijke returns:
             //als laptijd gemaakt is wordt het model laptijd met alle params terug gestuurd
-
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
-            lapTijd.LapTijdId = Guid.NewGuid();
-
-
-            string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+            try
             {
-                await sqlConnectionInsert.OpenAsync();
-                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
+                lapTijd.LapTijdId = Guid.NewGuid();
+
+
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                 {
-                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                    sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
-                    sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
-                    sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
-                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
-                    sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
-                    sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
+                    await sqlConnectionInsert.OpenAsync();
+                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    {
+                        sqlCommandInsert.Connection = sqlConnectionInsert;
+                        sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
+                        sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                        sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
+                        sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
+                        sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
+                        sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
 
 
 
-                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                        await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                    return new OkObjectResult(lapTijd);
+                        return new OkObjectResult(lapTijd);
 
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+
+            
         }
 
         [FunctionName("DelLapTijd")]
@@ -795,9 +879,19 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/{LaptijdId}")] HttpRequest req,
           ILogger log, Guid LaptijdId)
         {
-            CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(LaptijdId);
+            try
+            {
+                CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(LaptijdId);
 
-            return new OkObjectResult(customResponse);
+                return new OkObjectResult(customResponse);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+            
         }
 
 
@@ -806,9 +900,19 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
-            CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
+            try
+            {
+                CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
 
-            return new OkObjectResult(customResponse);
+                return new OkObjectResult(customResponse);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+            
         }
 
 
@@ -817,8 +921,18 @@ namespace TeamProjectFunction
          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/{RondeId}")] HttpRequest req,
          ILogger log, Guid RondeId)
         {
-            CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
-            return new OkObjectResult(customResponse);
+            try
+            {
+                CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
+                return new OkObjectResult(customResponse);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult(); ;
+            }
+            
         }
 
         [FunctionName("GetRondesUser")]
@@ -945,7 +1059,7 @@ namespace TeamProjectFunction
             {
 
                 Console.WriteLine($"Error: {ex}");
-                return new OkObjectResult(ex);
+                return new BadRequestResult();
             }
 
         }
@@ -985,7 +1099,7 @@ namespace TeamProjectFunction
             {
 
                 Console.WriteLine($"Error: {ex}");
-                return new OkObjectResult(ex);
+                return new BadRequestResult();
             }
 
         }
@@ -1030,7 +1144,7 @@ namespace TeamProjectFunction
             {
 
                 Console.WriteLine($"Error: {ex}");
-                return new OkObjectResult(ex);
+                return new BadRequestResult();
             }
 
         }
