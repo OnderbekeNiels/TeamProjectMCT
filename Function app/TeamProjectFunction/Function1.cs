@@ -11,6 +11,10 @@ using TeamProjectFunction.Models;
 using System.Data.SqlClient;
 using System.Data;
 using TeamProjectFunction.Repository;
+using TeamProjectFunction.Models.GebruikerRelated;
+using TeamProjectFunction.Models.Klassement;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TeamProjectFunction
 {
@@ -417,6 +421,7 @@ namespace TeamProjectFunction
             // genereer nieuwe invite code
             ronde.RondeId = Guid.NewGuid();
             ronde.EindDatum = DateTime.ParseExact("9999-12-31 11:59:59", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            ronde.StartDatum = DateTime.Now;
             string inviteCode = RandomCharGen.RandomString(8);
             bool inviteIsValid = false;
 
@@ -783,10 +788,6 @@ namespace TeamProjectFunction
 
                 }
             }
-
-
-
-
         }
 
         [FunctionName("DelLapTijd")]
@@ -794,15 +795,9 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "laptijden/{LaptijdId}")] HttpRequest req,
           ILogger log, Guid LaptijdId)
         {
-
-
             CustomResponse customResponse = await DeleteFunctions.DelLapTijdFunction(LaptijdId);
 
             return new OkObjectResult(customResponse);
-
-
-
-
         }
 
 
@@ -811,12 +806,12 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
-
-
-
-<<<<<<< HEAD
             CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
-=======
+
+            return new OkObjectResult(customResponse);
+        }
+
+
         [FunctionName("DelRonde")]
         public static async Task<IActionResult> DelRonde(
          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/{RondeId}")] HttpRequest req,
@@ -825,23 +820,181 @@ namespace TeamProjectFunction
             CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
             return new OkObjectResult(customResponse);
         }
->>>>>>> develop
 
-            return new OkObjectResult(customResponse);
+        [FunctionName("GetRondesUser")]
+        public static async Task<IActionResult> GetRondesUser(
+       [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "gebruikers/ronde/{UserId}")] HttpRequest req, Guid UserId, ILogger log)
+        {
+            try
+            {
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                List<RondesGebruiker> rondes = new List<RondesGebruiker>();
+                
+                using (SqlConnection connection = new SqlConnection(connectionStringInsert))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select g.GebruikersId, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum order by r.StartDatum desc";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", UserId);
+                        SqlDataReader reader = command.ExecuteReader();
 
+                        while (reader.Read())
+                        {
+                            RondesGebruiker data = new RondesGebruiker();
+                            data.GebruikersId = Guid.Parse(reader["GebruikersId"].ToString());
+                            data.StartDatum = DateTime.Parse(reader["StartDatum"].ToString());
+                            data.RondeNaam = reader["RondeNaam"].ToString();
+                            data.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
 
+                            //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
 
+                            List<KlassementRonde> rondesKlassement = await GetRondeKlassementAsync(data.RondeId, connectionStringInsert);
+                            KlassementRonde obj = rondesKlassement.Where(obj => obj.GebruikersId == data.GebruikersId).FirstOrDefault();
+
+                            if(obj != null)
+                            {
+                                data.TotaalTijd = obj.TotaalTijd;
+                                data.Plaats = obj.Plaats;
+                            }
+
+                            rondes.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(rondes);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
 
         }
 
 
-        [FunctionName("DelRonde")]
-        public static async Task<IActionResult> DelRonde(
-         [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "rondes/del/{RondeId}")] HttpRequest req,
-         ILogger log, Guid RondeId)
+        private static async Task<List<KlassementRonde>> GetRondeKlassementAsync(Guid RondeId, string connString)
         {
-<<<<<<< HEAD
-=======
+            List<KlassementRonde> rondesKlassement = new List<KlassementRonde>();
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam as 'RondeNaam', Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where e.RondeId = @rondeId group by l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam order by Sum(l.TijdLap);";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@rondeId", RondeId);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        KlassementRonde data = new KlassementRonde();
+                        data.Plaats = int.Parse(reader["Plaats"].ToString());
+                        data.GebruikersId = Guid.Parse(reader["GebruikerId"].ToString());
+                        data.GebruikersNaam = reader["GebruikersNaam"].ToString();
+                        data.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                        data.RondeNaam = reader["RondeNaam"].ToString();
+                        data.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
+                        rondesKlassement.Add(data);
+                    }
+                }
+            }
+            return rondesKlassement;
+        }
+
+        [FunctionName("GetEtappesRonde")]
+        public static async Task<IActionResult> GetEtappesRonde(
+        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "gebruikers/ronde/{UserId}/{RondeId}")] HttpRequest req, Guid UserId, Guid RondeId, ILogger log)
+        {
+            try
+            {
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                List<EtappesRonde> tijden = new List<EtappesRonde>();
+
+                using (SqlConnection connection = new SqlConnection(connectionStringInsert))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select r.Naam as 'RondeNaam', r.RondeId, g.GebruikersNaam, l.GebruikerId,  l.EtappeId, e.StartTijd, Sum(l.TijdLap) as 'TotalTime' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on l.EtappeId = e.EtappeId right join Rondes as r on e.RondeId = r.RondeId where l.GebruikerId = @userId and r.RondeId = @rondeId group by  l.GebruikerId, g.GebruikersNaam, e.StartTijd, l.EtappeId, r.RondeId, r.Naam; ";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", UserId);
+                        command.Parameters.AddWithValue("rondeId", RondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            EtappesRonde data = new EtappesRonde();
+                            data.RondeNaam = reader["RondeNaam"].ToString();
+                            data.EtappeTijd = int.Parse(reader["TotalTime"].ToString());
+                            data.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            data.StartTijd = DateTime.Parse(reader["StartTijd"].ToString());
+                            tijden.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(tijden);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new OkObjectResult(ex);
+            }
+
+        }
+
+        [FunctionName("GetTotaalTijdRonde")]
+        public static async Task<IActionResult> GetTotaalTijdRonde(
+        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "gebruikers/ronde/{UserId}/{RondeId}/Totaaltijd")] HttpRequest req, Guid UserId, Guid RondeId, ILogger log)
+        {
+            try
+            {
+                TotaalTijdRonde tijd = new TotaalTijdRonde();
+                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+
+                using (SqlConnection connection = new SqlConnection(connectionStringInsert))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where g.GebruikersId = @userId and e.RondeId = @rondeId  group by  g.GebruikersId, g.GebruikersNaam, e.RondeId, r.Naam order by Sum(l.TijdLap)";
+                        ;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", UserId);
+                        command.Parameters.AddWithValue("rondeId", RondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            tijd.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
+
+                        }
+                    }
+                }
+                return new OkObjectResult(tijd);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new OkObjectResult(ex);
+            }
+
+        }
+
+        //Tijden van snelts naar traag van een bepaalde ronde
+        [FunctionName("GetKlassementRonde")]
+        public static async Task<IActionResult> GetKlassementRonde(
+        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "ronde/klassement/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
+        {
             try
             {
                 string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
@@ -875,11 +1028,12 @@ namespace TeamProjectFunction
             }
             catch (Exception ex)
             {
->>>>>>> develop
 
-            CustomResponse customResponse = await DeleteFunctions.DelRondeFunction(RondeId);
-            return new OkObjectResult(customResponse);
+                Console.WriteLine($"Error: {ex}");
+                return new OkObjectResult(ex);
+            }
 
         }
     }
 }
+
