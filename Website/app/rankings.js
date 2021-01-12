@@ -30,14 +30,20 @@ const showTable = function (data) {
 </tr>`;
   for (const item of data) {
     //filter op gereden rondes
-    if(item.plaats != 0 && item.aantalEtappes !=0){
+  //   if(item.plaats != 0 && item.aantalEtappes !=0){
+  //   htmlString += `<tr>
+  //   <td class="c-ranking-table__item">${datetimeToDateNotation(item.startDatum)}</td>
+  //   <td class="c-ranking-table__item">${item.rondeNaam} (${item.aantalEtappes} etappes)</td>
+  //   <td class="c-ranking-table__item">${secToTimeNotation(item.totaalTijd)}</td>
+  //   <td class="c-ranking-table__item">#${item.plaats}</td>
+  // </tr>`;
+  //   }
     htmlString += `<tr>
     <td class="c-ranking-table__item">${datetimeToDateNotation(item.startDatum)}</td>
     <td class="c-ranking-table__item">${item.rondeNaam} (${item.aantalEtappes} etappes)</td>
     <td class="c-ranking-table__item">${secToTimeNotation(item.totaalTijd)}</td>
     <td class="c-ranking-table__item">#${item.plaats}</td>
   </tr>`;
-    }
   }
   table.innerHTML = htmlString;
 };
