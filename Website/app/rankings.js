@@ -23,6 +23,7 @@ const datetimeToDateNotation = function (date) {
 
 const showTable = function (data) {
   console.table(data);
+  data.sort((a, b) => (a.startDatum < b.startDatum) ? 1 : -1)
   const table = document.querySelector(".js-rounds-table");
   let htmlString = `<div class="c-ranking-table__header">
   <p class="c-ranking-table__header-item">
@@ -62,7 +63,7 @@ const showTable = function (data) {
 };
 
 const getRounds = async function () {
-  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruikers/ronde/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
