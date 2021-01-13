@@ -81,3 +81,4 @@ C:\DP\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\View
 C:\DP\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\CreateRondePage.xaml.g.cs
 C:\DP\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\RondeOverzichtPage.xaml.g.cs
 D:\project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\EtappePaginas\EtappeOverzichtPage.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPage.xaml.g.cs
