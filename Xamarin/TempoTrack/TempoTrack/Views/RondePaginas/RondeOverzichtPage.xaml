@@ -35,7 +35,7 @@
 
                                     <Label Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding StartDate}' TextColor="#707070" FontSize="16"/>
                                     <Label Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="0" Text='{Binding RondeNaam}' TextColor="#707070" FontSize="16"/>
-                                    <Label Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,16,0" Text='{Binding Plaats}' TextColor="#015D99" FontSize="16"/>
+                                    <Label Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,16,0" Text='{Binding Ranking}' TextColor="#015D99" FontSize="16"/>
 
                                 </Grid>
                             </Frame>
