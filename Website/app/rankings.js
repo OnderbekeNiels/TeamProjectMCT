@@ -9,6 +9,12 @@ const secToTimeNotation = function (seconds) {
   return time;
 };
 
+const secToRankingTimeNotation = function (seconds) {
+  let time = new Date(seconds * 1000).toISOString();
+  console.log(time);
+  return `${time.getHours()}-${time.getMinutes()}'${time.getSeconds()}`;
+};
+
 const datetimeToDateNotation = function (date) {
   date = new Date(date);
   let day = date.getDate(),
@@ -29,7 +35,7 @@ const datetimeToDateNotation = function (date) {
 
 const showRounds = function (data) {
   console.table(data);
-  data.sort((a, b) => (a.startDatum < b.startDatum) ? 1 : -1)
+  data.sort((a, b) => (a.startDatum < b.startDatum ? 1 : -1));
   const table = document.querySelector(".js-rounds-table");
   let htmlString = `<div class="c-ranking-table__header">
   <p class="c-ranking-table__header-item">
@@ -47,7 +53,9 @@ const showRounds = function (data) {
 </div>`;
   for (const item of data) {
     htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${item.rondeId}'>
+        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${
+          item.rondeId
+        }'>
       <p class="c-ranking-table__row-item">
       ${datetimeToDateNotation(item.startDatum)}
       </p>
@@ -68,9 +76,41 @@ const showRounds = function (data) {
   table.innerHTML = htmlString;
 };
 
+const showRoundsRanking = function (data) {
+  console.table(data);
+  const table = document.querySelector(".js-rounds-ranking-table");
+  let htmlString = ` <div class="c-ranking-table__header">
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3">Positie</p>
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3 u-text-align--left">
+    Deelnemer
+  </p>
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3">Totale tijd</p>
+</div>`;
+  let fastestTime = data[0].totaalTijd;
+  for (const item of data) {
+    htmlString += `
+    <div class="c-ranking-table__row js-rounds-ranking-row">
+    <p
+      class="c-ranking-table__row-item u-flex-basis-1-of-3 c-ranking-table__row-item--position u-color-alpha"
+    >
+      ${item.plaats}
+    </p>
+    <p class="c-ranking-table__row-item u-flex-basis-1-of-3 u-text-align--left ">${
+      item.gebruikersNaam
+    }</p>
+    <div class="c-ranking-table__row-item c-ranking-table__row-item--total-time  u-flex-basis-1-of-3"><p class="c-ranking-table__row-item--main">${secToTimeNotation(
+      item.totaalTijd
+    )}</p><p class="c-ranking-table__row-item--sub">+${secToRankingTimeNotation(
+      item.totaalTijd - fastestTime
+    )}</p></div>
+  </div>`;
+  }
+  table.innerHTML = htmlString;
+};
+
 const showEtappes = function (data) {
   console.table(data);
-  data.sort((a, b) => (a.startTijd < b.startTijd) ? 1 : -1)
+  data.sort((a, b) => (a.startTijd < b.startTijd ? 1 : -1));
   const table = document.querySelector(".js-etappes-table");
   let htmlString = `<div class="c-ranking-table__header">
   <p class="c-ranking-table__header-item">
@@ -89,7 +129,9 @@ const showEtappes = function (data) {
   let Etappe = data.length;
   for (const item of data) {
     htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${item.rondeId}'>
+        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${
+          item.rondeId
+        }'>
       <p class="c-ranking-table__row-item">
       ${datetimeToDateNotation(item.startTijd)}
       </p>
@@ -119,11 +161,11 @@ const listenToToggle = function () {
     input.addEventListener("change", function () {
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
-        getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
+        //getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
-        //getTable();
+        getRoundsRanking("5f4266b2-d77e-46e9-95fe-0b76779b737e");
       }
     });
   }
@@ -158,10 +200,10 @@ const getEtappes = async function (rondeId) {
 const getRoundsRanking = async function () {
   let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
-    const response = await fetch(endpoint);
+    const response = await fetch("rondeKlassement.json");
     const data = await response.json();
     console.log(data);
-    showRounds(data);
+    showRoundsRanking(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
@@ -193,13 +235,12 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
   // userId = sessionStorage.getItem("gebruikerId");
-  if(document.querySelector('.roundsoverview')){
+  if (document.querySelector(".roundsoverview")) {
     getRounds();
   }
-  if(document.querySelector('.etappesoverview')){
+  if (document.querySelector(".etappesoverview")) {
     listenToToggle();
     //getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
     //getRoundsRanking();
   }
-  
 });

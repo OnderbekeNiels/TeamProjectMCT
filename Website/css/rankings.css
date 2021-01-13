@@ -622,9 +622,23 @@ input:disabled {
 }
 
 .c-ranking-table__row-item--sub {
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-bottom: 0;
   color: var(--global-color-neutral);
+}
+
+.c-ranking-table__row-item--total-time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-ranking-table__row-item--main {
+  margin-bottom: 0;
+}
+
+.c-ranking-table__row-item--main + .c-ranking-table__row-item--sub {
+  margin-left: var(--global-whitespace-sm);
 }
 
 @media (min-width: 27rem) {
@@ -816,6 +830,14 @@ input:disabled {
 
 .u-text-sm {
   font-size: 14px;
+}
+
+/*
+    Utilities: flexbasis
+*/
+
+.u-flex-basis-1-of-3 {
+  flex-basis: calc(100% / 3);
 }
 
 /*
