@@ -38,7 +38,7 @@ namespace TempoTrack.Views.RondePaginas
                 LoadKlassementAsync(item, lvw);
             }
 
-            lvw.ItemsSource = rondesGebruiker;
+            //lvw.ItemsSource = rondesGebruiker;
         }
 
         //Het klassement ophalen van de rondes waarin de gebruiker meedeed.
@@ -65,7 +65,7 @@ namespace TempoTrack.Views.RondePaginas
                 Debug.WriteLine(item.ToString());
             }
 
-            //lvw.ItemsSource = output;
+            lvw.ItemsSource = output;
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
