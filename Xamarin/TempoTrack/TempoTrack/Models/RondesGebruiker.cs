@@ -22,19 +22,22 @@ namespace TempoTrack.Models
         public string RondeNaam { get; set; }
         public Guid RondeId { get; set; }
 
-        public int Ranking { get; set; }
+        public int Plaats { get; set; }
 
-        public string Plaats
+        public string Ranking
         {
             get
             {
-                return $"#{Ranking}";
+                return $"#{Plaats}";
             }
         }
 
         public Guid GebruikersId { get; set; }
 
         public int TotaalTijd { get; set; }
+        public Guid Admin { get; set; }
+        public int AantalEtappes { get; set; }
+        public int AantalDeelnemers { get; set; }
 
         public override string ToString()
         {
