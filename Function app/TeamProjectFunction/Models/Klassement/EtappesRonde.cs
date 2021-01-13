@@ -15,5 +15,6 @@ namespace TeamProjectFunction.Models
         public int TotaalTijd { get; set; }
         public int SnelsteTijd { get; set; }
         public int Plaats { get; set; }
+        public Guid Admin { get; set; }
     }
 }
