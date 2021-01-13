@@ -12,6 +12,5 @@ namespace TeamProjectFunction.Models.Klassement
         public Guid RondeId { get; set; }
         public string RondeNaam { get; set; }
         public int TotaalTijd { get; set; }
-        public Guid Admin { get; set; }
     }
 }

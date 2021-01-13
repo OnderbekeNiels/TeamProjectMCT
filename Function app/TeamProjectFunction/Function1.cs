@@ -512,23 +512,6 @@ namespace TeamProjectFunction
 
                         await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                        // add admin to deelnemer van de ronde
-                        Deelnemer deelnemer = new Deelnemer();
-                        deelnemer.RondeId = ronde.RondeId;
-                        deelnemer.GebruikerId = ronde.Admin;
-                        deelnemer.DeelnemerId = Guid.NewGuid();
-
-                        sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2)";
-                        sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
-                        sqlCommandInsert.Parameters.AddWithValue("@RondeId_2", deelnemer.RondeId);
-                        sqlCommandInsert.Parameters.AddWithValue("@GebruikerId_2", deelnemer.GebruikerId);
-
-                        //deelnemer.RondeId = ronde.RondeId;
-
-                        await sqlCommandInsert.ExecuteNonQueryAsync();
-
-
                         return new OkObjectResult(ronde);
 
                     }
@@ -990,7 +973,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
@@ -1003,7 +986,6 @@ namespace TeamProjectFunction
                             data.RondeNaam = reader["RondeNaam"].ToString();
                             data.RondeId = Guid.Parse(reader["RondeId"].ToString());
                             data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
-                            data.Admin = Guid.Parse(reader["Admin"].ToString());
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
 
