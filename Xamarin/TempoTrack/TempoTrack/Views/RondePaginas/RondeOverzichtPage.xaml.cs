@@ -35,38 +35,10 @@ namespace TempoTrack.Views.RondePaginas
             foreach (RondesGebruiker item in rondesGebruiker)
             {
                 Debug.WriteLine(item.ToString());
-                //LoadKlassementAsync(item, lvw);
             }
 
             lvw.ItemsSource = rondesGebruiker;
         }
-
-        //Het klassement ophalen van de rondes waarin de gebruiker meedeed.
-        //private static async Task LoadKlassementAsync(RondesGebruiker ronde, Xamarin.Forms.ListView lvw)
-        //{
-        //    List<RondeKlassement> klassementen = await RondeRepository.GetRondeKlassement(ronde.RondeId);
-
-        //    List<RondesGebruiker> output = new List<RondesGebruiker>();
-
-        //    foreach (RondeKlassement item in klassementen)
-        //    {
-        //        Debug.WriteLine(item.ToString());
-        //        if (item.GebruikersId == GebruikersInfo.GebruikerId)
-        //        {
-        //            ronde.Plaats = item.Plaats;
-        //            ronde.GebruikersId = item.GebruikersId;
-        //            ronde.TotaalTijd = item.TotaalTijd;
-        //            output.Add(ronde);
-        //        }
-        //    }
-
-        //    foreach (RondesGebruiker item in output)
-        //    {
-        //        Debug.WriteLine(item.ToString());
-        //    }
-
-        //    lvw.ItemsSource = output;
-        //}
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

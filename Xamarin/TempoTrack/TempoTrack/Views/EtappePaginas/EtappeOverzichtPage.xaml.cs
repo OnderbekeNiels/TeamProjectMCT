@@ -43,7 +43,7 @@ namespace TempoTrack.Views.EtappePaginas
             }
 
             lvw.ItemsSource = etappes;
-            lblRondePlaats.Text = RondeInfo.Plaats;
+            lblRondePlaats.Text = RondeInfo.Ranking;
             lblRondeTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
         }
 
