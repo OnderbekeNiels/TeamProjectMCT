@@ -364,24 +364,24 @@ namespace TeamProjectFunction
                             //gebruiker bestaat al
 
                             //checken als username aangepast is
-                            //if (gebruikerLogin.Name != null && gebruikerLogin.Name != gebruikerDb.Name)
-                            //{
-                            //    //gebruikersname moet geupdate worden
-                            //    using (SqlConnection sqlConnectionUpdate = new SqlConnection(connectionString))
-                            //    {
-                            //        await sqlConnectionUpdate.OpenAsync();
-                            //        using (SqlCommand sqlCommandUpdate = new SqlCommand())
-                            //        {
-                            //            sqlCommandUpdate.Connection = sqlConnection;
-                            //            sqlCommandUpdate.CommandText = "UPDATE Gebruikers SET GebruikersNaam = @GebruikersNaam  WHERE Email = @Email";
-                            //            sqlCommandUpdate.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.Name);
-                            //            sqlCommandUpdate.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
-                            //            await sqlCommandUpdate.ExecuteNonQueryAsync();
+                            if (gebruikerLogin.Name != null && gebruikerLogin.Name != gebruikerDb.Name)
+                            {
+                                //gebruikersname moet geupdate worden
+                                using (SqlConnection sqlConnectionUpdate = new SqlConnection(connectionString))
+                                {
+                                    await sqlConnectionUpdate.OpenAsync();
+                                    using (SqlCommand sqlCommandUpdate = new SqlCommand())
+                                    {
+                                        sqlCommandUpdate.Connection = sqlConnection;
+                                        sqlCommandUpdate.CommandText = "UPDATE Gebruikers SET GebruikersNaam = @GebruikersNaam  WHERE Email = @Email";
+                                        sqlCommandUpdate.Parameters.AddWithValue("@GebruikersNaam", gebruikerLogin.Name);
+                                        sqlCommandUpdate.Parameters.AddWithValue("@Email", gebruikerLogin.Email);
+                                        await sqlCommandUpdate.ExecuteNonQueryAsync();
 
-                            //            gebruikerDb.Name = gebruikerLogin.Name;
-                            //        }
-                            //    }
-                            //}
+                                        gebruikerDb.Name = gebruikerLogin.Name;
+                                    }
+                                }
+                            }
 
 
                             gebruikerLogin.GebruikerId = gebruikerDb.GebruikerId;
