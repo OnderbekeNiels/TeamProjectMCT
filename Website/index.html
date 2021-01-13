@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/rankings.css" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <script src="./app/rankings.js"></script>
+    <script src="./app/index.js"></script>
     <meta name="google-signin-client_id" content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com">
   </head>
   <body class="roundsoverview">
@@ -36,36 +36,21 @@
       </svg>  
       <h1 class="c-header__logo--title">Tempo Track</h1>
       </div>    
-      <div class="c-header__action">
-        <p class="c-header__user">Niels</p>
-        <button class="c-header__logoutBtn o-button-reset" onclick="signOut();">Afmelden</button>
-      </div>
     </header>
-    <div class="c-main-container">
-      <h1 class="c-page-title">Ronde overzicht</h1>
-    <p class="c-page-subtitle">Dit zijn de rondes waar u aan heeft deelgenomen.</p>
-    <div class="c-ranking-table js-rounds-table">
-      <div class="c-ranking-table__header">
-        <p class="c-ranking-table__header-item">
-          Startdatum
-        </p>
-        <p class="c-ranking-table__header-item u-text-align--left">
-          Ronde
-        </p>
-        <p class="c-ranking-table__header-item">
-          Totale tijd
-        </p>
-        <p class="c-ranking-table__header-item u-mr-clear">
-          Positie
-        </p>
-      </div>
-      <div class="o-data-loading">
-        <svg class="o-circular-loader"viewBox="25 25 50 50" >
-          <circle class="o-loader-path" cx="50" cy="50" r="20" fill="none" stroke="#016fb7" stroke-width="2" />
-        </svg>
-        We halen uw rondes op.
-      </div>
-    </div>
-  </div>
+    <section class="o-row o-row--lg">
+        <div class="o-container">
+            <div class="o-layout o-layout--gutter">
+                <div class="o-layout__item u-1-of-2">
+                    <h1>Tempo Tracking Wielerpiste</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, facere magni reprehenderit impedit ut nemo officiis minima? Dolorum atque, iure aut recusandae ratione nobis, nam nesciunt hic voluptas eveniet soluta.</p>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+                <div class="o-layout__item u-1-of-2">
+                    <img src="img/png/voorlopige foto.PNG" alt="foto wielerpiste">
+                </div>
+            </div>
+        </div>
+    </section>
+        
   </body>
 </html>

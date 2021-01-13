@@ -27,10 +27,10 @@ const GetUserId = async function(profile){
     console.log('Success:', data);
     userId = data["gebruikerId"];
     console.log(userId);
-    sessionStorage.setItem("gebruikerId", userId);
+    localStorage.setItem("gebruikerId", userId);
     userName = data["name"];
     console.log(userName);
-    sessionStorage.setItem("name", userName);
+    localStorage.setItem("name", userName);
     //window.location.pathname = '/roundsoverview.html'
   })
   //Then with the error genereted...
