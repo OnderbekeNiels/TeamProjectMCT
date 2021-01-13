@@ -441,7 +441,7 @@ input:disabled {
   color: var(--global-color-neutral-x-light);
   margin: 0;
   font-style: italic;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .c-header__action {
@@ -454,7 +454,17 @@ input:disabled {
   line-height: 1.5;
   font-weight: 600;
   color: var(--global-color-neutral-x-light);
-  margin: 0 var(--global-whitespace-md);
+  margin: 0 var(--global-whitespace-sm) 0 var(--global-whitespace-md);
+}
+
+@media (min-width: 26rem) {
+  .c-header__user {
+    margin: 0 var(--global-whitespace-md);
+  }
+
+  .c-header__logo--title {
+    font-size: 1.5rem;
+  }
 }
 
 .c-header__logoutBtn {
@@ -566,7 +576,7 @@ input:disabled {
   border-radius: var(--global-borderRadius);
   margin-bottom: var(--global-whitespace-md);
   box-shadow: 0 4px 3px var(--global-color-neutral);
-  padding: var(--global-whitespace-sm);
+  padding: var(--global-whitespace-xs);
 }
 
 .c-ranking-table__header-item {
@@ -574,10 +584,6 @@ input:disabled {
   text-align: center;
   color: var(--global-color-neutral-x-light);
   margin: 0 var(--global-whitespace-xs) 0 0;
-}
-
-.c-ranking-table__header-item:nth-child(4) {
-  margin-right: 0;
 }
 
 .c-ranking-table__row {
@@ -603,18 +609,16 @@ input:disabled {
 
 .c-ranking-table__row-item {
   flex-basis: calc(100% / 4);
-  text-align: left;
+  text-align: center;
   margin: 0 var(--global-whitespace-xs) 0 0;
 }
 
-.c-ranking-table__row-item--round-name {
+.c-ranking-table__row-item--item-name {
   flex-basis: 40%;
 }
 
-.c-ranking-table__row-item--last-col {
+.c-ranking-table__row-item--position {
   flex-basis: 10%;
-  margin-right: 0;
-  text-align: right;
 }
 
 .c-ranking-table__row-item--top {
@@ -631,6 +635,7 @@ input:disabled {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-basis: 55%;
 }
 
 .c-ranking-table__row-item--main {
@@ -656,13 +661,16 @@ input:disabled {
     text-align: center;
   }
 
-  .c-ranking-table__row-item--round-name {
+  .c-ranking-table__header-item {
+    margin: 0 var(--global-whitespace-sm) 0 0;
+  }
+
+  .c-ranking-table__row-item--item-name {
     flex-basis: 25%;
   }
 
-  .c-ranking-table__row-item--last-col {
+  .c-ranking-table__row-item--position {
     flex-basis: 25%;
-    margin-right: 0;
   }
 }
 
@@ -685,6 +693,17 @@ input:disabled {
   .c-ranking-container__item {
     padding: 0 var(--global-whitespace-xxxxl) var(--global-whitespace-xxxxl)
       var(--global-whitespace-xxxxl);
+  }
+}
+
+/*
+      COMPONENT: Result items
+  */
+
+/* zorgt dat uitslagen mooi uitkomen op grotere schermen */
+@media (min-width: 27rem) {
+  .c-result-item {
+    flex-basis: calc(100% / 3);
   }
 }
 
@@ -777,6 +796,10 @@ input:disabled {
 
 .u-mb-lg {
   margin-bottom: var(--global-whitespace-xl) !important;
+}
+
+.u-mr-clear {
+  margin-right: 0;
 }
 
 /*

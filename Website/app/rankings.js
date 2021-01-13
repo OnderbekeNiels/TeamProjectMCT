@@ -10,20 +10,18 @@ const secToTimeNotation = function (seconds) {
 };
 
 const secToRankingTimeNotation = function (sec_num) {
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+  var hours = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - hours * 3600) / 60);
+  var seconds = sec_num - hours * 3600 - minutes * 60;
 
-    let output;
-    if(sec_num == 0){
-      output =  '';
-    }
-    else if(hours < 1){
-      output =  `+${minutes}'${seconds}"`;
-    }
-    else{
-      output = `+${hours}u${minutes}'${seconds}"`;
-    }
+  let output;
+  if (sec_num == 0) {
+    output = "";
+  } else if (hours < 1) {
+    output = `+${minutes}'${seconds}"`;
+  } else {
+    output = `+${hours}u${minutes}'${seconds}"`;
+  }
 
   return output;
 };
@@ -60,7 +58,7 @@ const showRounds = function (data) {
   <p class="c-ranking-table__header-item">
     Totale tijd
   </p>
-  <p class="c-ranking-table__header-item">
+  <p class="c-ranking-table__header-item u-mr-clear">
     Positie
   </p>
 </div>`;
@@ -72,7 +70,7 @@ const showRounds = function (data) {
       <p class="c-ranking-table__row-item">
       ${datetimeToDateNotation(item.startDatum)}
       </p>
-      <div class="c-ranking-table__row-item c-ranking-table__row-item--round-name u-text-align--left">
+      <div class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">
         <p class="c-ranking-table__row-item--top">${item.rondeNaam}</p>
         <p class="c-ranking-table__row-item--sub">${
           item.aantalEtappes
@@ -81,7 +79,7 @@ const showRounds = function (data) {
       <p class="c-ranking-table__row-item">
       ${secToTimeNotation(item.totaalTijd)}
       </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--last-col u-color-alpha ">
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha u-mr-clear">
       #${item.plaats}
       </p>
     </div>`;
@@ -97,42 +95,47 @@ const showRoundsRanking = function (data) {
   <p class="c-ranking-table__header-item u-flex-basis-1-of-3 u-text-align--left">
     Deelnemer
   </p>
-  <p class="c-ranking-table__header-item u-flex-basis-1-of-3">Totale tijd</p>
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3 u-mr-clear">Totale tijd</p>
 </div>`;
   let fastestTime = data[0].totaalTijd;
   for (const item of data) {
-    if(item.totaalTijd == fastestTime){
+    if (item.totaalTijd == fastestTime) {
+      htmlString += `<div class="c-ranking-table__row">
+      <p
+        class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
+      >
+      ${item.plaats}
+      </p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${
+        item.gebruikersNaam
+      }</p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear">${secToTimeNotation(
+        item.totaalTijd
+      )}</p>
+    </div>`;
+    } else {
       htmlString += `
-    <div class="c-ranking-table__row js-rounds-ranking-row">
-    <p
-      class="c-ranking-table__row-item u-flex-basis-1-of-3 u-color-alpha"
-    >
-      ${item.plaats}
-    </p>
-    <p class="c-ranking-table__row-item u-flex-basis-1-of-3 u-text-align--left ">${
-      item.gebruikersNaam
-    }</p>
-    <p class="c-ranking-table__row-item c-ranking-table__row-item--last-col u-flex-basis-1-of-3">${secToTimeNotation(
-      item.totaalTijd
-    )}</p>
-  </div>`;
+    <div class="c-ranking-table__row">
+              <p
+                class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
+              >
+              ${item.plaats}
+              </p>
+              <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${
+                item.gebruikersNaam
+              }</p>
+              <div
+                class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear"
+              >
+                <p class="c-ranking-table__row-item--main">${secToTimeNotation(
+                  fastestTime
+                )}</p>
+                <p class="c-ranking-table__row-item--sub">${secToRankingTimeNotation(
+                  item.totaalTijd - fastestTime
+                )}</p>
+              </div>
+            </div>`;
     }
-    else{htmlString += `
-    <div class="c-ranking-table__row js-rounds-ranking-row">
-    <p
-      class="c-ranking-table__row-item u-flex-basis-1-of-3 u-color-alpha"
-    >
-      ${item.plaats}
-    </p>
-    <p class="c-ranking-table__row-item u-flex-basis-1-of-3 u-text-align--left ">${
-      item.gebruikersNaam
-    }</p>
-    <div class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-ranking-table__row-item--last-col  u-flex-basis-1-of-3"><p class="c-ranking-table__row-item--main">${secToTimeNotation(
-      fastestTime
-    )}</p><p class="c-ranking-table__row-item--sub">${secToRankingTimeNotation(
-      item.totaalTijd - fastestTime
-    )}</p></div>
-  </div>`;}
   }
   table.innerHTML = htmlString;
 };
@@ -141,7 +144,7 @@ const showEtappes = function (data) {
   console.table(data);
   data.sort((a, b) => (a.startTijd < b.startTijd ? 1 : -1));
   const table = document.querySelector(".js-etappes-table");
-  let htmlString = `<div class="c-ranking-table__header">
+  let htmlString = `      <div class="c-ranking-table__header">
   <p class="c-ranking-table__header-item">
     Startdatum
   </p>
@@ -151,7 +154,7 @@ const showEtappes = function (data) {
   <p class="c-ranking-table__header-item">
     Totale tijd
   </p>
-  <p class="c-ranking-table__header-item">
+  <p class="c-ranking-table__header-item u-mr-clear">
     Positie
   </p>
 </div>`;
@@ -164,13 +167,13 @@ const showEtappes = function (data) {
       <p class="c-ranking-table__row-item">
       ${datetimeToDateNotation(item.startTijd)}
       </p>
-      <p class="c-ranking-table__row-item u-text-align--left">Etappe 
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">Etappe 
       ${Etappe}
       </p>
       <p class="c-ranking-table__row-item">
       ${secToTimeNotation(item.totaalTijd)}
       </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--last-col u-color-alpha ">
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-color-alpha ">
       #${item.plaats}
       </p>
     </div>`;
@@ -190,7 +193,7 @@ const listenToToggle = function () {
     input.addEventListener("change", function () {
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
-        getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
+        getEtappes("5F4266B2-D77E-46E9-95FE-0B76779B737E");
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
