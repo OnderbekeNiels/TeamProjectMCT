@@ -27,6 +27,8 @@ namespace TempoTrack.Views.EtappePaginas
             btnStoppen.Clicked += BtnStoppen_Clicked;
             btnCreateEtappe.Clicked += BtnCreateEtappe_Clicked;
 
+            
+
             if(GebruikersInfo.GebruikerId == RondeInfo.Admin)
             {
                 btnCreateEtappe.IsVisible = true;
@@ -46,10 +48,6 @@ namespace TempoTrack.Views.EtappePaginas
             {
                 item.EtappeNaam = $"Etappe {teller}";
                 teller += 1;
-                //item.TotaalRondeTijd = RondeInfo.TotaalTijd;
-                //Debug.WriteLine("-------------------------------------------------------");
-                //Debug.WriteLine(item.ToString());
-                //Debug.WriteLine("-------------------------------------------------------");
             }
 
             lvw.ItemsSource = etappes;
@@ -69,7 +67,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new CreateEtappePage(RondeInfo.RondeId));
+            Navigation.PushAsync(new CreateEtappePage(RondeInfo, GebruikersInfo));
         }
     }
 }
