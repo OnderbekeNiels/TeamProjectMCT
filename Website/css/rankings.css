@@ -611,7 +611,7 @@ input:disabled {
   flex-basis: 40%;
 }
 
-.c-ranking-table__row-item--position {
+.c-ranking-table__row-item--last-col {
   flex-basis: 10%;
   margin-right: 0;
   text-align: right;
@@ -660,7 +660,7 @@ input:disabled {
     flex-basis: 25%;
   }
 
-  .c-ranking-table__row-item--position {
+  .c-ranking-table__row-item--last-col {
     flex-basis: 25%;
     margin-right: 0;
   }
