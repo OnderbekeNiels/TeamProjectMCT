@@ -735,6 +735,28 @@ input:disabled {
   --c-toggle-color: var(--c-toggle-focus-color);
 }
 
+
+/*
+    Components: index content
+    ---
+*/
+
+.c-index-container{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.c-index-img{
+  max-width: 50%;
+}
+
+.c-index-text{
+  max-width: 50%;
+}
+
+
+
 /*
     Utilities: spacing
     ---
