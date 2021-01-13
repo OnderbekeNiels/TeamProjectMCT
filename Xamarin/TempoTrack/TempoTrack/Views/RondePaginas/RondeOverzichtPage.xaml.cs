@@ -65,12 +65,15 @@ namespace TempoTrack.Views.RondePaginas
             if (inviteCode.Length == 8)
             {
                 Guid gebruikersId = GebruikersInfo.GebruikerId;
+
                 //Deelnemer toevoegen in database
                 Deelnemer deelnemer = new Deelnemer();
                 deelnemer.InviteCode = inviteCode;
                 deelnemer.GebruikerId = gebruikersId;
                 Debug.Write(deelnemer.GebruikerId);
+
                 Deelnemer deelnemerResponse = await RondeRepository.AddDeelnemer(deelnemer);
+
                 if (deelnemerResponse == null)
                 {
                     await DisplayAlert("Foutmedling", "Foute invite code", "OK");
@@ -78,7 +81,7 @@ namespace TempoTrack.Views.RondePaginas
                 else
                 {
                     //doorsturen naar ronde pagina
-                    //Navigation.PushAsync(new EtappeOverzichtPage(deelnemerResponse));
+                    Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
                 }
 
             }
