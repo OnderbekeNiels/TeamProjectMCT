@@ -46,7 +46,7 @@ namespace TempoTrack.Views.RondePaginas
 
             if (ronde != null)
             {
-                Navigation.PushAsync(new EtappeOverzichtPage(ronde));
+                Navigation.PushAsync(new EtappeOverzichtPage(ronde, GebruikersInfo));
                 lvwRondes.SelectedItem = null;
             }
         }
@@ -55,7 +55,6 @@ namespace TempoTrack.Views.RondePaginas
         private void btnDeelnemen_Clicked(object sender, EventArgs e)
         {
             askInviteCode();
-
         }
 
         //Invite code opvragen

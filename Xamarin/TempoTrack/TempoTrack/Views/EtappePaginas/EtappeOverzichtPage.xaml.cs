@@ -15,13 +15,23 @@ namespace TempoTrack.Views.EtappePaginas
     public partial class EtappeOverzichtPage : ContentPage
     {
         private static RondesGebruiker RondeInfo { get; set; }
-        public EtappeOverzichtPage(RondesGebruiker rondeInfo)
+        private static GebruikerV2 GebruikersInfo { get; set; }
+        public EtappeOverzichtPage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
             RondeInfo = rondeInfo;
+            GebruikersInfo = gebruikersInfo;
+
             InitializeComponent();
 
             btnInvite.Clicked += BtnInvite_Clicked;
             btnStoppen.Clicked += BtnStoppen_Clicked;
+            btnCreateEtappe.Clicked += BtnCreateEtappe_Clicked;
+
+            if(GebruikersInfo.GebruikerId == RondeInfo.Admin)
+            {
+                btnCreateEtappe.IsVisible = true;
+                btnCreateEtappe.IsEnabled = true;
+            }
 
             LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
             Title = RondeInfo.RondeNaam;
@@ -55,6 +65,11 @@ namespace TempoTrack.Views.EtappePaginas
         private void BtnInvite_Clicked(object sender, EventArgs e)
         {
             //Navigation.PushAsync(new Invite)
+        }
+
+        private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CreateEtappePage(RondeInfo.RondeId));
         }
     }
 }

@@ -7,10 +7,11 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/> <!--label-->
-                <RowDefinition Height="250"/> <!--Grid etappes-->
+                <RowDefinition Height="200"/> <!--Grid etappes-->
                 <RowDefinition /> <!--Positie ronde / totale tijd-->
-                <RowDefinition Height="60"/> <!--Button stoppen-->
-                <RowDefinition Height="60"/> <!--Button Invite-->
+                <RowDefinition Height="196"/> <!--Etappe maken (Admin)-->
+                <!--<RowDefinition Height="60"/> --><!--Button stoppen--><!--
+                <RowDefinition Height="60"/> --><!--Button Invite-->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -56,17 +57,24 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <Label Grid.Row="0" Grid.Column="0" Text="Positie" VerticalOptions="Center" HorizontalOptions="Start" Margin="36,24,0,0" BackgroundColor="Transparent" FontSize="30" TextColor="#707070"/>
-                <Label Grid.Row="0" Grid.Column ="1" Text="Totale tijd" VerticalOptions="Center" HorizontalOptions="End" Margin="0,24,36,0" BackgroundColor="Transparent" FontSize="30" TextColor="#707070"/>
+                <Label Grid.Row="0" Grid.Column="0" Text="Positie" VerticalOptions="Center" HorizontalOptions="Start" Margin="36,16,0,0" BackgroundColor="Transparent" FontSize="30" TextColor="#707070"/>
+                <Label Grid.Row="0" Grid.Column ="1" Text="Totale tijd" VerticalOptions="Center" HorizontalOptions="End" Margin="0,16,36,0" BackgroundColor="Transparent" FontSize="30" TextColor="#707070"/>
 
                 <Label x:Name="lblRondePlaats" Grid.Row="1" Grid.Column="0"  VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,0" BackgroundColor="Transparent" FontSize="30" TextColor="#015D99"/>
                 <Label x:Name="lblRondeTijd" Grid.Row="1" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,0" BackgroundColor="Transparent" FontSize="30" TextColor="#015D99"/>
-
             </Grid>
 
-            <Button Grid.Row ="3"  x:Name="btnStoppen" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,0" HeightRequest="40" Text="Stoppen met deelnemen" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7"/>
-            <Button Grid.Row ="4" x:Name="btnInvite" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,16" HeightRequest="40" Text="Inviteer code" BackgroundColor="#016FB7" TextColor="White"/>
-
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                
+                <Button Grid.Row ="0" x:Name="btnCreateEtappe" FontFamily="DIN2014-Bold" VerticalOptions="Center" FontSize="16" BorderRadius="20" Margin="16,0,16,-16" HeightRequest="40" Text="Maak etappe" BackgroundColor="#016FB7" TextColor="White" IsEnabled="False" IsVisible="False"/>
+                <Button Grid.Row ="1" x:Name="btnStoppen" FontFamily="DIN2014-Bold" VerticalOptions="Center" FontSize="16" BorderRadius="20" Margin="16,0,16,0" HeightRequest="40" Text="Stoppen met deelnemen" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7"/>
+                <Button Grid.Row ="2" x:Name="btnInvite" FontFamily="DIN2014-Bold" VerticalOptions="Center" FontSize="16" BorderRadius="20" Margin="16,0,16,16" HeightRequest="40" Text="Inviteer code" BackgroundColor="#016FB7" TextColor="White"/>
+            </Grid>
         </Grid>    
         
         
