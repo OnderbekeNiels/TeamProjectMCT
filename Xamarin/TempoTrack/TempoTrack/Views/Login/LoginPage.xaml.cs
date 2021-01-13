@@ -97,9 +97,9 @@ namespace TempoTrack.Views.Login
             gebruikerInfo.GebruikerId = Guid.Parse("7B002679-1EE4-44DF-B5B7-54B7C76C3C73");
             gebruikerInfo.Email = "niels@email.com";
             gebruikerInfo.name = "Niels";
-            //Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
+            Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
             //Navigation.PushAsync(new CreateRondePage(gebruikerInfo));
-            Navigation.PushAsync(new ActivityPage());
+            //Navigation.PushAsync(new ActivityPage());
 
             //Ronde ronde = new Ronde();
             //ronde.RondeId = Guid.Parse("3A8CC923-EEAA-49CA-9E95-07687F7ADC3E");

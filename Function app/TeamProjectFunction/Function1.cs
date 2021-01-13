@@ -423,11 +423,6 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
-
-
-
-
-
         }
 
 
@@ -541,12 +536,6 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
-
-
-
-
-
-
         }
 
 
@@ -603,12 +592,6 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
-
-
-
-
-
-
         }
 
         [FunctionName("AddDeelnemerToRonde")]
@@ -656,28 +639,61 @@ namespace TeamProjectFunction
                         {
                             //invitecode bestaat
                             deelnemer.RondeId = rondeDb.RondeId;
+                            List<LapTijd> laptijden = new List<LapTijd>();
 
-                            using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                            //Controleren of er al een lap gereden is binnen een etappe
+                            using (SqlConnection sqlConnectionEtappesCheck = new SqlConnection(connectionStringInsert))
                             {
-                                await sqlConnectionInsert.OpenAsync();
-                                using (SqlCommand sqlCommandInsert = new SqlCommand())
+                                await sqlConnectionEtappesCheck.OpenAsync();
+                                using (SqlCommand sqlCommandEtappesCheck = new SqlCommand())
                                 {
-                                    sqlCommandInsert.Connection = sqlConnectionInsert;
-                                    sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
-                                    sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
-                                    sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
-                                    sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+                                    sqlCommandEtappesCheck.Connection = sqlConnectionEtappesCheck;
+                                    sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
+                                    sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
 
-                                    //deelnemer.RondeId = ronde.RondeId;
+                                    SqlDataReader readerEtappesCheck = sqlCommandEtappesCheck.ExecuteReader();
 
-                                    await sqlCommandInsert.ExecuteNonQueryAsync();
+                                    while (readerEtappesCheck.Read())
+                                    {
 
-                                    return new OkObjectResult(deelnemer);
-
+                                        LapTijd data = new LapTijd();
+                                        data.LapTijdId = Guid.Parse(reader["LapTijdId"].ToString());
+                                        laptijden.Add(data);
+                                    }
                                 }
                             }
 
+                            //Als er geen lap gereden is --> kan je nog meedoen.
+                            if(laptijden.Count() == 0)
+                            {
+                                //Deelnemer toevoegen aan de ronde
+                                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                                {
+                                    await sqlConnectionInsert.OpenAsync();
+                                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                                    {
+                                        sqlCommandInsert.Connection = sqlConnectionInsert;
+                                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
+                                        sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                                        sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
+                                        sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
 
+                                        //deelnemer.RondeId = ronde.RondeId;
+
+                                        await sqlCommandInsert.ExecuteNonQueryAsync();
+
+                                        return new OkObjectResult(deelnemer);
+                                    }
+                                }
+                            }
+                            //Als er wel al een lap gereden is kan je niet meer meedoen.
+                            else
+                            {
+                                CustomResponse customResponse = new CustomResponse();
+                                customResponse.Succes = false;
+                                customResponse.Message = "Invitecode is niet meer geldig.";
+                                return new OkObjectResult(customResponse);
+                            }
                         }
 
                         else
@@ -687,9 +703,6 @@ namespace TeamProjectFunction
                             customResponse.Message = "Invitecode betsaat niet";
                             return new OkObjectResult(customResponse);
                         }
-
-
-
                     }
                 }
 
@@ -700,12 +713,6 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
-
-
-
-
-
-
         }
 
 
@@ -787,11 +794,6 @@ namespace TeamProjectFunction
                 return new BadRequestResult(); ;
             }
 
-
-
-
-
-
         }
 
 
@@ -848,12 +850,6 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
-
-
-
-
-
-
         }
 
 
@@ -910,8 +906,6 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
-
-
         }
 
         [FunctionName("DelLapTijd")]
