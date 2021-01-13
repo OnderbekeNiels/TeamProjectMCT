@@ -34,6 +34,7 @@ namespace TempoTrack.Models
 
         public Guid GebruikersId { get; set; }
 
+        public string InviteCode { get; set; }
         public int TotaalTijd { get; set; }
         public Guid Admin { get; set; }
         public int AantalEtappes { get; set; }

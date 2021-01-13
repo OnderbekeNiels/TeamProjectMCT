@@ -65,6 +65,12 @@ namespace TempoTrack.Views.EtappePaginas
         private void BtnInvite_Clicked(object sender, EventArgs e)
         {
             //Navigation.PushAsync(new Invite)
+            PopUpInviteCode();
+        }
+
+        private async Task PopUpInviteCode() 
+        {
+            await DisplayAlert("Invite code", RondeInfo.InviteCode, "Ok");
         }
 
         private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
