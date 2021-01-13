@@ -10,7 +10,7 @@ namespace TempoTrack.Repositories
 {
     public class EtappeRepository
     {
-        private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api/etappes";
+        private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api";
         private const string _FUNCTIONKEY = "WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==";
         public static HttpClient GetHttpClient()
         {
@@ -21,7 +21,7 @@ namespace TempoTrack.Repositories
 
         public static async Task<Etappe> CreateEtappe(Etappe etappe)
         {
-            string url = $"{_BASEURI}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/etappes?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
@@ -58,5 +58,25 @@ namespace TempoTrack.Repositories
                 }
             }
         }
+
+        public static async Task<List<EtappesRonde>> GetEtappesRonde(Guid rondeId, Guid gebruikerId)
+        {
+            string url = $"{_BASEURI}/gebruiker/ronde/etappes/{rondeId}/{gebruikerId}?code={_FUNCTIONKEY}";
+            using (HttpClient client = GetHttpClient())
+            {
+                try
+                {
+                    string json = await client.GetStringAsync(url);
+                    List<EtappesRonde> list = JsonConvert.DeserializeObject<List<EtappesRonde>>(json);
+                    return list;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
+        }
     }
 }
+

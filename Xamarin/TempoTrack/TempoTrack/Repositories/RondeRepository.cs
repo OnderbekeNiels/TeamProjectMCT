@@ -12,7 +12,7 @@ namespace TempoTrack.Repositories
     {
         private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api/rondes";
         private const string _BASEURI2 = "https://temptrackingfunction.azurewebsites.net/api/ronde/klassement/";
-        private const string _BASEURI3 = "https://temptrackingfunction.azurewebsites.net/api/gebruikers/ronde/";
+        private const string _BASEURI3 = "https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/";
         private const string _BASEURI4 = "https://temptrackingfunction.azurewebsites.net/api/deelnemer";
         private const string _FUNCTIONKEY = "WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==";
         public static HttpClient GetHttpClient()

@@ -92,7 +92,8 @@ namespace TempoTrack.Views.Login
             };
             authenticator.Error += onAuthError;*/
             GebruikerV2 gebruikerInfo = new GebruikerV2();
-            gebruikerInfo.GebruikerId = Guid.Parse("547f309b-8596-4dbe-9439-333a7c9e79de");
+            //gebruikerInfo.GebruikerId = Guid.Parse("547f309b-8596-4dbe-9439-333a7c9e79de");
+            gebruikerInfo.GebruikerId = Guid.Parse("7B002679-1EE4-44DF-B5B7-54B7C76C3C73");
             gebruikerInfo.Email = "niels@email.com";
             gebruikerInfo.name = "Niels";
             Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));

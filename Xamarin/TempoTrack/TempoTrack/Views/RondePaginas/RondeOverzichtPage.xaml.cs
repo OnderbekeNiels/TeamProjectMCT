@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.EtappePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,7 +38,7 @@ namespace TempoTrack.Views.RondePaginas
                 LoadKlassementAsync(item, lvw);
             }
 
-            lvw.ItemsSource = rondesGebruiker;
+            //lvw.ItemsSource = rondesGebruiker;
         }
 
         //Het klassement ophalen van de rondes waarin de gebruiker meedeed.
@@ -54,6 +55,7 @@ namespace TempoTrack.Views.RondePaginas
                 {
                     ronde.Ranking = item.Plaats;
                     ronde.GebruikersId = item.GebruikersId;
+                    ronde.TotaalTijd = item.TotaalTijd;
                     output.Add(ronde);
                 }
             }
@@ -63,18 +65,18 @@ namespace TempoTrack.Views.RondePaginas
                 Debug.WriteLine(item.ToString());
             }
 
-            //lvw.ItemsSource = output;
+            lvw.ItemsSource = output;
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             RondesGebruiker ronde = lvwRondes.SelectedItem as RondesGebruiker;
 
-            /*if (ronde != null)
+            if (ronde != null)
             {
                 Navigation.PushAsync(new EtappeOverzichtPage(ronde));
                 lvwRondes.SelectedItem = null;
-            }*/
+            }
         }
 
         //Deelnemen aan een ronde
@@ -105,7 +107,7 @@ namespace TempoTrack.Views.RondePaginas
                 else
                 {
                     //doorsturen naar ronde pagina
-                    //Navigation.PushAsync(new EtappeOverzichtPage(deelnemerResponse.RondeId));
+                    //Navigation.PushAsync(new EtappeOverzichtPage(deelnemerResponse));
                 }
 
             }
