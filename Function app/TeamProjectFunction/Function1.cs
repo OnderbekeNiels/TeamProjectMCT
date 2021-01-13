@@ -1193,14 +1193,13 @@ namespace TeamProjectFunction
         //Tijden van snelts naar traag van een bepaalde ronde
         [FunctionName("GetKlassementRonde")]
         public static async Task<IActionResult> GetKlassementRonde(
-        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "ronde/klassement/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
+        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "klassement/rondes/{rondeId}")] HttpRequest req, Guid rondeId, ILogger log)
         {
             try
             {
-                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-                List<KlassementRonde> rondes = new List<KlassementRonde>();
-
-                using (SqlConnection connection = new SqlConnection(connectionStringInsert))
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<KlassementRonde> klassement = new List<KlassementRonde>();
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
                     using (SqlCommand command = new SqlCommand())
@@ -1208,7 +1207,7 @@ namespace TeamProjectFunction
                         command.Connection = connection;
                         string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam as 'RondeNaam', Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where e.RondeId = @rondeId group by l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam order by Sum(l.TijdLap);";
                         command.CommandText = sql;
-                        command.Parameters.AddWithValue("@rondeId", RondeId);
+                        command.Parameters.AddWithValue("@rondeId", rondeId);
                         SqlDataReader reader = command.ExecuteReader();
 
                         while (reader.Read())
@@ -1220,11 +1219,53 @@ namespace TeamProjectFunction
                             data.RondeId = Guid.Parse(reader["RondeId"].ToString());
                             data.RondeNaam = reader["RondeNaam"].ToString();
                             data.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
-                            rondes.Add(data);
+                            klassement.Add(data);
                         }
                     }
                 }
-                return new OkObjectResult(rondes);
+                return new OkObjectResult(klassement);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
+        [FunctionName("GetKlassementEtappe")]
+        public static async Task<IActionResult> GetKlassementEtappe(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "klassement/etappes/{etappeId}")] HttpRequest req, Guid etappeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<KlassementEtappe> klassement = new List<KlassementEtappe>();
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, l.EtappeId,  Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId where l.EtappeId = @etappeId group by  l.GebruikerId, g.GebruikersNaam, l.EtappeId order by Sum(l.TijdLap);";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            KlassementEtappe data = new KlassementEtappe();
+                            data.Plaats = int.Parse(reader["Plaats"].ToString());
+                            data.GebruikersId = Guid.Parse(reader["GebruikerId"].ToString());
+                            data.GebruikersNaam = reader["GebruikersNaam"].ToString();
+                            data.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            data.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
+                            klassement.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(klassement);
             }
             catch (Exception ex)
             {
