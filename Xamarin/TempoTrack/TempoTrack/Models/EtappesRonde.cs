@@ -14,6 +14,7 @@ namespace TempoTrack.Models
         public double LapAfstand { get; set; }
         public int TotaalTijd { get; set; }
         public int SnelsteTijd { get; set; }
+        public Guid Admin { get; set; }
         public int Plaats { get; set; }
 
         public string Ranking
