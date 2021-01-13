@@ -128,7 +128,7 @@ const showRoundsRanking = function (data) {
       item.gebruikersNaam
     }</p>
     <div class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-ranking-table__row-item--last-col  u-flex-basis-1-of-3"><p class="c-ranking-table__row-item--main">${secToTimeNotation(
-      item.totaalTijd
+      fastestTime
     )}</p><p class="c-ranking-table__row-item--sub">${secToRankingTimeNotation(
       item.totaalTijd - fastestTime
     )}</p></div>
