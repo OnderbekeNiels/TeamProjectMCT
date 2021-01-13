@@ -192,7 +192,7 @@ function signOut() {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
-  // userId = sessionStorage.getItem("gebruikerId");
+  // userId = localStorage.getItem("gebruikerId");
   if(document.querySelector('.roundsoverview')){
     getRounds();
   }

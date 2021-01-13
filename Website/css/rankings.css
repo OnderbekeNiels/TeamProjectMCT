@@ -406,6 +406,56 @@ input:disabled {
   border: 0;
 }
 
+/*
+    Object: container
+    ---
+    container index page
+*/
+
+.o-row {
+  padding: 24px 24px 0;
+  display: flow-root;
+}
+
+.o-row--dark {
+  padding: 24px 24px 0;
+  background-color: #131313;
+  color: white;
+}
+
+.o-row--primary {
+  padding: 24px 24px 0;
+  background-color: #E85F01;
+  color: white;
+}
+
+.o-container {
+  max-width: 90em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+    Objects: Layout
+    ---
+    The layout object provides us with a column-style layout system. This object
+    contains the basic structural elements, but classes should be complemented
+    with width utilities
+*/
+
+.o-layout {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.o-layout__item {
+  flex-basis: 100%;
+}
+
+
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
@@ -741,20 +791,109 @@ input:disabled {
     ---
 */
 
-.c-index-container{
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
+/*
+    Utility: Flex
+    ---
+    Utility classes to put specific flex properties onto elements
+    Will be mostly used on o-layout__item
+*/
+
+
+.u-flex-basis-auto {
+  flex-basis: auto !important;
 }
 
-.c-index-img{
-  max-width: 50%;
+.u-flex-grow-1{
+  flex-grow: 1 !important;
 }
 
-.c-index-text{
-  max-width: 50%;
+.u-1-of-2 {
+  flex-basis: calc(100%/2) !important;
 }
 
+.u-1-of-3 {
+  flex-basis: calc(100%/3) !important;
+}
+
+.u-2-of-3 {
+  flex-basis: calc(100%/3*2) !important;
+}
+
+.u-1-of-4 {
+  flex-basis: calc(100%/4) !important;
+}
+
+.u-3-of-4 {
+  flex-basis: calc(100%/4*3) !important;
+}
+
+.u-1-of-5 {
+  flex-basis: calc(100%/5) !important;
+}
+
+.u-2-of-5 {
+  flex-basis: calc(100%/5*2) !important;
+}
+
+.u-3-of-5 {
+  flex-basis: calc(100%/5*3) !important;
+}
+
+.u-4-of-5 {
+  flex-basis: calc(100%/5*4) !important;
+}
+
+.u-1-of-6 {
+  flex-basis: calc(100%/6) !important;
+}
+
+.u-5-of-6 {
+  flex-basis: calc(100%/6*5) !important;
+}
+
+.u-1-of-2-bp1 {
+  flex-basis: calc(100%/2) !important;
+}
+
+.u-1-of-2-bp2 {
+  flex-basis: calc(100%/2) !important;
+}
+
+.u-1-of-3-bp3 {
+  flex-basis: calc(100%/3) !important;
+}
+
+.u-1-of-4-bp4 {
+  flex-basis: calc(100%/4) !important;
+}
+
+.u-1-of-5-bp5 {
+  flex-basis: calc(100%/5) !important;
+}
+
+.u-1-of-6-bp6 {
+  flex-basis: calc(100%/6) !important;
+}
+
+.u-1-of-4-bp2 {
+  flex-basis: calc(100%/4) !important;
+}
+
+@media (min-width: 576px) {
+  .u-1-of-2-bp1 {}
+}
+
+@media (min-width: 768px) {
+  .u-1-of-2-bp2 {}
+}
+
+@media (min-width: 992px) {
+  .u-1-of-2-bp3 {}
+}
+
+@media (min-width: 1200px) {
+  .u-1-of-2-bp4 {}
+}
 
 
 /*
