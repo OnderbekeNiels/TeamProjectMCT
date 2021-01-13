@@ -990,7 +990,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
@@ -1000,6 +1000,7 @@ namespace TeamProjectFunction
                             RondesGebruiker data = new RondesGebruiker();
                             data.GebruikersId = Guid.Parse(reader["GebruikersId"].ToString());
                             data.StartDatum = DateTime.Parse(reader["StartDatum"].ToString());
+                            data.InviteCode = reader["InviteCode"].ToString();
                             data.RondeNaam = reader["RondeNaam"].ToString();
                             data.RondeId = Guid.Parse(reader["RondeId"].ToString());
                             data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
