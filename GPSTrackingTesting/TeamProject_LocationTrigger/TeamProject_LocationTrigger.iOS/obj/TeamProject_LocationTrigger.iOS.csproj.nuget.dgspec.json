@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj": {}
+    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj": {}
   },
   "projects": {
-    "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj": {
+    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
+        "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
         "projectName": "TeamProject_LocationTrigger.iOS",
-        "projectPath": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
+        "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
         "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-        "outputPath": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\obj\\",
+        "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "xamarinios10": {
             "projectReferences": {
-              "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj": {
-                "projectPath": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj"
+              "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj": {
+                "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj"
               }
             }
           }
@@ -44,7 +44,7 @@
           "dependencies": {
             "Plugin.Geofence": {
               "target": "Package",
-              "version": "[1.5.7, )"
+              "version": "[1.8.11, )"
             },
             "Xam.Plugin.Geofence": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -54,11 +54,11 @@
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.5.3.2, )"
+              "version": "[1.6.0, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[4.6.0.1141, )"
+              "version": "[5.0.0.1874, )"
             }
           }
         }
@@ -75,14 +75,14 @@
         }
       }
     },
-    "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj": {
+    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj",
+        "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj",
         "projectName": "TeamProject_LocationTrigger",
-        "projectPath": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj",
+        "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj",
         "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-        "outputPath": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\obj\\",
+        "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -122,15 +122,15 @@
             },
             "Plugin.Geofence": {
               "target": "Package",
-              "version": "[1.5.7, )"
+              "version": "[1.8.11, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.5.3.2, )"
+              "version": "[1.6.0, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[4.6.0.1141, )"
+              "version": "[5.0.0.1874, )"
             }
           },
           "imports": [

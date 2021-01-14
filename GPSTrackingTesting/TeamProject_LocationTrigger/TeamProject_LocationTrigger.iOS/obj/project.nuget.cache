@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "ymftIzgVbDHbHuSTQ6CQ1VPOLv94jgMfuXGMJEz5a8wZwsw5zrWkUlU7LYc9pOs3ABq2ytCapCZ6W/WJ5AVIlQ==",
+  "dgSpecHash": "9GUDjhBGjd/cWx3eFl86DRn5LbMy4XGCX2aSWOeEflGgczsK1kq1B91RtGuXsQco4s0IAhq+bV9Y4j1wNgYQBw==",
   "success": true,
-  "projectFilePath": "C:\\Xamarin\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
+  "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\niels\\.nuget\\packages\\plugin.geofence\\1.5.7\\plugin.geofence.1.5.7.nupkg.sha512",
+    "C:\\Users\\niels\\.nuget\\packages\\plugin.geofence\\1.8.11\\plugin.geofence.1.8.11.nupkg.sha512",
+    "C:\\Users\\niels\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\xam.plugin.geofence\\1.1.2\\xam.plugin.geofence.1.1.2.nupkg.sha512",
-    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
-    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
+    "C:\\Users\\niels\\.nuget\\packages\\xamarin.essentials\\1.6.0\\xamarin.essentials.1.6.0.nupkg.sha512",
+    "C:\\Users\\niels\\.nuget\\packages\\xamarin.forms\\5.0.0.1874\\xamarin.forms.5.0.0.1874.nupkg.sha512"
   ],
   "logs": []
 }
