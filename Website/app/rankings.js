@@ -182,6 +182,11 @@ const showEtappes = function (data) {
   table.innerHTML = htmlString;
 };
 
+const setUserName = function(){
+  const userInput = document.querySelector(".js-username");
+  userInput.innerHTML = userName;
+}
+
 //#endregion
 
 const listenToToggle = function () {
@@ -267,7 +272,8 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
   userId = localStorage.getItem("gebruikerId");
-  userName = localStorage.getItem("name")
+  userName = localStorage.getItem("name");
+  setUserName();
   if (document.querySelector(".roundsoverview")) {
     getRounds();
   }
