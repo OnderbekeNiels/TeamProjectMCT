@@ -72,17 +72,26 @@ namespace TempoTrack.Views.RondePaginas
                 deelnemer.GebruikerId = gebruikersId;
                 Debug.Write(deelnemer.GebruikerId);
 
-                Deelnemer deelnemerResponse = await RondeRepository.AddDeelnemer(deelnemer);
+                DeelnemerResponse deelnemerResponse = await RondeRepository.AddDeelnemer(deelnemer);
 
                 if (deelnemerResponse == null)
                 {
-                    await DisplayAlert("Foutmedling", "Foute invite code", "OK");
+                    await DisplayAlert("Foutmedling", "Geen verbinding met de servers.", "OK");
                 }
                 else
                 {
-                    await DisplayAlert("Succes", "Je doet nu mee aan de ronde", "OK");
-                    //doorsturen naar ronde pagina
-                    Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+                    if (deelnemerResponse.Succes == null)
+                    {
+                        await DisplayAlert("Succes", "Je doet nu mee aan de ronde", "OK");
+                        //doorsturen naar ronde pagina
+                        Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+                    }
+                    else
+                    {
+                        await DisplayAlert("Foutmedling", deelnemerResponse.Message, "OK");
+                    }
+
+
                 }
 
             }
