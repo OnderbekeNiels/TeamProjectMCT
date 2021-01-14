@@ -673,7 +673,7 @@ namespace TeamProjectFunction
                                     using (SqlCommand sqlCommandInsert = new SqlCommand())
                                     {
                                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
+                                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId, 1)";
                                         sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
                                         sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
                                         sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
