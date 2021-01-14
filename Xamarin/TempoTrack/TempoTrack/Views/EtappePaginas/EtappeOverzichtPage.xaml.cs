@@ -16,6 +16,8 @@ namespace TempoTrack.Views.EtappePaginas
     {
         private static RondesGebruiker RondeInfo { get; set; }
         private static GebruikerV2 GebruikersInfo { get; set; }
+
+        private static int etappeTeller = 1;
         public EtappeOverzichtPage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
             RondeInfo = rondeInfo;
@@ -26,6 +28,7 @@ namespace TempoTrack.Views.EtappePaginas
             btnInvite.Clicked += BtnInvite_Clicked;
             btnStoppen.Clicked += BtnStoppen_Clicked;
             btnCreateEtappe.Clicked += BtnCreateEtappe_Clicked;
+            btnRefresh.Clicked += BtnRefresh_Clicked;
 
             if(GebruikersInfo.GebruikerId == RondeInfo.Admin)
             {
@@ -41,11 +44,10 @@ namespace TempoTrack.Views.EtappePaginas
         {
            List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(rondeId, gebruikersId);
 
-            int teller = 1;
             foreach (EtappesRonde item in etappes)
             {
-                item.EtappeNaam = $"Etappe {teller}";
-                teller += 1;
+                item.EtappeNaam = $"Etappe {etappeTeller}";
+                etappeTeller += 1;
                 //item.TotaalRondeTijd = RondeInfo.TotaalTijd;
                 //Debug.WriteLine("-------------------------------------------------------");
                 //Debug.WriteLine(item.ToString());
@@ -79,5 +81,33 @@ namespace TempoTrack.Views.EtappePaginas
         {
             Navigation.PushAsync(new CreateEtappePage(RondeInfo , GebruikersInfo));
         }
+
+        private void BtnRefresh_Clicked(object sender, EventArgs e)
+        {
+            lvwEtappes.ItemsSource = null;
+            lblRondeTijd.Text = "";
+            lblRondePlaats.Text = "";
+            LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
+            LoadRondesAsync(RondeInfo.RondeId, lblRondePlaats, lblRondeTijd);
+        }
+
+        private static async Task LoadRondesAsync(Guid rondeId, Xamarin.Forms.Label lblPlaats, Xamarin.Forms.Label lblTijd)
+        {
+            List<RondeKlassement> rondesKlassement = await RondeRepository.GetRondeKlassement(rondeId);
+
+            foreach(RondeKlassement item in rondesKlassement)
+            {
+                if(item.GebruikersId == GebruikersInfo.GebruikerId)
+                {
+                    RondeInfo.Plaats = item.Plaats;
+                    RondeInfo.TotaalTijd = item.TotaalTijd;
+
+                    lblTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
+                    lblPlaats.Text = RondeInfo.Ranking;
+
+                }
+            }
+        }
+
     }
 }

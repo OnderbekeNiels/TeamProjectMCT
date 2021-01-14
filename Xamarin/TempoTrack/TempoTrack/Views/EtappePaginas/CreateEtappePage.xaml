@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.RowSpan="2" Grid.Column="0" Text="Aantal Rondes" FontFamily="DIN2014-Regular" FontSize="16" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="#707070" />
+                <Label Grid.RowSpan="2" Grid.Column="0" Text="Aantal laps" FontFamily="DIN2014-Regular" FontSize="16" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="#707070" />
                 <Label Grid.RowSpan="2" Grid.Column="1" x:Name="lblAantalRondes" VerticalOptions="Center" FontSize="16" HorizontalOptions="End" Text="0" TextColor="#016FB7"/>
                 <Button Grid.Row="0" Grid.Column="2" x:Name="btnUp" Text="˄" VerticalOptions="End" HorizontalOptions="End" HeightRequest="15" FontSize="15" TextColor="#016FB7" BackgroundColor="Transparent" Padding="0" WidthRequest="20"/>
                 <Button Grid.Row="1" Grid.Column="2" x:Name="btnDown" Text="˅" VerticalOptions="Start" TextColor="#6D9FC0" HorizontalOptions="End" HeightRequest="15" FontSize="15" BackgroundColor="Transparent" Padding="0,-4" WidthRequest="20" />
