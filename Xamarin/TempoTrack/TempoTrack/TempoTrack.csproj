@@ -25,7 +25,6 @@
     <EmbeddedResource Include="Assets\Fonts\DIN2014-Regular.ttf" />
     <EmbeddedResource Include="Assets\Images\GoogleLogo.png" />
     <EmbeddedResource Include="Assets\Images\LogoOnboarding.png" />
-    <EmbeddedResource Include="Assets\Images\LogoOnboarding.svg" />
   </ItemGroup>
 
   <ItemGroup>

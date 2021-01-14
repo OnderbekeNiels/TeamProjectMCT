@@ -30,6 +30,7 @@ namespace TempoTrack.Views.EtappePaginas
             btnDown.Clicked += btnDown_clicked;
 
             tpEtappe.Time = DateTime.Now.AddMinutes(1).TimeOfDay;
+            lblAantalRondes.Text = Convert.ToString(1);
         }
 
         private void btnDown_clicked(object sender, EventArgs e)
@@ -91,11 +92,13 @@ namespace TempoTrack.Views.EtappePaginas
                     await DisplayAlert("Succes", "Etappe is succesvol aangemaakt", "OK");
 
                     //Etappe aangemaakt doorgaan naar etappe pagina
-                    Navigation.PushAsync(new EtappeOverzichtPage(RondeInfo,GebruikersInfo));
+                    await Navigation.PushAsync(new EtappeOverzichtPage(RondeInfo,GebruikersInfo));
                 }
 
             }
             //anders niets doen
         }
     }
+
+    
 }

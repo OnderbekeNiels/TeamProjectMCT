@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/> <!--label-->
+                <RowDefinition Height="60"/> <!--label-->
                 <RowDefinition Height="200"/> <!--Grid etappes-->
                 <RowDefinition /> <!--Positie ronde / totale tijd-->
                 <RowDefinition Height="196"/> <!--Etappe maken (Admin)-->
@@ -15,11 +15,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Text="Etappes" VerticalOptions="Start" HorizontalOptions="Start" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="16" TextColor="#707070"/>
-
-            <ListView Grid.Row="1" x:Name="lvwEtappes" RowHeight="50" Margin="0" SeparatorVisibility="None">
+            <Label Grid.Row="0" Grid.Column="0" Text="Etappes" VerticalOptions="Start" HorizontalOptions="Start" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="16" TextColor="#707070"/>
+            <Button Grid.Row ="0" Grid.Column="1" x:Name="btnRefresh" FontFamily="DIN2014-Bold" VerticalOptions="End" FontSize="16" BorderRadius="20" Margin="0,16,16,12" HeightRequest="60" Text="Refresh" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7" Padding="0"/>
+            
+            <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwEtappes" RowHeight="50" Margin="0" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -47,7 +49,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="64"/>
                     <RowDefinition Height="100"/>
@@ -64,7 +66,7 @@
                 <Label x:Name="lblRondeTijd" Grid.Row="1" Grid.Column="1"  VerticalOptions="Center" HorizontalOptions="Center" Margin="0,0,0,0" BackgroundColor="Transparent" FontSize="30" TextColor="#015D99"/>
             </Grid>
 
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="3" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>

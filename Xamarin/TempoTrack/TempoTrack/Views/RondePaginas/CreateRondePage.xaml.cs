@@ -57,6 +57,7 @@ namespace TempoTrack.Views.RondePaginas
             {
                 //melding dat de ronde succesvol is aangemaakt
                 await DisplayAlert("Succes", "Ronde is succesvol aangemaakt", "OK");
+
                 //Ronde aangemaakt doorgaan naar etappe pagina
                 Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
             }
