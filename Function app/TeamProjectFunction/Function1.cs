@@ -658,6 +658,7 @@ namespace TeamProjectFunction
                                     {
                                         Deelnemer data = new Deelnemer();
                                         data.DeelnemerId = Guid.Parse(readerDeelnemerCheck["DeelnemerId"].ToString());
+                                        deelnemers.Add(data);
                                     }
                                 }
 
