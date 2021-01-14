@@ -1,4 +1,4 @@
-let userId;
+let userId, userName;
 
 userId = "547F309B-8596-4DBE-9439-333A7C9E79DE";
 
@@ -266,7 +266,8 @@ function signOut() {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
-  // userId = sessionStorage.getItem("gebruikerId");
+  userId = localStorage.getItem("gebruikerId");
+  userName = localStorage.getItem("name")
   if (document.querySelector(".roundsoverview")) {
     getRounds();
   }
