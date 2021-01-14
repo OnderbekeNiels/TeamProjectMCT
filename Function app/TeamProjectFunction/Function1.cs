@@ -514,7 +514,7 @@ namespace TeamProjectFunction
                         deelnemer.DeelnemerId = Guid.NewGuid();
 
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2)";
+                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId_2", deelnemer.RondeId);
                         sqlCommandInsert.Parameters.AddWithValue("@GebruikerId_2", deelnemer.GebruikerId);
@@ -770,7 +770,7 @@ namespace TeamProjectFunction
                     using (SqlCommand sqlCommandInsert = new SqlCommand())
                     {
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand)";
+                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
                         sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);
