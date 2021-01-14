@@ -106,9 +106,7 @@ const showRoundsRanking = function (data) {
       >
       ${item.plaats}
       </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${
-        item.gebruikersNaam
-      }</p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
       <p class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear">${secToTimeNotation(
         item.totaalTijd
       )}</p>
