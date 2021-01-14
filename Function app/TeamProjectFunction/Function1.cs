@@ -514,7 +514,7 @@ namespace TeamProjectFunction
                         deelnemer.DeelnemerId = Guid.NewGuid();
 
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2)";
+                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId_2", deelnemer.RondeId);
                         sqlCommandInsert.Parameters.AddWithValue("@GebruikerId_2", deelnemer.GebruikerId);
@@ -651,13 +651,13 @@ namespace TeamProjectFunction
                                     sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
                                     sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
 
-                                    SqlDataReader readerEtappesCheck = sqlCommandEtappesCheck.ExecuteReader();
+                                    SqlDataReader readerEtappesCheck = await sqlCommandEtappesCheck.ExecuteReaderAsync();
 
                                     while (readerEtappesCheck.Read())
                                     {
 
                                         LapTijd data = new LapTijd();
-                                        data.LapTijdId = Guid.Parse(reader["LapTijdId"].ToString());
+                                        data.LapTijdId = Guid.Parse(readerEtappesCheck["LapTijdId"].ToString());
                                         laptijden.Add(data);
                                     }
                                 }
@@ -673,7 +673,7 @@ namespace TeamProjectFunction
                                     using (SqlCommand sqlCommandInsert = new SqlCommand())
                                     {
                                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId)";
+                                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId, 1)";
                                         sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
                                         sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
                                         sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
@@ -770,7 +770,7 @@ namespace TeamProjectFunction
                     using (SqlCommand sqlCommandInsert = new SqlCommand())
                     {
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand)";
+                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
                         sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);

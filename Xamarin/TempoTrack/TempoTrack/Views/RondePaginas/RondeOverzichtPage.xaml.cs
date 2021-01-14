@@ -80,6 +80,7 @@ namespace TempoTrack.Views.RondePaginas
                 }
                 else
                 {
+                    await DisplayAlert("Succes", "Je doet nu mee aan de ronde", "OK");
                     //doorsturen naar ronde pagina
                     Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
                 }
