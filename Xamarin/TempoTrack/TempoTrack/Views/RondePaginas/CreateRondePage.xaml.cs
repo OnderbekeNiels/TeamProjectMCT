@@ -13,19 +13,19 @@ namespace TempoTrack.Views.RondePaginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateRondePage : ContentPage
     {
-        GebruikerV2 gebruiker;
+        GebruikerV2 GebruikersInfo;
         public CreateRondePage(GebruikerV2 gebruikersInfo)
         {
             InitializeComponent();
             btnCreate.Clicked += btnCreate_cliked;
-            gebruiker = gebruikersInfo;
+            GebruikersInfo = gebruikersInfo;
         }
 
         private void btnCreate_cliked(object sender, EventArgs e)
         {
             
             Ronde ronde = new Ronde();
-            ronde.Admin = gebruiker.GebruikerId;
+            ronde.Admin = GebruikersInfo.GebruikerId;
             //Controleren of er degelijk een ronde naam ingevuld is
             if (entRondeNaam.Text != null)
             {
@@ -58,7 +58,7 @@ namespace TempoTrack.Views.RondePaginas
                 //melding dat de ronde succesvol is aangemaakt
                 await DisplayAlert("Succes", "Ronde is succesvol aangemaakt", "OK");
                 //Ronde aangemaakt doorgaan naar etappe pagina
-                //Navigation.PushAsync();
+                Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
             }
 
         }
