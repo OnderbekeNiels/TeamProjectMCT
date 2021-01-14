@@ -62,7 +62,7 @@ namespace TempoTrack.Repositories
             }
         }
 
-        public static async Task<Deelnemer> AddDeelnemer(Deelnemer deelnemer)
+        public static async Task<DeelnemerResponse> AddDeelnemer(Deelnemer deelnemer)
         {
             string url = $"{_BASEURI4}?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
@@ -88,7 +88,7 @@ namespace TempoTrack.Repositories
                         //Bode van de response inlezen
                         var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                         //Nieuw object deelnemer aanmaken met de data van de response
-                        Deelnemer deelnemerResponse = JsonConvert.DeserializeObject<Deelnemer>(Convert.ToString(responseBody));
+                        DeelnemerResponse deelnemerResponse = JsonConvert.DeserializeObject<DeelnemerResponse>(Convert.ToString(responseBody));
 
                         //return object ronde met invite code etc
                         return deelnemerResponse;

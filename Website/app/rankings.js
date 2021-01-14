@@ -1,6 +1,6 @@
 let userId;
 
-userId = "547F309B-8596-4DBE-9439-333A7C9E79DE";
+userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -106,9 +106,7 @@ const showRoundsRanking = function (data) {
       >
       ${item.plaats}
       </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${
-        item.gebruikersNaam
-      }</p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
       <p class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear">${secToTimeNotation(
         item.totaalTijd
       )}</p>
@@ -121,9 +119,7 @@ const showRoundsRanking = function (data) {
               >
               ${item.plaats}
               </p>
-              <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${
-                item.gebruikersNaam
-              }</p>
+              <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
               <div
                 class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear"
               >
@@ -193,11 +189,11 @@ const listenToToggle = function () {
     input.addEventListener("change", function () {
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
-        getEtappes("5F4266B2-D77E-46E9-95FE-0B76779B737E");
+        getEtappes("CBB74C13-66EB-4856-8AD6-BA74F67C0AAC");
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
-        getRoundsRanking("5f4266b2-d77e-46e9-95fe-0b76779b737e");
+        getRoundsRanking("CBB74C13-66EB-4856-8AD6-BA74F67C0AAC");
       }
     });
   }
@@ -229,10 +225,10 @@ const getEtappes = async function (rondeId) {
   }
 };
 
-const getRoundsRanking = async function () {
-  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+const getRoundsRanking = async function (roundId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/klassement/rondes/${roundId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
-    const response = await fetch("rondeKlassement.json");
+    const response = await fetch(endpoint);
     const data = await response.json();
     console.log(data);
     showRoundsRanking(data);
