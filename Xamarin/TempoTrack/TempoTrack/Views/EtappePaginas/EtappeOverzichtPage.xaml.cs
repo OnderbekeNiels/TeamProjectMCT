@@ -52,6 +52,8 @@ namespace TempoTrack.Views.EtappePaginas
                 //Debug.WriteLine("-------------------------------------------------------");
             }
 
+            etappes.Reverse();
+
             lvw.ItemsSource = etappes;
             lblRondePlaats.Text = RondeInfo.Ranking;
             lblRondeTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
@@ -75,7 +77,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new CreateEtappePage(RondeInfo.RondeId));
+            Navigation.PushAsync(new CreateEtappePage(RondeInfo , GebruikersInfo));
         }
     }
 }
