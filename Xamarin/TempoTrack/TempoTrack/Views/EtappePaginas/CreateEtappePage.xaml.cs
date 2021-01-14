@@ -14,17 +14,22 @@ namespace TempoTrack.Views.EtappePaginas
     public partial class CreateEtappePage : ContentPage
     {
         int laps;
-        Guid rondeId;
-        public CreateEtappePage(Guid ronde)
+        private static RondesGebruiker RondeInfo { get; set; }
+        private static GebruikerV2 GebruikersInfo { get; set; }
+        public CreateEtappePage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
+            RondeInfo = rondeInfo;
+            gebruikersInfo = gebruikersInfo;
+
             InitializeComponent();
-            laps = 0;
+            laps = 1;
             btnCreate.Clicked += btnCreate_clicked;
+
             //numberpicker
             btnUp.Clicked += btnUp_clicked;
             btnDown.Clicked += btnDown_clicked;
-            //rondeid 
-            rondeId = ronde;
+
+            tpEtappe.Time = DateTime.Now.AddMinutes(1).TimeOfDay;
         }
 
         private void btnDown_clicked(object sender, EventArgs e)
@@ -61,7 +66,7 @@ namespace TempoTrack.Views.EtappePaginas
             if (laps < 1)
             {
                 //alert
-                await DisplayAlert("Foutmedling", "Rondes kunnen niet lager dan 1 zijn", "OK");
+                await DisplayAlert("Foutmedling", "Er moet minstens 1 lap gereden worden", "OK");
             }
             //controleren als alles goed is
             if (date > DateTime.Now && laps > 0)
@@ -69,7 +74,7 @@ namespace TempoTrack.Views.EtappePaginas
                 //dataverwerken in database
                 Etappe etappe = new Etappe();
                 etappe.Laps = laps;
-                etappe.RondeId = rondeId;
+                etappe.RondeId = RondeInfo.RondeId;
                 etappe.LapAfstand = (float)(laps * 333.33);
                 etappe.StartTijd = date;
 
@@ -78,14 +83,15 @@ namespace TempoTrack.Views.EtappePaginas
                 if (etappeResponse == null)
                 {
                     //Foutmelding
-                    await DisplayAlert("Foutmedling", "Er is iets foutgelopen bij het aanmaken van de ronde", "OK");
+                    await DisplayAlert("Foutmelding", "Er is iets foutgelopen bij het aanmaken van de etappe", "OK");
                 }
                 else
                 {
                     //melding dat de ronde succesvol is aangemaakt
-                    await DisplayAlert("Succes", "Ronde is succesvol aangemaakt", "OK");
+                    await DisplayAlert("Succes", "Etappe is succesvol aangemaakt", "OK");
+
                     //Etappe aangemaakt doorgaan naar etappe pagina
-                    //Navigation.PushAsync();
+                    Navigation.PushAsync(new EtappeOverzichtPage(RondeInfo,GebruikersInfo));
                 }
 
             }
