@@ -2,15 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TeamProject_LocationTrigger.MainPage"
-             BackgroundColor="LightGray">
+             BackgroundColor="White">
 
-    <StackLayout>
-        <Entry x:Name="lblCoordinate" TextColor="Red" FontSize="20"></Entry>
-        <Label x:Name="lblPassed" TextColor="DarkBlue"></Label>
+    <StackLayout Spacing="16" Padding="16">
+        <Label Text="Afgelegde rondes" TextColor="DarkGreen" FontSize="24" HorizontalOptions="Center"></Label>
+        <Label x:Name="lblPassed" Text="0" TextColor="red" FontSize="20" HorizontalOptions="Center"></Label>
         <Label x:Name="lblLap" TextColor="DarkBlue"></Label>
         <Label x:Name="lblDistanceFromLine" TextColor="DarkBlue"></Label>
-        <Button x:Name="btnStart" Text="start"></Button>
-        <Button x:Name="btnStop" Text="stop"></Button>
+        <Button x:Name="btnStart" Text="start etappe"></Button>
+        <Button x:Name="btnStop" Text="stop etappe"></Button>
+        <Label Text="Om de etappe correct op te nemen moet het scherm aan blijven."></Label>
     </StackLayout>
 
 </ContentPage>
