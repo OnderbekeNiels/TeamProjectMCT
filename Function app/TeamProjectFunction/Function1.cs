@@ -651,13 +651,13 @@ namespace TeamProjectFunction
                                     sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
                                     sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
 
-                                    SqlDataReader readerEtappesCheck = sqlCommandEtappesCheck.ExecuteReader();
+                                    SqlDataReader readerEtappesCheck = await sqlCommandEtappesCheck.ExecuteReaderAsync();
 
                                     while (readerEtappesCheck.Read())
                                     {
 
                                         LapTijd data = new LapTijd();
-                                        data.LapTijdId = Guid.Parse(reader["LapTijdId"].ToString());
+                                        data.LapTijdId = Guid.Parse(readerEtappesCheck["LapTijdId"].ToString());
                                         laptijden.Add(data);
                                     }
                                 }
