@@ -1131,7 +1131,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes', d.IsActief from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode, d.IsActief order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
@@ -1219,7 +1219,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
+                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId and e.IsActief = 0 group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         command.Parameters.AddWithValue("@rondeId", RondeId);
@@ -1418,6 +1418,73 @@ namespace TeamProjectFunction
             }
 
         }
+
+        [FunctionName("GetInfoEtappe")]
+        public static async Task<IActionResult> GetInfoEtappe(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "info/etappes/{etappeId}")] HttpRequest req, Guid etappeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                EtappeInfo etappeInfo = new EtappeInfo();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    //Opvragen etappe info vd winnaar
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select top 1 r.Naam as 'RondeNaam', r.RondeId, l.EtappeId,  Sum(l.TijdLap) as 'TotaalTijd', (Sum(l.TijdLap)/CONVERT(FLOAT,(e.Laps))) as 'GemiddeldeLapTijd', (e.Laps * (e.LapAfstand / 1000)) as 'Afstand', e.Laps from LapTijden as l left join Etappes as e on e.EtappeId = l.EtappeId left join Rondes as r on r.RondeId = e.RondeId where l.EtappeId = @etappeId and e.IsActief = 0 group by  r.Naam, r.rondeId, l.GebruikerId, l.EtappeId, e.Laps, e.LapAfstand order by Sum(l.TijdLap);";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            etappeInfo.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            etappeInfo.RondeNaam = reader["RondeNaam"].ToString();
+                            etappeInfo.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            etappeInfo.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
+                            etappeInfo.GemiddeldeLapTijd = double.Parse(reader["GemiddeldeLapTijd"].ToString());
+                            etappeInfo.Afstand = double.Parse(reader["Afstand"].ToString());
+                            etappeInfo.Laps = int.Parse(reader["Laps"].ToString());
+                        }
+                    }
+
+                    //Opvragen aantal deelnemers in de etappe
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select l.GebruikerId as 'Deelnemers' from LapTijden as l where l.EtappeId = @etappeId group by l.EtappeId, l.GebruikerId;";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        List<Guid> Deelnemers = new List<Guid>();
+
+                        while (reader.Read())
+                        {
+                            Guid data = new Guid();
+                            data = Guid.Parse(reader["Deelnemers"].ToString());
+                            Deelnemers.Add(data);
+                        }
+
+                        etappeInfo.AantalDeelnemers = Deelnemers.Count;
+                    }
+                }
+
+                return new OkObjectResult(etappeInfo);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
     }
 }
+
 
