@@ -262,6 +262,11 @@ const showEtappesRanking = function (data) {
   table.innerHTML = htmlString;
 };
 
+const showEtappeInfo = function(data){
+  const etappeInfo = document.querySelector('.js-etappe-info');
+  etappeInfo.innerText = `RNDS: ${0} - DLN ${0} - AFSTD: ${0.00} Km - GEM SN: ${0.00} Km/u`;
+}
+
 //#endregion
 
 const listenToToggle = function () {
@@ -327,7 +332,9 @@ const getEtappesRanking = async function (etappeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
+    console.table(data);
     showEtappesRanking(data);
+    showEtappeInfo(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
