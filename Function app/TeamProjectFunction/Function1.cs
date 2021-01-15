@@ -991,16 +991,34 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelEtappe")]
-        public static async Task<IActionResult> DelEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
+        [FunctionName("DelEtappeIsActief")]
+        public static async Task<IActionResult> DelEtappeIsActief(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
             try
             {
-                CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
+                string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                {
+                    await sqlConnectionDel.OpenAsync();
+                    using (SqlCommand sqlCommandDel = new SqlCommand())
+                    {
+                        sqlCommandDel.Connection = sqlConnectionDel;
+                        sqlCommandDel.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
+                        sqlCommandDel.Parameters.AddWithValue("@EtappeId", EtappeId);
 
-                return new OkObjectResult(customResponse);
+
+
+
+                        await sqlCommandDel.ExecuteNonQueryAsync();
+
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = true;
+                        return new OkObjectResult(customResponse);
+
+                    }
+                }
             }
             catch (Exception ex)
             {
