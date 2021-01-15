@@ -22,7 +22,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame BackgroundColor="White" Margin="10,0,12,10" Padding="0" HasShadow="True" CornerRadius="5">
+                            <Frame BackgroundColor="White" Margin="10,0,12,10" Padding="0" HasShadow="True" CornerRadius="5"  BorderColor= '{Binding IsAdmin}'>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
