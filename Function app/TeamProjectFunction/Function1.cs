@@ -758,15 +758,35 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelDeelnemerfromRonde")]
-        public static async Task<IActionResult> DelDeelnemerfromRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
+        [FunctionName("DelDeelnemerfromRondeIsActief")]
+        public static async Task<IActionResult> DelDeelnemerfromRondeIsActief(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
           ILogger log, Guid DeelnemerId)
         {
             try
             {
-                CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
-                return new OkObjectResult(customResponse);
+                
+                string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                {
+                    await sqlConnectionDel.OpenAsync();
+                    using (SqlCommand sqlCommandDel = new SqlCommand())
+                    {
+                        sqlCommandDel.Connection = sqlConnectionDel;
+                        sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
+                        sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", DeelnemerId);
+
+
+
+
+                        await sqlCommandDel.ExecuteNonQueryAsync();
+
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = true;
+                        return new OkObjectResult(customResponse);
+
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -971,16 +991,34 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelEtappe")]
-        public static async Task<IActionResult> DelEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
+        [FunctionName("DelEtappeIsActief")]
+        public static async Task<IActionResult> DelEtappeIsActief(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
             try
             {
-                CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
+                string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                {
+                    await sqlConnectionDel.OpenAsync();
+                    using (SqlCommand sqlCommandDel = new SqlCommand())
+                    {
+                        sqlCommandDel.Connection = sqlConnectionDel;
+                        sqlCommandDel.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
+                        sqlCommandDel.Parameters.AddWithValue("@EtappeId", EtappeId);
 
-                return new OkObjectResult(customResponse);
+
+
+
+                        await sqlCommandDel.ExecuteNonQueryAsync();
+
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = true;
+                        return new OkObjectResult(customResponse);
+
+                    }
+                }
             }
             catch (Exception ex)
             {
