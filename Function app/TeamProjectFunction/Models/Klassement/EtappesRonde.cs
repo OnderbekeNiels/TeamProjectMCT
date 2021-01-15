@@ -16,5 +16,6 @@ namespace TeamProjectFunction.Models
         public int SnelsteTijd { get; set; }
         public int Plaats { get; set; }
         public Guid Admin { get; set; }
+        public string RondeNaam { get; set; }
     }
 }

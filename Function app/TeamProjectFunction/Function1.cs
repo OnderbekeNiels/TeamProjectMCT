@@ -1168,6 +1168,7 @@ namespace TeamProjectFunction
                             data.StartTijd = DateTime.Parse(reader["StartTijd"].ToString());
                             data.LapAfstand = double.Parse(reader["LapAfstand"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
+                            data.RondeNaam = reader["RondeNaam"].ToString();
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
 
