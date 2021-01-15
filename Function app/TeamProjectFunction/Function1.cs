@@ -1152,7 +1152,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select r.RondeId,e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId group by r.RondeId, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
+                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         command.Parameters.AddWithValue("@rondeId", RondeId);
