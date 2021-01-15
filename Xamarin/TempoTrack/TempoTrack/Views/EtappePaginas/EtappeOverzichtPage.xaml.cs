@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.Activity;
 using TempoTrack.Views.RondePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -157,7 +158,7 @@ namespace TempoTrack.Views.EtappePaginas
             Etappe etappe = lvwEtappes.SelectedItem as Etappe;
             if (etappe.StartTijd > DateTime.Now)
             {
-                Navigation.PushAsync();
+                //Navigation.PushAsync(new ActivityPage(RondeInfo.RondeId, GebruikersInfo.GebruikerId));
             }
         }
     }
