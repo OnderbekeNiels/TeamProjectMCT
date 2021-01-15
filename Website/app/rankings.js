@@ -53,6 +53,15 @@ const listenToClickRound = function(){
   }
 }
 
+const listenToClickEtappe = function(){
+  const rounds = document.querySelectorAll('.js-etappes-table-row');
+  for(const item of rounds){
+    item.addEventListener('click', function(){
+      window.location.href = `etappe_detail.html?etappeId=${this.getAttribute('data-etappeId')}`;
+    })
+  }
+}
+
 //#endregion
 
 //#region *** Show Data Functions ***
@@ -117,7 +126,7 @@ const showRoundsRanking = function (data) {
       <p
         class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
       >
-      ${item.plaats}
+      #${item.plaats}
       </p>
       <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
       <p class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear">${secToTimeNotation(
@@ -130,7 +139,7 @@ const showRoundsRanking = function (data) {
               <p
                 class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
               >
-              ${item.plaats}
+              #${item.plaats}
               </p>
               <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
               <div
@@ -150,6 +159,7 @@ const showRoundsRanking = function (data) {
 };
 
 const showEtappes = function (data) {
+  console.table(data);
   data.sort((a, b) => (a.startTijd < b.startTijd ? 1 : -1));
   const table = document.querySelector(".js-etappes-table");
   let htmlString = `      <div class="c-ranking-table__header">
@@ -169,8 +179,8 @@ const showEtappes = function (data) {
   let Etappe = data.length;
   for (const item of data) {
     htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${
-          item.rondeId
+        <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
+          item.etappeId
         }'>
       <p class="c-ranking-table__row-item">
       ${datetimeToDateNotation(item.startTijd)}
@@ -188,12 +198,69 @@ const showEtappes = function (data) {
     Etappe--;
   }
   table.innerHTML = htmlString;
+  listenToClickEtappe();
 };
 
 const showRoundInfo = function(data){
   const roundName = document.querySelector('.js-round-name');
   roundName.innerText = data.rondeNaam;
 }
+
+const showEtappesRanking = function (data) {
+  const table = document.querySelector(".js-etappes-ranking-table");
+  let htmlString = `<div class="c-ranking-table__header">
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3">
+    Positie
+  </p>
+  <p
+    class="c-ranking-table__header-item u-flex-basis-1-of-3 u-text-align--left"
+  >
+    Deelnemer
+  </p>
+  <p
+    class="c-ranking-table__header-item u-flex-basis-1-of-3 u-mr-clear"
+  >
+    Totale tijd
+  </p>
+</div>`;
+  let fastestTime = data[0].totaalTijd;
+  for (const item of data) {
+    if (item.totaalTijd == fastestTime) {
+      htmlString += `<div class="c-ranking-table__row">
+      <p
+        class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
+      >
+      #${item.plaats}
+      </p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear">${secToTimeNotation(
+        item.totaalTijd
+      )}</p>
+    </div>`;
+    } else {
+      htmlString += `
+    <div class="c-ranking-table__row">
+              <p
+                class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
+              >
+              #${item.plaats}
+              </p>
+              <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${item.gebruikersNaam.toUpperCase()}</p>
+              <div
+                class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear"
+              >
+                <p class="c-ranking-table__row-item--main">${secToTimeNotation(
+                  item.totaalTijd
+                )}</p>
+                <p class="c-ranking-table__row-item--sub">${secToRankingTimeNotation(
+                  item.totaalTijd - fastestTime
+                )}</p>
+              </div>
+            </div>`;
+    }
+  }
+  table.innerHTML = htmlString;
+};
 
 //#endregion
 
@@ -255,6 +322,17 @@ const getRoundsRanking = async function (roundId) {
   }
 };
 
+const getEtappesRanking = async function (etappeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/klassement/etappes/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    showEtappesRanking(data);
+  } catch (error) {
+    console.error("An error occured, we handled it.", error);
+  }
+};
+
 //#endregion
 
 //#region *** Google Authentication ***
@@ -284,10 +362,17 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.querySelector(".roundsoverview")) {
     getRounds();
   }
-  if (document.querySelector(".etappesoverview")) {
+  if (document.querySelector(".roundsdetail")) {
     let urlParams = new URLSearchParams(window.location.search);
     const roundId = urlParams.get("roundId");
     getEtappes(roundId);
+    listenToToggle();
+    
+  }
+  if (document.querySelector(".etappesdetail")) {
+    let urlParams = new URLSearchParams(window.location.search);
+    const etappeId = urlParams.get("etappeId");
+    getEtappesRanking(etappeId);
     listenToToggle();
     
   }
