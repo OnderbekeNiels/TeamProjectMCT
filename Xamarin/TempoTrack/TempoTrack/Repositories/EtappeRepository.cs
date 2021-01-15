@@ -77,6 +77,34 @@ namespace TempoTrack.Repositories
                 }
             }
         }
+
+        public static async Task<int> RemoveDeelnemerRonde(Guid gebruikersId,Guid rondeId)
+        {
+            string url = $"{_BASEURI}/deelnemer/{gebruikersId}/{rondeId}?code={_FUNCTIONKEY}";
+            using (HttpClient client = GetHttpClient())
+            {
+                try
+                {
+                    HttpContent content = null;
+                    var response = await client.PutAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
+        }
     }
 }
 

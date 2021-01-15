@@ -75,7 +75,34 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void BtnStoppen_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            RemoveSpelerRonde(GebruikersInfo.GebruikerId, RondeInfo.RondeId);
+        }
+
+        private async Task RemoveSpelerRonde(Guid gebruikersId,Guid rondeId)
+        {
+            //Een confirmatie vragen
+            bool confirmatie = await DisplayAlert("Waarschuwing", "Ben je zeker dat je de ronde wilt verlaten?", "Ja", "Nee");
+
+            if(confirmatie == true)
+            {
+                int response = await EtappeRepository.RemoveDeelnemerRonde(GebruikersInfo.GebruikerId, RondeInfo.RondeId);
+
+                if (response == 1)
+                {
+                    await DisplayAlert("Ronde verlaten", "Je ben succesvol uit de ronde verwijderd", "Ok");
+                    await Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+                }
+                else
+                {
+                    await DisplayAlert("Fout", "Er is een fout opgetreden bij het verlaten", "Ok");
+                }
+            }
+            else
+            {
+
+            }
+
+            
         }
 
         private void BtnInvite_Clicked(object sender, EventArgs e)
@@ -126,16 +153,26 @@ namespace TempoTrack.Views.EtappePaginas
 
         private async Task DeleteRondes(Guid rondeId)
         {
-            int response = await RondeRepository.DeleteRonde(rondeId);
-            
-            if(response == 1)
+
+            bool confirmatie = await DisplayAlert("Waarschuwing", "Ben je zeker dat je de ronde wilt verwijderen?", "Ja", "Nee");
+
+            if(confirmatie == true)
             {
-                await DisplayAlert("Ronde verwijderd", "De ronde is succesvol verwijderd", "Ok");
-                await Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+                int response = await RondeRepository.DeleteRonde(rondeId);
+
+                if (response == 1)
+                {
+                    await DisplayAlert("Ronde verwijderd", "De ronde is succesvol verwijderd", "Ok");
+                    await Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+                }
+                else
+                {
+                    await DisplayAlert("Fout", "Er is een fout opgetreden bij het verwijderen", "Ok");
+                }
             }
             else
             {
-                await DisplayAlert("Fout", "Er is een fout opgetreden bij het verwijderen", "Ok");
+
             }
         }
 
