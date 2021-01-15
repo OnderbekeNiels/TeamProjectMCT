@@ -78,19 +78,19 @@ namespace TempoTrack.Repositories
             }
         }
 
-        public static async Task updateDeelnemerGestopt(Guid deelnemerId)
+        public static async Task UpdateDeelnemerGestopt(Guid rondeId, Guid gebruikersId)
         {
             try
             {
-                using (HttpClient client = GetHttpClient()) 
+                using (HttpClient client = GetHttpClient())
                 {
-                    string url = $"{ _BASEURI}/deelnemer/{deelnemerId}";
-                    string json = JsonConvert.SerializeObject(deelnemerId);
+                    string url = $"{ _BASEURI}/deelnemer/{gebruikersId}/{rondeId}";
+                    string json = "";
                     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await client.PutAsync(url, content);
                     if (!response.IsSuccessStatusCode)
                     {
-                        string errorMsg = $"Unsuccesful Put to url: {url}, object: {json}";
+                        string errorMsg = $"Unsuccesful Put to url: {url}";
                         throw new Exception(errorMsg);
                     }
                 }

@@ -51,7 +51,7 @@ namespace TempoTrack.Views.EtappePaginas
             var datum = dpEtappe.Date;
             var newDate = datum.Year.ToString() + "-" + datum.Month.ToString() + "-" + datum.Day.ToString() + " " + tijd.ToString();
             DateTime date = Convert.ToDateTime(newDate);
-            Console.WriteLine(date);
+            // Console.WriteLine(date);
             controleInput(date);
         }
 

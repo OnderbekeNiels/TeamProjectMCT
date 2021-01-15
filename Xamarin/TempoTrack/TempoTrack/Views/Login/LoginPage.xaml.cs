@@ -103,8 +103,6 @@ namespace TempoTrack.Views.Login
             //ronde.RondeId = Guid.Parse("3A8CC923-EEAA-49CA-9E95-07687F7ADC3E");
             //Navigation.PushAsync(new CreateEtappePage(ronde.RondeId));
             //Navigation.PushAsync(new ActivityPage());
-
-            Navigation.PushAsync(new ActivityPage());
         }
 
         private void onAuthError(object sender, AuthenticatorErrorEventArgs e)
