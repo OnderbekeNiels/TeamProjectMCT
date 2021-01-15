@@ -1141,7 +1141,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes', d.IsActief, e.IsActief from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 and (e.IsActief = 0 or e.IsActief is null) group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode, d.IsActief, e.IsActief order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes', d.IsActief as 'DeelnemerActief', e.IsActief as 'EtappeActief' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode, d.IsActief, e.IsActief order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
@@ -1155,6 +1155,8 @@ namespace TeamProjectFunction
                             data.RondeNaam = reader["RondeNaam"].ToString();
                             data.RondeId = Guid.Parse(reader["RondeId"].ToString());
                             data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
+                            data.DeelnemerActief = int.Parse(reader["DeelnemerActief"].ToString());
+                            data.EtappeActief = int.Parse(reader["EtappeActief"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
@@ -1229,7 +1231,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId and e.IsActief = 0 group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
+                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin, e.IsActief as 'EtappeActief' from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId= @userId group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin, e.IsActief order by e.StartTijd desc;";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         command.Parameters.AddWithValue("@rondeId", RondeId);
@@ -1245,6 +1247,7 @@ namespace TeamProjectFunction
                             data.StartTijd = DateTime.Parse(reader["StartTijd"].ToString());
                             data.LapAfstand = double.Parse(reader["LapAfstand"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
+                            data.EtappeActief = int.Parse(reader["EtappeActief"].ToString());
                             data.RondeNaam = reader["RondeNaam"].ToString();
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.

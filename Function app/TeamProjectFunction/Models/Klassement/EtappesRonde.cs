@@ -8,6 +8,7 @@ namespace TeamProjectFunction.Models
     {
         public Guid GebruikersId { get; set; }
         public Guid RondId { get; set; }
+        public string RondeNaam { get; set; }
         public Guid EtappeId { get; set; }
         public int Laps { get; set; }
         public DateTime StartTijd { get; set; }
@@ -16,6 +17,7 @@ namespace TeamProjectFunction.Models
         public int SnelsteTijd { get; set; }
         public int Plaats { get; set; }
         public Guid Admin { get; set; }
-        public string RondeNaam { get; set; }
+        public int EtappeActief { get; set; }
+
     }
 }

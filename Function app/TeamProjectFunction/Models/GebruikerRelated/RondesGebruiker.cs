@@ -16,5 +16,7 @@ namespace TeamProjectFunction.Models.GebruikerRelated
         public int AantalEtappes { get; set; }
         public int AantalDeelnemers { get; set; }
         public Guid Admin { get; set; }
+        public int DeelnemerActief { get; set; }
+        public int EtappeActief { get; set; }
     }
 }
