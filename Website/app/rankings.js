@@ -89,7 +89,8 @@ const showRounds = function (data) {
   </p>
 </div>`;
   for (const item of data) {
-    htmlString += `
+    if(item.EtappeActief != 1 || item.EtappeActief != null){
+      htmlString += `
         <div class="c-ranking-table__row js-rounds-table-row" data-roundId='${
           item.rondeId
         }'>
@@ -109,6 +110,7 @@ const showRounds = function (data) {
       #${item.plaats}
       </p>
     </div>`;
+    }
   }
   table.innerHTML = htmlString;
   listenToClickRound();
@@ -182,24 +184,26 @@ const showEtappes = function (data) {
 </div>`;
   let Etappe = data.length;
   for (const item of data) {
-    htmlString += `
-        <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
-          item.etappeId
-        }'>
-      <p class="c-ranking-table__row-item">
-      ${datetimeToDateNotation(item.startTijd)}
-      </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">Etappe 
-      ${Etappe}
-      </p>
-      <p class="c-ranking-table__row-item">
-      ${secToTimeNotation(item.totaalTijd)}
-      </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-color-alpha ">
-      #${item.plaats}
-      </p>
-    </div>`;
-    Etappe--;
+    if(item.EtappeActief != 1 || item.EtappeActief != null){
+      htmlString += `
+      <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
+        item.etappeId
+      }'>
+    <p class="c-ranking-table__row-item">
+    ${datetimeToDateNotation(item.startTijd)}
+    </p>
+    <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">Etappe 
+    ${Etappe}
+    </p>
+    <p class="c-ranking-table__row-item">
+    ${secToTimeNotation(item.totaalTijd)}
+    </p>
+    <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-color-alpha ">
+    #${item.plaats}
+    </p>
+  </div>`;
+  Etappe--;
+    }
   }
   table.innerHTML = htmlString;
   listenToClickEtappe();
