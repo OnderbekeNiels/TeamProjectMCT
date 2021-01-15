@@ -915,7 +915,7 @@ namespace TeamProjectFunction
             //als laptijd gemaakt is wordt het model laptijd met alle params terug gestuurd
             try
             {
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 //var jarray = JArray.Parse(requestBody);
                 List<LapTijd> lapTijden = JsonConvert.DeserializeObject<List<LapTijd>>(requestBody);
                 foreach (LapTijd lapTijd in lapTijden)
