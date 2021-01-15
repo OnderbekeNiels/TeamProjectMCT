@@ -4,6 +4,7 @@ public class MonoPackageManager_Resources {
 		/* We need to ensure that "TeamProject_LocationTrigger.Android.dll" comes first in this list. */
 		"TeamProject_LocationTrigger.Android.dll",
 		"FormsViewGroup.dll",
+		"Newtonsoft.Json.dll",
 		"Plugin.Geofence.dll",
 		"TeamProject_LocationTrigger.dll",
 		"Xamarin.Android.Arch.Core.Common.dll",

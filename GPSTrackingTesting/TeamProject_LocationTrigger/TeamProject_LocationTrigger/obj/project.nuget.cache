@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "IJuXDzPp3ypCf8Df0LnVfgg67c7R/OD/xVb0qh8nJj0LW5WmxCI/2jYbYi6VXVVqqG/WHjc6AJ9HEgmDTVzi9g==",
+  "dgSpecHash": "MMNWBv2aAtW9Prq86a+Ff7musn74id5NXg+JKC5TkwmJO5XRZCvUXzNQW/M7KyyhDGa717ag9YjUj5kYNkP+1Q==",
   "success": true,
   "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\niels\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\niels\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\plugin.geofence\\1.8.11\\plugin.geofence.1.8.11.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\xamarin.essentials\\1.6.0\\xamarin.essentials.1.6.0.nupkg.sha512",

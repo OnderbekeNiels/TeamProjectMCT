@@ -1,4 +1,5 @@
-﻿using Plugin.Geofence;
+﻿using Newtonsoft.Json;
+using Plugin.Geofence;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace TeamProject_LocationTrigger
         {
             isRacing = false;
             DeviceDisplay.KeepScreenOn = false; //De app mag weer automatisch sluimeren.
+            string json = JsonConvert.SerializeObject(timeRegistrations);
         }
 
         private void BtnStart_Clicked(object sender, EventArgs e)
@@ -115,21 +117,17 @@ namespace TeamProject_LocationTrigger
             Location finishP2 = new Location(50.915356335370404, 3.6511052916846483); //Midden finsih piste
             Location finishP3 = new Location(50.915352530515946, 3.6510684113136893); //Rechter uiteinde finish piste
 
-            Location checkpointP1 = new Location(50.915075799426724, 3.6512685643987943); //Linker uiteinde checkpoint piste
-            Location checkpointP2 = new Location(50.91506396202935, 3.651253141698211); //Midden checkpoint piste
-            Location checkpointP3 = new Location(50.915069880728424, 3.651225649058041); //Rechter uiteinde checkpoint piste
+            Location checkpoint = new Location(50.91506396202935, 3.651253141698211); //Midden checkpoint piste
 
             //Berekenen afstand van jouw gsm ten opzichte van de punten.
             double distanceFinishP1 = Location.CalculateDistance(finishP1, Phone, DistanceUnits.Kilometers) * 1000;
             double distanceFinishP2 = Location.CalculateDistance(finishP2, Phone, DistanceUnits.Kilometers) * 1000;
             double distanceFinishP3 = Location.CalculateDistance(finishP3, Phone, DistanceUnits.Kilometers) * 1000;
 
-            double distanceCheckpointP1 = Location.CalculateDistance(checkpointP1, Phone, DistanceUnits.Kilometers) * 1000;
-            double distanceCheckpointP2 = Location.CalculateDistance(checkpointP2, Phone, DistanceUnits.Kilometers) * 1000;
-            double distanceCheckpointP3 = Location.CalculateDistance(checkpointP3, Phone, DistanceUnits.Kilometers) * 1000;
+            double distanceCheckpoint = Location.CalculateDistance(checkpoint, Phone, DistanceUnits.Kilometers) * 1000;
 
-            //Checken of je op 2 meter bent van het chechpoint
-            if (distanceCheckpointP1 <= 2 || distanceCheckpointP2 <= 2 || distanceCheckpointP3 <= 2)
+            //Checken of je op 6 meter bent van het chechpoint
+            if (distanceCheckpoint <= 6)
             {
                 passedCheckpoint = true;
             }
