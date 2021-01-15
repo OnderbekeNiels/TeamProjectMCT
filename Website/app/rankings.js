@@ -42,6 +42,19 @@ const datetimeToDateNotation = function (date) {
 
 //#endregion
 
+//#region *** Listen To ***
+
+const listenToClickRound = function(){
+  const rounds = document.querySelectorAll('.js-rounds-table-row');
+  for(const item of rounds){
+    item.addEventListener('click', function(){
+      window.location.href = `ronde_detail.html?roundId=${this.getAttribute('data-roundId')}`;
+    })
+  }
+}
+
+//#endregion
+
 //#region *** Show Data Functions ***
 
 const showRounds = function (data) {
@@ -64,7 +77,7 @@ const showRounds = function (data) {
 </div>`;
   for (const item of data) {
     htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row" data-roundid='${
+        <div class="c-ranking-table__row js-rounds-table-row" data-roundId='${
           item.rondeId
         }'>
       <p class="c-ranking-table__row-item">
@@ -85,10 +98,10 @@ const showRounds = function (data) {
     </div>`;
   }
   table.innerHTML = htmlString;
+  listenToClickRound();
 };
 
 const showRoundsRanking = function (data) {
-  console.table(data);
   const table = document.querySelector(".js-rounds-ranking-table");
   let htmlString = ` <div class="c-ranking-table__header">
   <p class="c-ranking-table__header-item u-flex-basis-1-of-3">Positie</p>
@@ -124,7 +137,7 @@ const showRoundsRanking = function (data) {
                 class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear"
               >
                 <p class="c-ranking-table__row-item--main">${secToTimeNotation(
-                  fastestTime
+                  item.totaalTijd
                 )}</p>
                 <p class="c-ranking-table__row-item--sub">${secToRankingTimeNotation(
                   item.totaalTijd - fastestTime
@@ -137,7 +150,6 @@ const showRoundsRanking = function (data) {
 };
 
 const showEtappes = function (data) {
-  console.table(data);
   data.sort((a, b) => (a.startTijd < b.startTijd ? 1 : -1));
   const table = document.querySelector(".js-etappes-table");
   let htmlString = `      <div class="c-ranking-table__header">
@@ -178,6 +190,11 @@ const showEtappes = function (data) {
   table.innerHTML = htmlString;
 };
 
+const showRoundInfo = function(data){
+  const roundName = document.querySelector('.js-round-name');
+  roundName.innerText = data.rondeNaam;
+}
+
 //#endregion
 
 const listenToToggle = function () {
@@ -187,13 +204,15 @@ const listenToToggle = function () {
     rankingContainer = document.querySelector(".c-ranking-container");
   for (const input of inputs) {
     input.addEventListener("change", function () {
+      let urlParams = new URLSearchParams(window.location.search);
+      const roundId = urlParams.get("roundId");
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
-        getEtappes("CBB74C13-66EB-4856-8AD6-BA74F67C0AAC");
+        getEtappes(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
-        getRoundsRanking("CBB74C13-66EB-4856-8AD6-BA74F67C0AAC");
+        getRoundsRanking(roundId);
       }
     });
   }
@@ -206,7 +225,6 @@ const getRounds = async function () {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.log(data);
     showRounds(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
@@ -218,8 +236,8 @@ const getEtappes = async function (rondeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.log(data);
     showEtappes(data);
+    showRoundInfo(data[0]);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
@@ -230,8 +248,8 @@ const getRoundsRanking = async function (roundId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.log(data);
     showRoundsRanking(data);
+    showRoundInfo(data[0]);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
@@ -267,8 +285,10 @@ document.addEventListener("DOMContentLoaded", function () {
     getRounds();
   }
   if (document.querySelector(".etappesoverview")) {
+    let urlParams = new URLSearchParams(window.location.search);
+    const roundId = urlParams.get("roundId");
+    getEtappes(roundId);
     listenToToggle();
-    //getEtappes('5F4266B2-D77E-46E9-95FE-0B76779B737E');
-    //getRoundsRanking();
+    
   }
 });
