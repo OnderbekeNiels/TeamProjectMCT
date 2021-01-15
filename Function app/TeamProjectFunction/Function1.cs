@@ -15,6 +15,7 @@ using TeamProjectFunction.Models.GebruikerRelated;
 using TeamProjectFunction.Models.Klassement;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace TeamProjectFunction
 {
@@ -915,32 +916,41 @@ namespace TeamProjectFunction
             try
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
-                lapTijd.LapTijdId = Guid.NewGuid();
-
-
-                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                //var jarray = JArray.Parse(requestBody);
+                List<LapTijd> lapTijden = JsonConvert.DeserializeObject<List<LapTijd>>(requestBody);
+                foreach (LapTijd lapTijd in lapTijden)
                 {
-                    await sqlConnectionInsert.OpenAsync();
-                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    lapTijd.LapTijdId = Guid.NewGuid();
+                    Console.WriteLine(lapTijd.EtappeId);
+
+                    string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                    using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                     {
-                        sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
-                        sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
-                        sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
-                        sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
-                        sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
-                        sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
+                        await sqlConnectionInsert.OpenAsync();
+                        using (SqlCommand sqlCommandInsert = new SqlCommand())
+                        {
+                            sqlCommandInsert.Connection = sqlConnectionInsert;
+                            sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
+                            sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                            sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
+                            sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
+                            sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
+                            sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
 
 
 
-                        await sqlCommandInsert.ExecuteNonQueryAsync();
+                            await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                        return new OkObjectResult(lapTijd);
-
+                        }
                     }
                 }
+
+
+                CustomResponse customResponse = new CustomResponse();
+                customResponse.Succes = true;
+                customResponse.Message = "Laptijden succesvol opgeslagen.";
+                return new OkObjectResult(customResponse);
+                
             }
             catch (Exception ex)
             {
