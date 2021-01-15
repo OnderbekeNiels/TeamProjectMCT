@@ -34,7 +34,15 @@ namespace TempoTrack.Views.RondePaginas
 
             foreach (RondesGebruiker item in rondesGebruiker)
             {
-                Debug.WriteLine(item.ToString());
+                if(item.Admin == GebruikersInfo.GebruikerId)
+                {
+                    item.IsAdmin = "#015D99";
+                }
+                else
+                {
+                    item.IsAdmin = null;
+                }
+                //Debug.WriteLine(item.ToString());
             }
 
             lvw.ItemsSource = rondesGebruiker;
