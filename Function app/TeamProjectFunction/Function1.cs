@@ -758,15 +758,102 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelDeelnemerfromRonde")]
-        public static async Task<IActionResult> DelDeelnemerfromRonde(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
-          ILogger log, Guid DeelnemerId)
+        //[FunctionName("DelDeelnemerfromRondeIsActief")]
+        //public static async Task<IActionResult> DelDeelnemerfromRondeIsActief(
+        //  [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
+        //  ILogger log, Guid DeelnemerId)
+        //{
+        //    try
+        //    {
+                
+        //        string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+        //        using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+        //        {
+        //            await sqlConnectionDel.OpenAsync();
+        //            using (SqlCommand sqlCommandDel = new SqlCommand())
+        //            {
+        //                sqlCommandDel.Connection = sqlConnectionDel;
+        //                sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
+        //                sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", DeelnemerId);
+
+
+
+
+        //                await sqlCommandDel.ExecuteNonQueryAsync();
+
+        //                CustomResponse customResponse = new CustomResponse();
+        //                customResponse.Succes = true;
+        //                return new OkObjectResult(customResponse);
+
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Console.WriteLine($"Error: {ex}");
+        //        return new BadRequestResult(); ;
+        //    }
+
+
+        //}
+
+
+        [FunctionName("DelDeelnemerfromRondeIsActief")]
+        public static async Task<IActionResult> DelDeelnemerfromRondeIsActief(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "deelnemer/{GebruikerId}/{RondeId}")] HttpRequest req,
+          ILogger log, Guid GebruikerId, Guid RondeId)
         {
             try
             {
-                CustomResponse customResponse = await DeleteFunctions.DelDeelnemerFromRonde(DeelnemerId);
-                return new OkObjectResult(customResponse);
+                string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+                //deelnemerid ophalen:
+                using (SqlConnection sqlConnection = new SqlConnection(connectionStringDel))
+                {
+                    await sqlConnection.OpenAsync();
+                    using (SqlCommand sqlCommand = new SqlCommand())
+                    {
+                        sqlCommand.Connection = sqlConnection;
+                        sqlCommand.CommandText = "select DeelnemerId from Deelnemers where RondeId = @RondeId and GebruikersId = @GebruikersId";
+                        sqlCommand.Parameters.AddWithValue("@RondeId", RondeId);
+                        sqlCommand.Parameters.AddWithValue("@GebruikersId", GebruikerId);
+                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+
+                        while (reader.Read())
+                        {
+                            Deelnemer deelnemer = new Deelnemer();
+                            deelnemer.DeelnemerId = Guid.Parse(reader["DeelnemerId"].ToString());
+
+                            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                            {
+                                await sqlConnectionDel.OpenAsync();
+                                using (SqlCommand sqlCommandDel = new SqlCommand())
+                                {
+                                    sqlCommandDel.Connection = sqlConnectionDel;
+                                    sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
+                                    sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+
+
+
+
+                                    await sqlCommandDel.ExecuteNonQueryAsync();
+
+                                    
+
+                                }
+                            }
+                        }
+
+
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = true;
+                        return new OkObjectResult(customResponse);
+                    }
+                }
+
+
+                
+                
             }
             catch (Exception ex)
             {
@@ -971,16 +1058,34 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelEtappe")]
-        public static async Task<IActionResult> DelEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "etappe/{EtappeId}")] HttpRequest req,
+        [FunctionName("DelEtappeIsActief")]
+        public static async Task<IActionResult> DelEtappeIsActief(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{EtappeId}")] HttpRequest req,
           ILogger log, Guid EtappeId)
         {
             try
             {
-                CustomResponse customResponse = await DeleteFunctions.DelEtappeFunction(EtappeId);
+                string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                {
+                    await sqlConnectionDel.OpenAsync();
+                    using (SqlCommand sqlCommandDel = new SqlCommand())
+                    {
+                        sqlCommandDel.Connection = sqlConnectionDel;
+                        sqlCommandDel.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
+                        sqlCommandDel.Parameters.AddWithValue("@EtappeId", EtappeId);
 
-                return new OkObjectResult(customResponse);
+
+
+
+                        await sqlCommandDel.ExecuteNonQueryAsync();
+
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = true;
+                        return new OkObjectResult(customResponse);
+
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1114,7 +1219,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select r.RondeId,e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId group by r.RondeId, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
+                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         command.Parameters.AddWithValue("@rondeId", RondeId);
@@ -1130,6 +1235,7 @@ namespace TeamProjectFunction
                             data.StartTijd = DateTime.Parse(reader["StartTijd"].ToString());
                             data.LapAfstand = double.Parse(reader["LapAfstand"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
+                            data.RondeNaam = reader["RondeNaam"].ToString();
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
 
