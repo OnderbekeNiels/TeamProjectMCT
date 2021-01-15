@@ -263,8 +263,9 @@ const showEtappesRanking = function (data) {
 };
 
 const showEtappeInfo = function(data){
-  const etappeInfo = document.querySelector('.js-etappe-info');
-  etappeInfo.innerText = `RNDS: ${0} - DLN ${0} - AFSTD: ${0.00} Km - GEM SN: ${0.00} Km/u`;
+  const etappeInfo = document.querySelector('.js-etappe-info'), etappeName = document.querySelector('.js-etappe-name');
+  etappeInfo.innerText = `RNDS: ${data.laps} - DLN ${data.aantalDeelnemers} - AFSTD: ${Math.round((data.afstand + Number.EPSILON) * 100) / 100} Km - GEM SN: ${Math.round((((3600/data.totaalTijd) * data.afstand) + Number.EPSILON) * 100) / 100} Km/u`;
+  etappeName.innerText = `${data.rondeNaam} - `
 }
 
 //#endregion
@@ -334,6 +335,17 @@ const getEtappesRanking = async function (etappeId) {
     const data = await response.json();
     console.table(data);
     showEtappesRanking(data);
+  } catch (error) {
+    console.error("An error occured, we handled it.", error);
+  }
+};
+
+const getEtappeInfo = async function (etappeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappes/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.table(data);
     showEtappeInfo(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
@@ -380,7 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
     getEtappesRanking(etappeId);
-    listenToToggle();
+    getEtappeInfo(etappeId);
     
   }
 });
