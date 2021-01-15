@@ -105,6 +105,7 @@ namespace TeamProjectFunction.Repository
             // eerst controleren als er nog deelnemers betsaan in deze ronde
             // en controleren als er nog etappes zijn
             //List<Guid> lapTijden = new List<Guid>();
+
             List<Guid> deelnemerIds = new List<Guid>();
             string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
             //deelnemers verwijderen:

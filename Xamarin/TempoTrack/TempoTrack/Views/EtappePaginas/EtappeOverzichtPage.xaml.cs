@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.RondePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,15 +26,26 @@ namespace TempoTrack.Views.EtappePaginas
 
             InitializeComponent();
 
+            //UserControls
             btnInvite.Clicked += BtnInvite_Clicked;
             btnStoppen.Clicked += BtnStoppen_Clicked;
-            btnCreateEtappe.Clicked += BtnCreateEtappe_Clicked;
             btnRefresh.Clicked += BtnRefresh_Clicked;
+
+            //AdminControls
+            btnCreateEtappe.Clicked += BtnCreateEtappe_Clicked;
+            btnInviteAdmin.Clicked += BtnInviteAdmin_Clicked;
+            btnVerwijder.Clicked += BtnVerwijder_Clicked;
 
             if(GebruikersInfo.GebruikerId == RondeInfo.Admin)
             {
+                //AdminControls tonen
                 btnCreateEtappe.IsVisible = true;
-                btnCreateEtappe.IsEnabled = true;
+                btnInviteAdmin.IsVisible = true;
+                btnVerwijder.IsVisible = true;
+
+                //UserControls niet tonen
+                btnStoppen.IsVisible = false;
+                btnInvite.IsVisible = false;
             }
 
             LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
@@ -77,11 +89,6 @@ namespace TempoTrack.Views.EtappePaginas
             await DisplayAlert("Invite code", RondeInfo.InviteCode, "Ok");
         }
 
-        private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new CreateEtappePage(RondeInfo , GebruikersInfo));
-        }
-
         private void BtnRefresh_Clicked(object sender, EventArgs e)
         {
             lvwEtappes.ItemsSource = null;
@@ -109,5 +116,37 @@ namespace TempoTrack.Views.EtappePaginas
             }
         }
 
+        private void BtnVerwijder_Clicked(object sender, EventArgs e)
+        {
+            Ronde delRonde = new Ronde();
+            delRonde.RondeId = RondeInfo.RondeId;
+
+            DeleteRondes(delRonde.RondeId);
+        }
+
+        private async Task DeleteRondes(Guid rondeId)
+        {
+            int response = await RondeRepository.DeleteRonde(rondeId);
+            
+            if(response == 1)
+            {
+                await DisplayAlert("Ronde verwijderd", "De ronde is succesvol verwijderd", "Ok");
+                await Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+            }
+            else
+            {
+                await DisplayAlert("Fout", "Er is een fout opgetreden bij het verwijderen", "Ok");
+            }
+        }
+
+        private void BtnInviteAdmin_Clicked(object sender, EventArgs e)
+        {
+            PopUpInviteCode();
+        }
+
+        private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CreateEtappePage(RondeInfo, GebruikersInfo));
+        }
     }
 }
