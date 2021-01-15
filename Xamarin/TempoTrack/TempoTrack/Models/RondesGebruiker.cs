@@ -40,6 +40,8 @@ namespace TempoTrack.Models
         public int AantalEtappes { get; set; }
         public int AantalDeelnemers { get; set; }
 
+        public string IsAdmin { get; set; }
+
         public override string ToString()
         {
             return $"Startdatum: {StartDatum}, RondeNaam: {RondeNaam}, RondeId: {RondeId}, Ranking: {Ranking}";
