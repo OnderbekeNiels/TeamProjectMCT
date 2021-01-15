@@ -12,8 +12,7 @@
           "NETStandard.Library": "2.0.3",
           "Plugin.Geofence": "1.8.11",
           "Xamarin.Essentials": "1.6.0",
-          "Xamarin.Forms": "5.0.0.1874",
-          "Mono.Android": "0.0.0.0"
+          "Xamarin.Forms": "5.0.0.1874"
         },
         "runtime": {
           "TeamProject_LocationTrigger.dll": {}
@@ -67,14 +66,6 @@
             "fileVersion": "5.0.0.582"
           }
         }
-      },
-      "Mono.Android/0.0.0.0": {
-        "runtime": {
-          "Mono.Android.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
       }
     }
   },
@@ -125,11 +116,6 @@
       "sha512": "sha512-DddatpRCi4WvM4pBuDfRtKr/KkhFZoVE1KLNFwbOfltVUecqf78y8VaIDDU/iddfNfMSSzoqDBWpZgNj6lFyxA==",
       "path": "xamarin.forms/5.0.0.1874",
       "hashPath": "xamarin.forms.5.0.0.1874.nupkg.sha512"
-    },
-    "Mono.Android/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

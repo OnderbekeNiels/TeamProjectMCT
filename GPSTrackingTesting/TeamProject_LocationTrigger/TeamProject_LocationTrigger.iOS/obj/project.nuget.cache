@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9GUDjhBGjd/cWx3eFl86DRn5LbMy4XGCX2aSWOeEflGgczsK1kq1B91RtGuXsQco4s0IAhq+bV9Y4j1wNgYQBw==",
+  "dgSpecHash": "SIsOV4JyRAGZdP/RijkcT3CYL1UUAQs5g2fRi7bYQvSmUvZkc8eKY/By9EDmAIsvCnp2BRPIgsdLzqDSCglvPg==",
   "success": true,
   "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\niels\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\plugin.geofence\\1.8.11\\plugin.geofence.1.8.11.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\xam.plugin.geofence\\1.1.2\\xam.plugin.geofence.1.1.2.nupkg.sha512",

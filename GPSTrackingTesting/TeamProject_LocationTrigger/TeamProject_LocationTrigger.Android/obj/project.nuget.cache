@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "WOKM2TWE7ubwU/ZDS4sKBeb6Q1qATUiNupqa5F8YP2thFy7TUNwx4cffMj7WAZNclfiTUb4witLc0aLj/aFZaQ==",
+  "dgSpecHash": "7WTbu+0P8Vg4Bq0h1OXbZ15sJcnMo1Uaentbc5LrVO9j6HXDQ5UO+Wt7oY+dXuhW90fn8mWjmLP1VQC9AcQNug==",
   "success": true,
   "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.Android\\TeamProject_LocationTrigger.Android.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\niels\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\plugin.geofence\\1.8.11\\plugin.geofence.1.8.11.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\xam.plugin.geofence\\1.1.2\\xam.plugin.geofence.1.1.2.nupkg.sha512",
