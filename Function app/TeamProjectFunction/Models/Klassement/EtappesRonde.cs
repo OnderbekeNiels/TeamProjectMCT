@@ -17,7 +17,7 @@ namespace TeamProjectFunction.Models
         public int SnelsteTijd { get; set; }
         public int Plaats { get; set; }
         public Guid Admin { get; set; }
-        public int EtappeActief { get; set; }
+        public bool EtappeActief { get; set; }
 
     }
 }
