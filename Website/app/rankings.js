@@ -44,23 +44,27 @@ const datetimeToDateNotation = function (date) {
 
 //#region *** Listen To ***
 
-const listenToClickRound = function(){
-  const rounds = document.querySelectorAll('.js-rounds-table-row');
-  for(const item of rounds){
-    item.addEventListener('click', function(){
-      window.location.href = `ronde_detail.html?roundId=${this.getAttribute('data-roundId')}`;
-    })
+const listenToClickRound = function () {
+  const rounds = document.querySelectorAll(".js-rounds-table-row");
+  for (const item of rounds) {
+    item.addEventListener("click", function () {
+      window.location.href = `ronde_detail.html?roundId=${this.getAttribute(
+        "data-roundId"
+      )}`;
+    });
   }
-}
+};
 
-const listenToClickEtappe = function(){
-  const rounds = document.querySelectorAll('.js-etappes-table-row');
-  for(const item of rounds){
-    item.addEventListener('click', function(){
-      window.location.href = `etappe_detail.html?etappeId=${this.getAttribute('data-etappeId')}`;
-    })
+const listenToClickEtappe = function () {
+  const rounds = document.querySelectorAll(".js-etappes-table-row");
+  for (const item of rounds) {
+    item.addEventListener("click", function () {
+      window.location.href = `etappe_detail.html?etappeId=${this.getAttribute(
+        "data-etappeId"
+      )}`;
+    });
   }
-}
+};
 
 //#endregion
 
@@ -201,10 +205,10 @@ const showEtappes = function (data) {
   listenToClickEtappe();
 };
 
-const showRoundInfo = function(data){
-  const roundName = document.querySelector('.js-round-name');
+const showRoundInfo = function (data) {
+  const roundName = document.querySelector(".js-round-name");
   roundName.innerText = data.rondeNaam;
-}
+};
 
 const showEtappesRanking = function (data) {
   const table = document.querySelector(".js-etappes-ranking-table");
@@ -262,11 +266,20 @@ const showEtappesRanking = function (data) {
   table.innerHTML = htmlString;
 };
 
-const showEtappeInfo = function(data){
-  const etappeInfo = document.querySelector('.js-etappe-info'), etappeName = document.querySelector('.js-etappe-name');
-  etappeInfo.innerText = `RNDS: ${data.laps} - DLN ${data.aantalDeelnemers} - AFSTD: ${Math.round((data.afstand + Number.EPSILON) * 100) / 100} Km - GEM SN: ${Math.round((((3600/data.totaalTijd) * data.afstand) + Number.EPSILON) * 100) / 100} Km/u`;
-  etappeName.innerText = `${data.rondeNaam} - `
-}
+const showEtappeInfo = function (data) {
+  const etappeInfo = document.querySelector(".js-etappe-info"),
+    etappeName = document.querySelector(".js-etappe-name");
+  etappeInfo.innerText = `RNDS: ${data.laps} - DLN ${
+    data.aantalDeelnemers
+  } - AFSTD: ${
+    Math.round((data.afstand + Number.EPSILON) * 100) / 100
+  } Km - GEM SN: ${
+    Math.round(
+      ((3600 / data.totaalTijd) * data.afstand + Number.EPSILON) * 100
+    ) / 100
+  } Km/u`;
+  etappeName.innerText = `${data.rondeNaam} - `;
+};
 
 //#endregion
 
@@ -386,13 +399,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const roundId = urlParams.get("roundId");
     getEtappes(roundId);
     listenToToggle();
-    
   }
   if (document.querySelector(".etappesdetail")) {
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
     getEtappesRanking(etappeId);
     getEtappeInfo(etappeId);
-    
   }
 });
