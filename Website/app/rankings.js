@@ -89,7 +89,7 @@ const showRounds = function (data) {
   </p>
 </div>`;
   for (const item of data) {
-    if(item.EtappeActief != 1 || item.EtappeActief != null){
+    if (item.EtappeActief != true || item.EtappeActief != null) {
       htmlString += `
         <div class="c-ranking-table__row js-rounds-table-row" data-roundId='${
           item.rondeId
@@ -184,7 +184,7 @@ const showEtappes = function (data) {
 </div>`;
   let Etappe = data.length;
   for (const item of data) {
-    if(item.EtappeActief != 1 || item.EtappeActief != null){
+    if (item.EtappeActief != true || item.EtappeActief != null) {
       htmlString += `
       <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
         item.etappeId
@@ -202,7 +202,7 @@ const showEtappes = function (data) {
     #${item.plaats}
     </p>
   </div>`;
-  Etappe--;
+      Etappe--;
     }
   }
   table.innerHTML = htmlString;
