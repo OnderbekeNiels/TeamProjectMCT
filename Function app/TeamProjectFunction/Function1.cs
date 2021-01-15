@@ -758,35 +758,102 @@ namespace TeamProjectFunction
         }
 
 
+        //[FunctionName("DelDeelnemerfromRondeIsActief")]
+        //public static async Task<IActionResult> DelDeelnemerfromRondeIsActief(
+        //  [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
+        //  ILogger log, Guid DeelnemerId)
+        //{
+        //    try
+        //    {
+                
+        //        string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+        //        using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+        //        {
+        //            await sqlConnectionDel.OpenAsync();
+        //            using (SqlCommand sqlCommandDel = new SqlCommand())
+        //            {
+        //                sqlCommandDel.Connection = sqlConnectionDel;
+        //                sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
+        //                sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", DeelnemerId);
+
+
+
+
+        //                await sqlCommandDel.ExecuteNonQueryAsync();
+
+        //                CustomResponse customResponse = new CustomResponse();
+        //                customResponse.Succes = true;
+        //                return new OkObjectResult(customResponse);
+
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Console.WriteLine($"Error: {ex}");
+        //        return new BadRequestResult(); ;
+        //    }
+
+
+        //}
+
+
         [FunctionName("DelDeelnemerfromRondeIsActief")]
         public static async Task<IActionResult> DelDeelnemerfromRondeIsActief(
-          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "deelnemer/{DeelnemerId}")] HttpRequest req,
-          ILogger log, Guid DeelnemerId)
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "deelnemer/{GebruikerId}/{RondeId}")] HttpRequest req,
+          ILogger log, Guid GebruikerId, Guid RondeId)
         {
             try
             {
-                
                 string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
-                using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                //deelnemerid ophalen:
+                using (SqlConnection sqlConnection = new SqlConnection(connectionStringDel))
                 {
-                    await sqlConnectionDel.OpenAsync();
-                    using (SqlCommand sqlCommandDel = new SqlCommand())
+                    await sqlConnection.OpenAsync();
+                    using (SqlCommand sqlCommand = new SqlCommand())
                     {
-                        sqlCommandDel.Connection = sqlConnectionDel;
-                        sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
-                        sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", DeelnemerId);
+                        sqlCommand.Connection = sqlConnection;
+                        sqlCommand.CommandText = "select DeelnemerId from Deelnemers where RondeId = @RondeId and GebruikersId = @GebruikersId";
+                        sqlCommand.Parameters.AddWithValue("@RondeId", RondeId);
+                        sqlCommand.Parameters.AddWithValue("@GebruikersId", GebruikerId);
+                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+
+                        while (reader.Read())
+                        {
+                            Deelnemer deelnemer = new Deelnemer();
+                            deelnemer.DeelnemerId = Guid.Parse(reader["DeelnemerId"].ToString());
+
+                            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+                            {
+                                await sqlConnectionDel.OpenAsync();
+                                using (SqlCommand sqlCommandDel = new SqlCommand())
+                                {
+                                    sqlCommandDel.Connection = sqlConnectionDel;
+                                    sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
+                                    sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
 
 
 
 
-                        await sqlCommandDel.ExecuteNonQueryAsync();
+                                    await sqlCommandDel.ExecuteNonQueryAsync();
+
+                                    
+
+                                }
+                            }
+                        }
+
 
                         CustomResponse customResponse = new CustomResponse();
                         customResponse.Succes = true;
                         return new OkObjectResult(customResponse);
-
                     }
                 }
+
+
+                
+                
             }
             catch (Exception ex)
             {
