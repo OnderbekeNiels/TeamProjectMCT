@@ -69,8 +69,10 @@ namespace TempoTrack.Views.EtappePaginas
             etappes.Reverse();
 
             lvw.ItemsSource = etappes;
+
             lblRondePlaats.Text = RondeInfo.Ranking;
             lblRondeTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
+            lvw.EndRefresh();
         }
 
         private void BtnStoppen_Clicked(object sender, EventArgs e)

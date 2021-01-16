@@ -46,6 +46,8 @@ namespace TempoTrack.Views.RondePaginas
             }
 
             lvw.ItemsSource = rondesGebruiker;
+
+            lvw.EndRefresh();
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
