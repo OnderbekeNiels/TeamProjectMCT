@@ -200,20 +200,25 @@ const showEtappes = function (data) {
     Positie
   </p>
 </div>`;
-  let Etappe = data.length;
+  let aantalEtappes = 0;
+  for(const item of data){
+    if(item.etappeActief == false){
+      aantalEtappes++;
+    }
+  }
   for (const item of data) {
-    if (item.EtappeActief != true || item.EtappeActief != null) {
+    if (item.etappeActief != true) {
       htmlString += `
       <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
         item.etappeId
       }' data-etappeTitle='Etappe ${
-        Etappe 
+        aantalEtappes 
       }'>
     <p class="c-ranking-table__row-item">
     ${datetimeToDateNotation(item.startTijd)}
     </p>
     <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">Etappe 
-    ${Etappe}
+    ${aantalEtappes}
     </p>
     <p class="c-ranking-table__row-item">
     ${secToTimeNotation(item.totaalTijd)}
@@ -222,7 +227,7 @@ const showEtappes = function (data) {
     #${item.plaats}
     </p>
   </div>`;
-      Etappe--;
+      aantalEtappes--;
     }
   }
   table.innerHTML = htmlString;
