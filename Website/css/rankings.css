@@ -2,6 +2,18 @@
 #FONTS
 \*------------------------------------*/
 
+@font-face {
+  font-family: "DIN 2014";
+  font-weight: 400;
+  src: url("../fonts/DIN2014-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DIN 2014";
+  font-weight: 700;
+  src: url("../fonts/DIN2014-Bold.woff") format("woff");
+}
+
 /*------------------------------------*\
 #Variables
 \*------------------------------------*/
@@ -150,7 +162,7 @@
 html {
   font-size: 100%;
   line-height: 1.5;
-  font-family: "Inter", sans-serif;
+  font-family: "DIN 2014", sans-serif;
   color: var(--global-color-neutral-xx-dark);
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -491,6 +503,7 @@ input:disabled {
   margin: 0 var(--global-whitespace-sm) 0 0;
   font-size: 1.125rem;
   font-weight: 700;
+  font-style: italic;
 }
 
 /* Toon title */
@@ -860,7 +873,7 @@ input:disabled {
   font-weight: 700;
   padding: calc(3rem / var(--global-font-size)) 0px;
   width: calc(var(--global-baseline) * 16);
-  line-height: calc(24rem / var(--global-font-size));
+  line-height: calc(20rem / var(--global-font-size));
   border: 1px solid var(--c-toggle-borderColor);
   color: var(--c-toggle-color);
   transition: all var(--global-transitionSpeed-fast) ease-in-out;

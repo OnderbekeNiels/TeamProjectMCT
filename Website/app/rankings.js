@@ -310,7 +310,7 @@ const showEtappeInfo = function (data) {
 //#region *** Get Data Functions ***
 
 const getRounds = async function () {
-  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/site/gebruiker/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
