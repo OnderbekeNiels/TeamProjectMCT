@@ -35,69 +35,69 @@ namespace TempoTrack.Views.Login
         private void BtnLogin_Clicked(object sender, EventArgs e)
         {
 
-            var authenticator = new OAuth2Authenticator
-                         (
-                           "623999391750-8cep3ajgrnh26gdnmlbjq3376im2gcui.apps.googleusercontent.com",
-                           "email profile",
-                            new System.Uri("https://accounts.google.com/o/oauth2/auth"),
-                            new System.Uri("https://localhost:44312/signin-google")
-                          );
+            //var authenticator = new OAuth2Authenticator
+            //             (
+            //               "623999391750-8cep3ajgrnh26gdnmlbjq3376im2gcui.apps.googleusercontent.com",
+            //               "email profile",
+            //                new System.Uri("https://accounts.google.com/o/oauth2/auth"),
+            //                new System.Uri("https://localhost:44312/signin-google")
+            //              );
 
-            authenticator.AllowCancel = true;
+            //authenticator.AllowCancel = true;
 
-            var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
-            presenter.Login(authenticator);
+            //var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
+            //presenter.Login(authenticator);
 
-            authenticator.Completed += async (senders, obj) =>
-            {
-                if (obj.IsAuthenticated)
-                {
-                    Debug.WriteLine("Dit doet iets");
-                    var clientData = new HttpClient();
+            //authenticator.Completed += async (senders, obj) =>
+            //{
+            //    if (obj.IsAuthenticated)
+            //    {
+            //        Debug.WriteLine("Dit doet iets");
+            //        var clientData = new HttpClient();
 
-                    //call google api to fetch logged in user profile info
-                    token = obj.Account.Properties["access_token"];
-                    var resData = await clientData.GetAsync("https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + obj.Account.Properties["access_token"]);
-                    var jsonData = await resData.Content.ReadAsStringAsync();
+            //        //call google api to fetch logged in user profile info
+            //        token = obj.Account.Properties["access_token"];
+            //        var resData = await clientData.GetAsync("https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + obj.Account.Properties["access_token"]);
+            //        var jsonData = await resData.Content.ReadAsStringAsync();
 
-                    //deserlize the jsondata and intilize in GoogleAuthClass
-                    GoogleLogin googleObject = JsonConvert.DeserializeObject<GoogleLogin>(jsonData);
+            //        //deserlize the jsondata and intilize in GoogleAuthClass
+            //        GoogleLogin googleObject = JsonConvert.DeserializeObject<GoogleLogin>(jsonData);
 
-                    //you can access following property after login
-                    string email = googleObject.email;
-                    string name = googleObject.name;
+            //        //you can access following property after login
+            //        string email = googleObject.email;
+            //        string name = googleObject.name;
 
-                    GebruikerV2 gebruikerInfo = await LoginRepository.CheckLogin(googleObject);
+            //        GebruikerV2 gebruikerInfo = await LoginRepository.CheckLogin(googleObject);
 
-                    if (gebruikerInfo != null)
-                    {
-                        Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
-                        Debug.WriteLine("-----------------------------------------------------------------------------------------");
-                        Debug.WriteLine($"Email:{gebruikerInfo.Email}, Gebruikersnaam: {gebruikerInfo.name}, GebruikersId: {gebruikerInfo.GebruikerId}");
-                        Debug.WriteLine("-----------------------------------------------------------------------------------------");
+            //        if (gebruikerInfo != null)
+            //        {
+            //            Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
+            //            Debug.WriteLine("-----------------------------------------------------------------------------------------");
+            //            Debug.WriteLine($"Email:{gebruikerInfo.Email}, Gebruikersnaam: {gebruikerInfo.name}, GebruikersId: {gebruikerInfo.GebruikerId}");
+            //            Debug.WriteLine("-----------------------------------------------------------------------------------------");
 
-                    }
-                    else
-                    {
-                        Navigation.PopAsync();
-                        Debug.WriteLine("-----------------------------------------------------------------------------------------");
-                        Debug.WriteLine("Failed for some reason");
-                        Debug.WriteLine("-----------------------------------------------------------------------------------------");
-                    }
-                }
-                else
-                {
-                    //Authentication fail
-                    //write the code to handle when auth failed
-                }
-            };
-            authenticator.Error += onAuthError;
+            //        }
+            //        else
+            //        {
+            //            Navigation.PopAsync();
+            //            Debug.WriteLine("-----------------------------------------------------------------------------------------");
+            //            Debug.WriteLine("Failed for some reason");
+            //            Debug.WriteLine("-----------------------------------------------------------------------------------------");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        //Authentication fail
+            //        //write the code to handle when auth failed
+            //    }
+            //};
+            //authenticator.Error += onAuthError;
 
-            //GebruikerV2 gebruikerInfo = new GebruikerV2();
-            //gebruikerInfo.GebruikerId = Guid.Parse("e0944f6f-f304-494e-9f96-4addea34fcab");
-            //gebruikerInfo.Email = "signin.testuser@gmail.com";
-            //gebruikerInfo.name = "jelle demets";
-            //Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
+            GebruikerV2 gebruikerInfo = new GebruikerV2();
+            gebruikerInfo.GebruikerId = Guid.Parse("e0944f6f-f304-494e-9f96-4addea34fcab");
+            gebruikerInfo.Email = "signin.testuser@gmail.com";
+            gebruikerInfo.name = "jelle demets";
+            Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
 
             //GebruikerV2 gebruikerInfo = new GebruikerV2();
             //gebruikerInfo.GebruikerId = Guid.Parse("ecde6aac-3192-4f8c-a077-c5bbbff1e600");
