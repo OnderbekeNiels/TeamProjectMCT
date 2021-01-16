@@ -3,17 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ronde Overzicht</title>
+    <title>Ronde detail</title>
 
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="./css/rankings.css" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <script src="./app/rankings.js"></script>
-    <meta name="google-signin-client_id" content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com">
+    <meta
+      name="google-signin-client_id"
+      content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com"
+    />
   </head>
-  <body class="roundsoverview">
-    <header class="c-header">
+  <body class="roundsdetail">
+        <header class="c-header">
       <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
       <div class="c-header__logo">
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -39,33 +42,107 @@
       <div class="c-header__action">
         <p class="c-header__user">Niels</p>
         <button class="c-header__logoutBtn o-button-reset" onclick="signOut();">Afmelden</button>
+        <button class="c-header__logoutBtn--icon o-button-reset" onclick="signOut();"><svg id="login-24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <g id="Group_7" data-name="Group 7">
+            <rect id="Rectangle_5" data-name="Rectangle 5" width="24" height="24" fill="none"/>
+          </g>
+          <g id="Group_8" data-name="Group 8" transform="translate(2 3)">
+            <path id="Path_1" data-name="Path 1" d="M13,7l1.4,1.4L11.8,11H22v2H11.8l2.6,2.6L13,17,8,12ZM4,19h8v2H4a2.006,2.006,0,0,1-2-2V5A2.006,2.006,0,0,1,4,3h8V5H4Z" transform="translate(-2 -3)" fill="#fff"/>
+          </g>
+        </svg>
+        </button>
       </div>
     </header>
     <div class="c-main-container">
-      <h1 class="c-page-title">Ronde overzicht</h1>
-    <p class="c-page-subtitle">Dit zijn de rondes waar u aan heeft deelgenomen.</p>
-    <div class="c-ranking-table js-rounds-table">
-      <div class="c-ranking-table__header">
-        <p class="c-ranking-table__header-item">
-          Startdatum
-        </p>
-        <p class="c-ranking-table__header-item u-text-align--left">
-          Ronde
-        </p>
-        <p class="c-ranking-table__header-item">
-          Totale tijd
-        </p>
-        <p class="c-ranking-table__header-item u-mr-clear">
-          Positie
-        </p>
-      </div>
-      <div class="o-data-loading">
-        <svg class="o-circular-loader"viewBox="25 25 50 50" >
-          <circle class="o-loader-path" cx="50" cy="50" r="20" fill="none" stroke="#016fb7" stroke-width="2" />
-        </svg>
-        We halen uw rondes op.
+      <h1 class="c-page-title js-round-name">Tour de France</h1>
+      <div class="c-toggle">
+        <input
+          class="c-toggle-option__input o-hide-accessible js-option-etappe js-option"
+          type="radio"
+          name="toggle"
+          checked
+          id="etappe"
+        />
+        <label
+          class="c-toggle-option__label c-toggle-option__label--left"
+          for="etappe"
+          >Etappes</label
+        >
+        <input
+          class="c-toggle-option__input js-option-rounds-ranking js-option o-hide-accessible"
+          type="radio"
+          name="toggle"
+          id="ranking"
+        />
+        <label
+          class="c-toggle-option__label c-toggle-option__label--right"
+          for="ranking"
+          >Klassement</label
+        >
       </div>
     </div>
-  </div>
+    <div class="c-data">
+      <div class="c-ranking-container">
+        <div class="c-ranking-container__item">
+          <div class="c-ranking-table js-etappes-table">
+            <div class="c-ranking-table__header">
+              <p class="c-ranking-table__header-item">Startdatum</p>
+              <p class="c-ranking-table__header-item u-text-align--left">
+                Ronde
+              </p>
+              <p class="c-ranking-table__header-item">Totale tijd</p>
+              <p class="c-ranking-table__header-item u-mr-clear">Positie</p>
+            </div>
+            <div class="o-data-loading">
+              <svg class="o-circular-loader" viewBox="25 25 50 50">
+                <circle
+                  class="o-loader-path"
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  stroke="#016fb7"
+                  stroke-width="2"
+                />
+              </svg>
+              We halen uw data op.
+            </div>
+          </div>
+        </div>
+        <div class="c-ranking-container__item">
+          <div class="c-ranking-table js-rounds-ranking-table">
+            <div class="c-ranking-table__header">
+              <p class="c-ranking-table__header-item u-flex-basis-1-of-3">
+                Positie
+              </p>
+              <p
+                class="c-ranking-table__header-item u-flex-basis-1-of-3 u-text-align--left"
+              >
+                Deelnemer
+              </p>
+              <p
+                class="c-ranking-table__header-item u-flex-basis-1-of-3 u-mr-clear"
+              >
+                Totale tijd
+              </p>
+            </div>
+            <div class="o-data-loading">
+              <svg class="o-circular-loader" viewBox="25 25 50 50">
+                <circle
+                  class="o-loader-path"
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  stroke="#016fb7"
+                  stroke-width="2"
+                />
+              </svg>
+              We halen uw data op.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
