@@ -155,10 +155,10 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void lvwEtappes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            Etappe etappe = lvwEtappes.SelectedItem as Etappe;
+            EtappesRonde etappe = lvwEtappes.SelectedItem as EtappesRonde;
             if (etappe.StartTijd > DateTime.Now)
             {
-                //Navigation.PushAsync(new ActivityPage(RondeInfo.RondeId, GebruikersInfo.GebruikerId));
+               Navigation.PushAsync(new ActivityPage(RondeInfo.RondeId, GebruikersInfo));
             }
         }
     }

@@ -84,7 +84,7 @@ namespace TempoTrack.Repositories
             {
                 using (HttpClient client = GetHttpClient())
                 {
-                    string url = $"{ _BASEURI}/deelnemer/{gebruikersId}/{rondeId}";
+                    string url = $"{ _BASEURI}/deelnemer/{gebruikersId}/{rondeId}?code={_FUNCTIONKEY}";
                     string json = "";
                     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await client.PutAsync(url, content);

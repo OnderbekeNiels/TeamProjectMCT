@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.RondePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,14 +16,14 @@ namespace TempoTrack.Views.Activity
     {
         //Navigation.PushAsync(new ActivityPage(RondeInfo.rondeId, GebruikersInfo.gerbruikersId));
         Guid rondeId;
-        Guid gebruikersId;
-        public ActivityPage(Guid parRondeId, Guid parGebruikersId)
+        GebruikerV2 gebruikersInfo;
+        public ActivityPage(Guid parRondeId, GebruikerV2 parGebruikersInfo)
         {
             InitializeComponent();
             btnStoppen.Clicked += btnStoppen_clicked;
 
             rondeId = parRondeId;
-            gebruikersId = parGebruikersId;
+            gebruikersInfo = parGebruikersInfo;
         }
 
         private void btnStoppen_clicked(object sender, EventArgs e)
@@ -38,8 +40,8 @@ namespace TempoTrack.Views.Activity
             if (answer == true)
             {
                 //Deelnemer uit de ronde smijten
-                await EtappeRepository.UpdateDeelnemerGestopt(rondeId, gebruikersId);
-                Navigation.PopAsync();
+                await EtappeRepository.UpdateDeelnemerGestopt(rondeId, gebruikersInfo.GebruikerId);
+                Navigation.PushAsync(new RondeOverzichtPage(gebruikersInfo));
             }
         }
     }
