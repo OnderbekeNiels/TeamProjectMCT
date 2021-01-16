@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.RondePaginas.RondeOverzichtPage"
              Title="TempoTracking" 
@@ -14,11 +14,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Text="Recent gereden rondes" VerticalOptions="Start" HorizontalOptions="Start" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="16" TextColor="#707070"/>
-
-            <ListView Grid.Row="1" x:Name="lvwRondes" RowHeight="50" Margin="0" SeparatorVisibility="None">
+            <Button Grid.Row ="0" Grid.Column="1" x:Name="btnRefresh" FontFamily="DIN2014-Bold" VerticalOptions="End" FontSize="16" BorderRadius="20" Margin="0,16,16,12" HeightRequest="60" Text="Refresh" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7" Padding="0"/>
+            
+            <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwRondes" RowHeight="50" Margin="0" SeparatorVisibility="None" IsRefreshing="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -45,10 +47,23 @@
             </ListView>
 
 
-            <Button Grid.Row ="2"  x:Name="btnCreate" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,0" HeightRequest="40" Text="Ronde Aanmaken" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7"/>
+            <Button Grid.Row ="2" Grid.ColumnSpan="2" x:Name="btnCreate" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,0" HeightRequest="40" Text="Ronde Aanmaken" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7"/>
 
-            <Button Grid.Row ="3" x:Name="btnDeelnemen" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,16" HeightRequest="40" Text="Deelnemen Ronde" BackgroundColor="#016FB7" TextColor="White"/>
+            <Button Grid.Row ="3" Grid.ColumnSpan="2" x:Name="btnDeelnemen" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,16" HeightRequest="40" Text="Deelnemen Ronde" BackgroundColor="#016FB7" TextColor="White"/>
 
         </Grid>
     </ContentPage.Content>
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="TempoTrack" VerticalOptions="Center" FontSize="24" TextColor="White"/>
+            <Button Grid.Column="1" Text="Uitloggen" HorizontalOptions="End" VerticalOptions="Center" x:Name ="btnLogOut" BackgroundColor="White" TextColor="#015D99" BorderWidth="1" BorderColor="#015D99" CornerRadius="5" Padding="0" HeightRequest="30" Margin="0,0,16,0"/>
+        </Grid>
+    </NavigationPage.TitleView>
 </ContentPage>

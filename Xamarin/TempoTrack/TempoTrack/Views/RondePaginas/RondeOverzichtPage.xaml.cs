@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
 using TempoTrack.Views.EtappePaginas;
+using TempoTrack.Views.Login;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,8 +23,24 @@ namespace TempoTrack.Views.RondePaginas
             GebruikersInfo = gebruikersInfo;
             InitializeComponent();
             lvwRondes.ItemSelected += LvwRondes_ItemSelected;
+
             btnCreate.Clicked += btnCreate_Clicked;
             btnDeelnemen.Clicked += btnDeelnemen_Clicked;
+            btnRefresh.Clicked += BtnRefresh_Clicked;
+            btnLogOut.Clicked += BtnLogOut_Clicked;
+
+            LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
+        }
+
+        private void BtnLogOut_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new LoginPage());
+        }
+
+        private void BtnRefresh_Clicked(object sender, EventArgs e)
+        {
+            lvwRondes.ItemsSource = null;
+            lvwRondes.IsRefreshing = true;
             LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
         }
 
@@ -46,6 +63,8 @@ namespace TempoTrack.Views.RondePaginas
             }
 
             lvw.ItemsSource = rondesGebruiker;
+
+            lvw.EndRefresh();
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)

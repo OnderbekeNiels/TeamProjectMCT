@@ -15,6 +15,7 @@ using TeamProjectFunction.Models.GebruikerRelated;
 using TeamProjectFunction.Models.Klassement;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace TeamProjectFunction
 {
@@ -1001,33 +1002,42 @@ namespace TeamProjectFunction
             //als laptijd gemaakt is wordt het model laptijd met alle params terug gestuurd
             try
             {
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                LapTijd lapTijd = JsonConvert.DeserializeObject<LapTijd>(requestBody);
-                lapTijd.LapTijdId = Guid.NewGuid();
-
-
-                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                //var jarray = JArray.Parse(requestBody);
+                List<LapTijd> lapTijden = JsonConvert.DeserializeObject<List<LapTijd>>(requestBody);
+                foreach (LapTijd lapTijd in lapTijden)
                 {
-                    await sqlConnectionInsert.OpenAsync();
-                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    lapTijd.LapTijdId = Guid.NewGuid();
+                    Console.WriteLine(lapTijd.EtappeId);
+
+                    string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
+                    using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
                     {
-                        sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
-                        sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
-                        sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
-                        sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
-                        sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
-                        sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
+                        await sqlConnectionInsert.OpenAsync();
+                        using (SqlCommand sqlCommandInsert = new SqlCommand())
+                        {
+                            sqlCommandInsert.Connection = sqlConnectionInsert;
+                            sqlCommandInsert.CommandText = "INSERT INTO LapTijden VALUES(@LapTijdId, @EtappeId, @GebruikerId, @TijdLap, @LapNummer)";
+                            sqlCommandInsert.Parameters.AddWithValue("@LapTijdId", lapTijd.LapTijdId);
+                            sqlCommandInsert.Parameters.AddWithValue("@EtappeId", lapTijd.EtappeId);
+                            sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
+                            sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
+                            sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
 
 
 
-                        await sqlCommandInsert.ExecuteNonQueryAsync();
+                            await sqlCommandInsert.ExecuteNonQueryAsync();
 
-                        return new OkObjectResult(lapTijd);
-
+                        }
                     }
                 }
+
+
+                CustomResponse customResponse = new CustomResponse();
+                customResponse.Succes = true;
+                customResponse.Message = "Laptijden succesvol opgeslagen.";
+                return new OkObjectResult(customResponse);
+                
             }
             catch (Exception ex)
             {
@@ -1131,7 +1141,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes', d.IsActief as 'DeelnemerActief', case when e.IsActief is null then 'True' else case when e.IsActief = 0 then 'False' else case when e.IsActief = 1 then 'True' end end end as 'EtappeActief' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode, d.IsActief, e.IsActief order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
@@ -1145,6 +1155,8 @@ namespace TeamProjectFunction
                             data.RondeNaam = reader["RondeNaam"].ToString();
                             data.RondeId = Guid.Parse(reader["RondeId"].ToString());
                             data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
+                            data.DeelnemerActief = bool.Parse(reader["DeelnemerActief"].ToString());
+                            data.EtappeActief = bool.Parse(reader["EtappeActief"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
@@ -1183,7 +1195,7 @@ namespace TeamProjectFunction
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
-                    string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam as 'RondeNaam', Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where e.RondeId = @rondeId group by l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam order by Sum(l.TijdLap);";
+                    string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam as 'RondeNaam', Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where e.RondeId = @rondeId group by l.GebruikerId, g.GebruikersNaam, e.RondeId, r.Naam order by Sum(l.TijdLap)";
                     command.CommandText = sql;
                     command.Parameters.AddWithValue("@rondeId", RondeId);
                     SqlDataReader reader = command.ExecuteReader();
@@ -1219,7 +1231,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId=@userId group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin order by e.StartTijd desc;";
+                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin, e.IsActief as 'EtappeActief' from Rondes as r left join Deelnemers as d on d.RondeId = r.RondeId left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and d.GebruikersId= @userId group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin, e.IsActief order by e.StartTijd desc;";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         command.Parameters.AddWithValue("@rondeId", RondeId);
@@ -1235,6 +1247,7 @@ namespace TeamProjectFunction
                             data.StartTijd = DateTime.Parse(reader["StartTijd"].ToString());
                             data.LapAfstand = double.Parse(reader["LapAfstand"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
+                            data.EtappeActief = bool.Parse(reader["EtappeActief"].ToString());
                             data.RondeNaam = reader["RondeNaam"].ToString();
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
@@ -1418,6 +1431,73 @@ namespace TeamProjectFunction
             }
 
         }
+
+        [FunctionName("GetInfoEtappe")]
+        public static async Task<IActionResult> GetInfoEtappe(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "info/etappes/{etappeId}")] HttpRequest req, Guid etappeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                EtappeInfo etappeInfo = new EtappeInfo();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    //Opvragen etappe info vd winnaar
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select top 1 r.Naam as 'RondeNaam', r.RondeId, l.EtappeId,  Sum(l.TijdLap) as 'TotaalTijd', (Sum(l.TijdLap)/CONVERT(FLOAT,(e.Laps))) as 'GemiddeldeLapTijd', (e.Laps * (e.LapAfstand / 1000)) as 'Afstand', e.Laps from LapTijden as l left join Etappes as e on e.EtappeId = l.EtappeId left join Rondes as r on r.RondeId = e.RondeId where l.EtappeId = @etappeId and e.IsActief = 0 group by  r.Naam, r.rondeId, l.GebruikerId, l.EtappeId, e.Laps, e.LapAfstand order by Sum(l.TijdLap);";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            etappeInfo.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            etappeInfo.RondeNaam = reader["RondeNaam"].ToString();
+                            etappeInfo.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            etappeInfo.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
+                            etappeInfo.GemiddeldeLapTijd = double.Parse(reader["GemiddeldeLapTijd"].ToString());
+                            etappeInfo.Afstand = double.Parse(reader["Afstand"].ToString());
+                            etappeInfo.Laps = int.Parse(reader["Laps"].ToString());
+                        }
+                    }
+
+                    //Opvragen aantal deelnemers in de etappe
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select l.GebruikerId as 'Deelnemers' from LapTijden as l where l.EtappeId = @etappeId group by l.EtappeId, l.GebruikerId;";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        List<Guid> Deelnemers = new List<Guid>();
+
+                        while (reader.Read())
+                        {
+                            Guid data = new Guid();
+                            data = Guid.Parse(reader["Deelnemers"].ToString());
+                            Deelnemers.Add(data);
+                        }
+
+                        etappeInfo.AantalDeelnemers = Deelnemers.Count;
+                    }
+                }
+
+                return new OkObjectResult(etappeInfo);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
     }
 }
+
 
