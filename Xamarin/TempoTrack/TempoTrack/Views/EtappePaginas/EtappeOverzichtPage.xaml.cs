@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.Activity;
 using TempoTrack.Views.RondePaginas;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,7 +19,7 @@ namespace TempoTrack.Views.EtappePaginas
         private static RondesGebruiker RondeInfo { get; set; }
         private static GebruikerV2 GebruikersInfo { get; set; }
 
-        private static int etappeTeller = 1;
+        private static int etappeTeller = 0;
         public EtappeOverzichtPage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
             RondeInfo = rondeInfo;
@@ -56,17 +57,20 @@ namespace TempoTrack.Views.EtappePaginas
         {
            List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(rondeId, gebruikersId);
 
+            etappeTeller += etappes.Count();
+
             foreach (EtappesRonde item in etappes)
             {
                 item.EtappeNaam = $"Etappe {etappeTeller}";
-                etappeTeller += 1;
+                etappeTeller -= 1;
+                
                 //item.TotaalRondeTijd = RondeInfo.TotaalTijd;
                 //Debug.WriteLine("-------------------------------------------------------");
                 //Debug.WriteLine(item.ToString());
                 //Debug.WriteLine("-------------------------------------------------------");
             }
 
-            etappes.Reverse();
+            //etappes.Reverse();
 
             lvw.ItemsSource = etappes;
             lblRondePlaats.Text = RondeInfo.Ranking;
@@ -147,6 +151,15 @@ namespace TempoTrack.Views.EtappePaginas
         private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new CreateEtappePage(RondeInfo, GebruikersInfo));
+        }
+
+        private void lvwEtappes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            EtappesRonde etappe = lvwEtappes.SelectedItem as EtappesRonde;
+            if (etappe.StartTijd > DateTime.Now)
+            {
+               Navigation.PushAsync(new ActivityPage(RondeInfo.RondeId, GebruikersInfo));
+            }
         }
     }
 }
