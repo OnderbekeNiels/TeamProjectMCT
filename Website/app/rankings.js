@@ -71,7 +71,6 @@ const listenToClickEtappe = function () {
 //#region *** Show Data Functions ***
 
 const showRounds = function (data) {
-  console.table(data);
   data.sort((a, b) => (a.startDatum < b.startDatum ? 1 : -1));
   const table = document.querySelector(".js-rounds-table");
   let htmlString = `<div class="c-ranking-table__header">
@@ -89,7 +88,6 @@ const showRounds = function (data) {
   </p>
 </div>`;
   for (const item of data) {
-    if (item.EtappeActief != true || item.EtappeActief != null) {
       htmlString += `
         <div class="c-ranking-table__row js-rounds-table-row" data-roundId='${
           item.rondeId
@@ -111,7 +109,6 @@ const showRounds = function (data) {
       </p>
     </div>`;
     }
-  }
   table.innerHTML = htmlString;
   listenToClickRound();
 };
@@ -165,7 +162,6 @@ const showRoundsRanking = function (data) {
 };
 
 const showEtappes = function (data) {
-  console.table(data);
   data.sort((a, b) => (a.startTijd < b.startTijd ? 1 : -1));
   const table = document.querySelector(".js-etappes-table");
   let htmlString = `      <div class="c-ranking-table__header">
