@@ -59,9 +59,31 @@ const listenToClickEtappe = function () {
   const rounds = document.querySelectorAll(".js-etappes-table-row");
   for (const item of rounds) {
     item.addEventListener("click", function () {
+      localStorage.setItem("etappeTitle", this.getAttribute("data-etappeTitle"));
       window.location.href = `etappe_detail.html?etappeId=${this.getAttribute(
         "data-etappeId"
       )}`;
+    });
+  }
+};
+
+const listenToToggle = function () {
+  const etappeInput = document.querySelector(".js-option-etappe"),
+    roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
+    inputs = document.querySelectorAll(".js-option"),
+    rankingContainer = document.querySelector(".c-ranking-container");
+  for (const input of inputs) {
+    input.addEventListener("change", function () {
+      let urlParams = new URLSearchParams(window.location.search);
+      const roundId = urlParams.get("roundId");
+      if (etappeInput.checked) {
+        rankingContainer.classList.remove("c-rounds-ranking--visible");
+        getEtappes(roundId);
+      }
+      if (roundsRankingInput.checked) {
+        rankingContainer.classList.add("c-rounds-ranking--visible");
+        getRoundsRanking(roundId);
+      }
     });
   }
 };
@@ -184,6 +206,8 @@ const showEtappes = function (data) {
       htmlString += `
       <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
         item.etappeId
+      }' data-etappeTitle='Etappe ${
+        Etappe 
       }'>
     <p class="c-ranking-table__row-item">
     ${datetimeToDateNotation(item.startTijd)}
@@ -278,31 +302,10 @@ const showEtappeInfo = function (data) {
       ((3600 / data.totaalTijd) * data.afstand + Number.EPSILON) * 100
     ) / 100
   } Km/u`;
-  etappeName.innerText = `${data.rondeNaam} - `;
+  etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem('etappeTitle')}`;
 };
 
 //#endregion
-
-const listenToToggle = function () {
-  const etappeInput = document.querySelector(".js-option-etappe"),
-    roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
-    inputs = document.querySelectorAll(".js-option"),
-    rankingContainer = document.querySelector(".c-ranking-container");
-  for (const input of inputs) {
-    input.addEventListener("change", function () {
-      let urlParams = new URLSearchParams(window.location.search);
-      const roundId = urlParams.get("roundId");
-      if (etappeInput.checked) {
-        rankingContainer.classList.remove("c-rounds-ranking--visible");
-        getEtappes(roundId);
-      }
-      if (roundsRankingInput.checked) {
-        rankingContainer.classList.add("c-rounds-ranking--visible");
-        getRoundsRanking(roundId);
-      }
-    });
-  }
-};
 
 //#region *** Get Data Functions ***
 
