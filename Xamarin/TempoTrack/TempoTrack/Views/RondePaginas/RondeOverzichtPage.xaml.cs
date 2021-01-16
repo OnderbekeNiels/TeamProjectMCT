@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
 using TempoTrack.Views.EtappePaginas;
+using TempoTrack.Views.Login;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,8 +27,14 @@ namespace TempoTrack.Views.RondePaginas
             btnCreate.Clicked += btnCreate_Clicked;
             btnDeelnemen.Clicked += btnDeelnemen_Clicked;
             btnRefresh.Clicked += BtnRefresh_Clicked;
+            btnLogOut.Clicked += BtnLogOut_Clicked;
 
             LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
+        }
+
+        private void BtnLogOut_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new LoginPage());
         }
 
         private void BtnRefresh_Clicked(object sender, EventArgs e)
