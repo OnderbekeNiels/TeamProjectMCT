@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.RondePaginas.RondeOverzichtPage"
              Title="TempoTracking" 
@@ -53,4 +53,17 @@
 
         </Grid>
     </ContentPage.Content>
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="TempoTrack" VerticalOptions="Center" FontSize="24" TextColor="White"/>
+            <Button Grid.Column="1" Text="Uitloggen" HorizontalOptions="End" VerticalOptions="Center" x:Name ="btnLogOut" BackgroundColor="White" TextColor="#015D99" BorderWidth="1" BorderColor="#015D99" CornerRadius="5" Padding="0" HeightRequest="30" Margin="0,0,16,0"/>
+        </Grid>
+    </NavigationPage.TitleView>
 </ContentPage>
