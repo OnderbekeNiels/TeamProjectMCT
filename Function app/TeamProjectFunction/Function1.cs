@@ -1126,6 +1126,7 @@ namespace TeamProjectFunction
 
         }
 
+        //Toont alle rondes van een gebruiker - voor in xamarin app
         [FunctionName("GetRondesUser")]
         public static async Task<IActionResult> GetRondesUser(
        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "gebruiker/rondes/{UserId}")] HttpRequest req, Guid UserId, ILogger log)
@@ -1141,7 +1142,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes', d.IsActief as 'DeelnemerActief', case when e.IsActief is null then 'True' else case when e.IsActief = 0 then 'False' else case when e.IsActief = 1 then 'True' end end end as 'EtappeActief' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode, d.IsActief, e.IsActief order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
@@ -1155,14 +1156,12 @@ namespace TeamProjectFunction
                             data.RondeNaam = reader["RondeNaam"].ToString();
                             data.RondeId = Guid.Parse(reader["RondeId"].ToString());
                             data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
-                            data.DeelnemerActief = bool.Parse(reader["DeelnemerActief"].ToString());
-                            data.EtappeActief = bool.Parse(reader["EtappeActief"].ToString());
                             data.Admin = Guid.Parse(reader["Admin"].ToString());
 
                             //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
 
-                            List<KlassementRonde> rondeKlassement = await GetRondeKlassementAsync(data.RondeId, connectionString);
-                            KlassementRonde obj = rondeKlassement.Where(obj => obj.GebruikersId == data.GebruikersId).FirstOrDefault();
+                            List<RondesGebruiker> rondeKlassement = await GetRondeKlassementAsync(data.RondeId, connectionString);
+                            RondesGebruiker obj = rondeKlassement.Where(obj => obj.GebruikersId == data.GebruikersId).FirstOrDefault();
 
                             if (obj != null)
                             {
@@ -1185,10 +1184,67 @@ namespace TeamProjectFunction
 
         }
 
-
-        public static async Task<List<KlassementRonde>> GetRondeKlassementAsync(Guid RondeId, string connString)
+        //Toont alle rondes van een gebruiker, telt enkel de niet actieve etappes mee - voor website
+        [FunctionName("GetRondesUserSite")]
+        public static async Task<IActionResult> GetRondesUserSite(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "site/gebruiker/rondes/{UserId}")] HttpRequest req, Guid UserId, ILogger log)
         {
-            List<KlassementRonde> rondeKlassement = new List<KlassementRonde>();
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<RondesGebruiker> rondes = new List<RondesGebruiker>();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 and e.IsActief = 0 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", UserId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            RondesGebruiker data = new RondesGebruiker();
+                            data.GebruikersId = Guid.Parse(reader["GebruikersId"].ToString());
+                            data.StartDatum = DateTime.Parse(reader["StartDatum"].ToString());
+                            data.InviteCode = reader["InviteCode"].ToString();
+                            data.RondeNaam = reader["RondeNaam"].ToString();
+                            data.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());
+                            data.Admin = Guid.Parse(reader["Admin"].ToString());
+
+                            //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
+
+                            List<RondesGebruiker> rondeKlassement = await GetRondeKlassementAsync(data.RondeId, connectionString);
+                            RondesGebruiker obj = rondeKlassement.Where(obj => obj.GebruikersId == data.GebruikersId).FirstOrDefault();
+
+                            if (obj != null)
+                            {
+                                data.TotaalTijd = obj.TotaalTijd;
+                                data.Plaats = obj.Plaats;
+                            }
+
+                            rondes.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(rondes);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
+        public static async Task<List<RondesGebruiker>> GetRondeKlassementAsync(Guid RondeId, string connString)
+        {
+            List<RondesGebruiker> rondeKlassement = new List<RondesGebruiker>();
             using (SqlConnection connection = new SqlConnection(connString))
             {
                 await connection.OpenAsync();
@@ -1202,12 +1258,8 @@ namespace TeamProjectFunction
 
                     while (reader.Read())
                     {
-                        KlassementRonde data = new KlassementRonde();
+                        RondesGebruiker data = new RondesGebruiker();
                         data.Plaats = int.Parse(reader["Plaats"].ToString());
-                        data.GebruikersId = Guid.Parse(reader["GebruikerId"].ToString());
-                        data.GebruikersNaam = reader["GebruikersNaam"].ToString();
-                        data.RondeId = Guid.Parse(reader["RondeId"].ToString());
-                        data.RondeNaam = reader["RondeNaam"].ToString();
                         data.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
                         rondeKlassement.Add(data);
                     }
@@ -1216,6 +1268,8 @@ namespace TeamProjectFunction
             return rondeKlassement;
         }
 
+
+        //Toont alle etappes van een ronde - voor in xamarin app en website
         [FunctionName("GetEtappesRonde")]
         public static async Task<IActionResult> GetEtappesRonde(
         [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "gebruiker/ronde/etappes/{RondeId}/{UserId}")] HttpRequest req, Guid RondeId, Guid UserId, ILogger log)

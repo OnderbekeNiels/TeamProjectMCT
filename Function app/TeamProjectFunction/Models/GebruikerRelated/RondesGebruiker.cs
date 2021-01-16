@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamProjectFunction.Models.GebruikerRelated
 {
-    class RondesGebruiker
+    public class RondesGebruiker
     {
         public Guid GebruikersId { get; set; }
         public DateTime StartDatum { get; set; }
@@ -16,7 +16,5 @@ namespace TeamProjectFunction.Models.GebruikerRelated
         public int AantalEtappes { get; set; }
         public int AantalDeelnemers { get; set; }
         public Guid Admin { get; set; }
-        public bool DeelnemerActief { get; set; }
-        public bool EtappeActief { get; set; }
     }
 }
