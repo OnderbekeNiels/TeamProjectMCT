@@ -22,8 +22,18 @@ namespace TempoTrack.Views.RondePaginas
             GebruikersInfo = gebruikersInfo;
             InitializeComponent();
             lvwRondes.ItemSelected += LvwRondes_ItemSelected;
+
             btnCreate.Clicked += btnCreate_Clicked;
             btnDeelnemen.Clicked += btnDeelnemen_Clicked;
+            btnRefresh.Clicked += BtnRefresh_Clicked;
+
+            LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
+        }
+
+        private void BtnRefresh_Clicked(object sender, EventArgs e)
+        {
+            lvwRondes.ItemsSource = null;
+            lvwRondes.IsRefreshing = true;
             LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
         }
 
@@ -46,6 +56,8 @@ namespace TempoTrack.Views.RondePaginas
             }
 
             lvw.ItemsSource = rondesGebruiker;
+
+            lvw.EndRefresh();
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
