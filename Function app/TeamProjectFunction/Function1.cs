@@ -1260,6 +1260,7 @@ namespace TeamProjectFunction
                     while (reader.Read())
                     {
                         RondesGebruiker data = new RondesGebruiker();
+                        data.GebruikersId = Guid.Parse(reader["GebruikerId"].ToString());
                         data.Plaats = int.Parse(reader["Plaats"].ToString());
                         data.TotaalTijd = int.Parse(reader["TotaalTijd"].ToString());
                         rondeKlassement.Add(data);
