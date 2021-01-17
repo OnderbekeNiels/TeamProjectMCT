@@ -31,7 +31,7 @@ const GetUserId = async function(profile){
     userName = data["name"];
     console.log(userName);
     localStorage.setItem("name", userName);
-    //window.location.pathname = '/ronde_overzicht.html'
+    window.location.pathname = '/ronde_overzicht.html'
   })
   //Then with the error genereted...
   .catch((error) => {

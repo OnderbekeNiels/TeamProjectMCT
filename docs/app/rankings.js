@@ -1,6 +1,6 @@
 let userId;
 
-userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
+//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -398,7 +398,7 @@ function signOut() {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
-  // userId = sessionStorage.getItem("gebruikerId");
+  userId = sessionStorage.getItem("gebruikerId");
   if (document.querySelector(".roundsoverview")) {
     getRounds();
   }
