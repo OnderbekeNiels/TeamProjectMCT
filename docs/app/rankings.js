@@ -546,7 +546,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.js-graph-button').setAttribute('data-etappeId',  etappeId);
     listenToClickGraphButton();
   }
-  if(document.querySelector('.etappeschart')){
+  if(document.querySelector('.etappesgraph')){
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
     ShowLoader();
