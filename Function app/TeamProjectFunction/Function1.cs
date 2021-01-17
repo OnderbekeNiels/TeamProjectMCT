@@ -1459,7 +1459,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, l.EtappeId,  Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId where l.EtappeId = @etappeId group by  l.GebruikerId, g.GebruikersNaam, l.EtappeId order by Sum(l.TijdLap);";
+                        string sql = "select Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, l.EtappeId,  Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId where l.EtappeId = @etappeId group by  l.GebruikerId, g.GebruikersNaam, l.EtappeId, e.Laps having count(l.TijdLap) = e.Laps order by Sum(l.TijdLap);";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@etappeId", etappeId);
                         SqlDataReader reader = command.ExecuteReader();
