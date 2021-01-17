@@ -1401,7 +1401,7 @@ namespace TeamProjectFunction
 
         //}
 
-        //Tijden van snelts naar traag van een bepaalde ronde
+        //Tijden van snelts naar traag van een bepaalde ronde - nog niet gefilterd op deelnemers isactief !!!
         [FunctionName("GetKlassementRonde")]
         public static async Task<IActionResult> GetKlassementRonde(
         [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "klassement/rondes/{rondeId}")] HttpRequest req, Guid rondeId, ILogger log)
