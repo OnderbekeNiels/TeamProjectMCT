@@ -1,6 +1,6 @@
 let userId;
 
-//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
+userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -87,6 +87,15 @@ const listenToToggle = function () {
     });
   }
 };
+
+const listenToClickGraphButton = function(){
+  const btn = document.querySelector('.js-graph-button');
+  btn.addEventListener('click', function(){
+    window.location.href = `etappe_grafiek.html?etappeId=${this.getAttribute(
+      "data-etappeId"
+    )}`;
+  })
+}
 
 //#endregion
 
@@ -325,6 +334,7 @@ const showEtappeUserData = function(data){
 <p class="c-etappe-info-data">${secToTimeNotation(data.traagsteLapTijd)}</p>
 </div>
   `
+  document.querySelector('.js-etappe-head').innerText = `${data.rondeNaam} - ${localStorage.getItem('etappeTitle')}`;
 }
 
 const showEtappeUserChartData = function (data) {
@@ -392,6 +402,7 @@ const showEtappeUserChartData = function (data) {
       }
   };
   let speedChart = new Chart(ctx, config);
+  HideLoader();
 }
 
 //#endregion
@@ -458,9 +469,9 @@ const getEtappeInfo = async function (etappeId) {
 };
 
 const getEtappeUserData = async function (etappeId) {
-  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappes/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappe/users/${etappeId}/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
-    const response = await fetch('dataHeadGrafiek.json');
+    const response = await fetch(endpoint);
     const data = await response.json();
     console.table(data);
     showEtappeUserData(data);
@@ -470,9 +481,9 @@ const getEtappeUserData = async function (etappeId) {
 };
 
 const getEtappeUserChartData = async function (etappeId) {
-  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappes/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappe/laptijden/users/${etappeId}/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
-    const response = await fetch('dataGrafiek.json');
+    const response = await fetch(endpoint);
     const data = await response.json();
     console.table(data);
     showEtappeUserChartData(data);
@@ -502,12 +513,22 @@ function signOut() {
   });
 }
 
+const HideLoader = function(){
+  const loader = document.querySelector('.js-data-loader');
+  loader.classList.add('o-hide-accessible');
+}
+
+const ShowLoader = function(){
+  const loader = document.querySelector('.js-data-loader');
+  loader.classList.remove('o-hide-accessible');
+}
+
 //#endregion
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
-  userId = sessionStorage.getItem("gebruikerId");
+  //userId = sessionStorage.getItem("gebruikerId");
   if (document.querySelector(".roundsoverview")) {
     getRounds();
   }
@@ -522,10 +543,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const etappeId = urlParams.get("etappeId");
     getEtappesRanking(etappeId);
     getEtappeInfo(etappeId);
+    document.querySelector('.js-graph-button').setAttribute('data-etappeId',  etappeId);
+    listenToClickGraphButton();
   }
-  if(document.querySelector('.etappeschart')){
+  if(document.querySelector('.etappesgraph')){
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
+    ShowLoader();
     getEtappeUserData(etappeId);
     getEtappeUserChartData(etappeId);
   }

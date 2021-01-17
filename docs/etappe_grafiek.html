@@ -15,7 +15,7 @@
       content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com"
     />
   </head>
-  <body class="etappeschart">
+  <body class="etappesgraph">
     <header class="c-header">
       <div
         class="g-signin2"
@@ -141,25 +141,10 @@
       </div>
     </header>
     <div class="c-main-container">
-      <h1 class="c-page-title js-etappe-name">Etappe Grafiek</h1>
+      <h1 class="c-page-title js-etappe-head">Etappe Grafiek</h1>
       <div class="c-etappe-info-container js-etappe-info">
-          <div class="c-etappe-info-container__item">
-              <p class="c-etappe-info-subtitle">Gemiddelde rondetijd</p>
-              <p class="c-etappe-info-data">00:00:00</p>
-          </div>
-          <div class="c-etappe-info-container__item">
-            <p class="c-etappe-info-subtitle">Snelste rondetijd</p>
-            <p class="c-etappe-info-data">00:00:00</p>
-          </div>
-          <div class="c-etappe-info-container__item">
-            <p class="c-etappe-info-subtitle">Traagste rondetijd</p>
-            <p class="c-etappe-info-data">00:00:00</p>
-          </div>
       </div>
-      <div class="c-etappe-chart-container">
-        <canvas class="js-etappe-chart" id="etappeChart"></canvas>
-      </div>
-      <div class="o-data-loading">
+      <div class="o-data-loading js-data-loader">
         <svg class="o-circular-loader" viewBox="25 25 50 50">
           <circle
             class="o-loader-path"
@@ -172,6 +157,9 @@
           />
         </svg>
         We halen uw data op.
+      </div>
+      <div class="c-etappe-chart-container">
+        <canvas class="js-etappe-chart" id="etappeChart"></canvas>
       </div>
     </div>
   </body>
