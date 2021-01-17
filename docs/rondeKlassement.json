@@ -1,0 +1,20 @@
+[
+  {
+    "plaats": 1,
+    "gebruikersId": "7b002679-1ee4-44df-b5b7-54b7c76c3c73",
+    "gebruikersNaam": "Jelle",
+    "rondeId": "5f4266b2-d77e-46e9-95fe-0b76779b737e",
+    "rondeNaam": "Tour de France",
+    "totaalTijd": 118,
+    "admin": "00000000-0000-0000-0000-000000000000"
+  },
+  {
+    "plaats": 2,
+    "gebruikersId": "547f309b-8596-4dbe-9439-333a7c9e79de",
+    "gebruikersNaam": "Niels",
+    "rondeId": "5f4266b2-d77e-46e9-95fe-0b76779b737e",
+    "rondeNaam": "Tour de France",
+    "totaalTijd": 162,
+    "admin": "00000000-0000-0000-0000-000000000000"
+  }
+]
