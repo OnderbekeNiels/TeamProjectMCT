@@ -335,6 +335,38 @@ input:disabled {
 #OBJECTS
 \*------------------------------------*/
 
+/*
+    Object: Loading Circle
+    ---
+*/
+
+.o-circular-loader {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+  height: 8rem;
+  -webkit-transform-origin: center center;
+  -ms-transform-origin: center center;
+  transform-origin: center center;
+  width: 8rem;
+}
+
+.o-loader-path {
+  stroke-dasharray: 150, 200;
+  stroke-dashoffset: -10;
+  -webkit-animation: dash 1.5s ease-in-out infinite,
+    color 6s ease-in-out infinite;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+.o-data-loading {
+  margin: var(--global-whitespace-xxxxl) var(--global-whitespace-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .o-list {
   list-style: none;
   padding: 0;
@@ -369,37 +401,6 @@ input:disabled {
   -webkit-appearance: none;
 }
 
-/*
-    Object: Loading Circle
-    ---
-*/
-
-.o-circular-loader {
-  -webkit-animation: rotate 2s linear infinite;
-  animation: rotate 2s linear infinite;
-  height: 8rem;
-  -webkit-transform-origin: center center;
-  -ms-transform-origin: center center;
-  transform-origin: center center;
-  width: 8rem;
-}
-
-.o-loader-path {
-  stroke-dasharray: 150, 200;
-  stroke-dashoffset: -10;
-  -webkit-animation: dash 1.5s ease-in-out infinite,
-    color 6s ease-in-out infinite;
-  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-  stroke-linecap: round;
-}
-
-.o-data-loading {
-  margin: var(--global-whitespace-xxxxl) var(--global-whitespace-md);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 /*
     Object: Hide accessible
@@ -955,6 +956,35 @@ input:disabled {
   justify-content: center;
   position: relative;
   height: 40vh;
+}
+
+.c-etappe-chart-button{
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  border: 1px solid var(--global-color-alpha);
+  border-radius: var(--global-borderRadius);
+  padding: 0 var(--global-whitespace-sm);
+  margin: var(--global-whitespace-md) auto;
+}
+
+.c-etappe-chart-button:hover {
+  background-color: var(--global-color-neutral-x-light);
+  color: var(--global-color-alpha);
+}
+
+.c-etappe-chart-button:active,
+.c-etappe-chart-button:focus {
+  outline: none;
+  border-color: var(--global-color-alpha);
+  box-shadow: 0 0 0 3px var(--global-color-alpha);
+}
+
+
+
+.c-etappe-chart-icon{
+  fill: var(--global-color-alpha);
+  width: 1.5rem;
 }
 
 /*

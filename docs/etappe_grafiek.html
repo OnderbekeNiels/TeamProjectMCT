@@ -143,23 +143,8 @@
     <div class="c-main-container">
       <h1 class="c-page-title js-etappe-name">Etappe Grafiek</h1>
       <div class="c-etappe-info-container js-etappe-info">
-          <div class="c-etappe-info-container__item">
-              <p class="c-etappe-info-subtitle">Gemiddelde rondetijd</p>
-              <p class="c-etappe-info-data">00:00:00</p>
-          </div>
-          <div class="c-etappe-info-container__item">
-            <p class="c-etappe-info-subtitle">Snelste rondetijd</p>
-            <p class="c-etappe-info-data">00:00:00</p>
-          </div>
-          <div class="c-etappe-info-container__item">
-            <p class="c-etappe-info-subtitle">Traagste rondetijd</p>
-            <p class="c-etappe-info-data">00:00:00</p>
-          </div>
       </div>
-      <div class="c-etappe-chart-container">
-        <canvas class="js-etappe-chart" id="etappeChart"></canvas>
-      </div>
-      <div class="o-data-loading">
+      <div class="o-data-loading js-data-loader">
         <svg class="o-circular-loader" viewBox="25 25 50 50">
           <circle
             class="o-loader-path"
@@ -172,6 +157,9 @@
           />
         </svg>
         We halen uw data op.
+      </div>
+      <div class="c-etappe-chart-container">
+        <canvas class="js-etappe-chart" id="etappeChart"></canvas>
       </div>
     </div>
   </body>

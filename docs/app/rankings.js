@@ -392,6 +392,7 @@ const showEtappeUserChartData = function (data) {
       }
   };
   let speedChart = new Chart(ctx, config);
+  HideLoader();
 }
 
 //#endregion
@@ -502,6 +503,16 @@ function signOut() {
   });
 }
 
+const HideLoader = function(){
+  const loader = document.querySelector('.js-data-loader');
+  loader.classList.add('o-hide-accessible');
+}
+
+const ShowLoader = function(){
+  const loader = document.querySelector('.js-data-loader');
+  loader.classList.remove('o-hide-accessible');
+}
+
 //#endregion
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -526,6 +537,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if(document.querySelector('.etappeschart')){
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
+    ShowLoader();
     getEtappeUserData(etappeId);
     getEtappeUserChartData(etappeId);
   }
