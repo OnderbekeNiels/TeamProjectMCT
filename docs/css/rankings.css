@@ -36,7 +36,7 @@
 
   --global-color-neutral-x-light: #ffffff;
   --global-color-neutral-light: #cccccc;
-  --global-color-neutral: #999999;
+  --global-color-neutral: #777777;
   --global-color-neutral-dark: #666666;
   --global-color-neutral-x-dark: #2d2d2d;
 
@@ -904,6 +904,58 @@ input:disabled {
     Components: index content
     ---
 */
+
+/*
+    Components: etappe info
+    ---
+*/
+
+.c-etappe-info-container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: var(--global-whitespace-md);
+}
+
+.c-etappe-info-container__item{
+  flex-basis: 100%;
+  padding: var(--global-whitespace-sm);
+  text-align: center;
+}
+
+.c-etappe-info-subtitle{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--global-color-neutral-dark);
+  margin-bottom: var(--global-whitespace-sm);
+}
+
+.c-etappe-info-data{
+  color: var(--global-color-neutral);
+  margin-bottom: 0;
+}
+
+@media (min-width: 28rem) {
+  .c-etappe-info-container__item{
+    flex-basis: calc(100%/3);
+    padding: var(--global-whitespace-sm);
+    text-align: center;
+  }
+}
+
+/*
+    Components: etappe chart
+    ---
+*/
+
+.c-etappe-chart-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 40vh;
+}
 
 /*
     Utility: Flex

@@ -310,6 +310,90 @@ const showEtappeInfo = function (data) {
   etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem('etappeTitle')}`;
 };
 
+const showEtappeUserData = function(data){
+  const etappeInfo = document.querySelector(".js-etappe-info");
+  etappeInfo.innerHTML = `<div class="c-etappe-info-container__item">
+  <p class="c-etappe-info-subtitle">Gemiddelde rondetijd</p>
+  <p class="c-etappe-info-data">${secToTimeNotation(data.gemiddeldeLaptijd)}</p>
+</div>
+<div class="c-etappe-info-container__item">
+<p class="c-etappe-info-subtitle">Snelste rondetijd</p>
+<p class="c-etappe-info-data">${secToTimeNotation(data.snelsteLapTijd)}</p>
+</div>
+<div class="c-etappe-info-container__item">
+<p class="c-etappe-info-subtitle">Traagste rondetijd</p>
+<p class="c-etappe-info-data">${secToTimeNotation(data.traagsteLapTijd)}</p>
+</div>
+  `
+}
+
+const showEtappeUserChartData = function (data) {
+  let converted_labels = [];
+  let converted_data = [];
+  console.log(data)
+  for (const item of data) {
+      converted_labels.push(item.lapNummer);
+      converted_data.push(item.tijdLap);
+  }
+
+  let ctx = document.querySelector(".js-etappe-chart").getContext("2d");
+
+  let config = {
+      type: "line",
+      data: {
+          labels: converted_labels,
+          datasets: [
+              {
+                  label: "seconden",
+                  backgroundColor: "#2d2d2d",
+                  borderColor: "#016fb7",
+                  data: converted_data,
+                  pointRadius: 3,
+                  pointHoverRadius: 8,
+                  fill: false
+              }
+          ]
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          title: {
+              display: true,
+              text: "Afgewerkte rondes"
+          },
+          tooltips: {
+              mode: "index",
+              intersect: true
+          },
+          hover: {
+              mode: "nearest",
+              intersect: true
+          },
+          scales: {
+              xAxes: [
+                  {
+                      display: true,
+                      scaleLabel: {
+                          display: true,
+                          labelString: "Rondes"
+                      }
+                  }
+              ],
+              yAxes: [
+                  {
+                      display: true,
+                      scaleLabel: {
+                          display: true,
+                          labelString: "Ronde Tijd"
+                      }
+                  }
+              ]
+          }
+      }
+  };
+  let speedChart = new Chart(ctx, config);
+}
+
 //#endregion
 
 //#region *** Get Data Functions ***
@@ -373,6 +457,31 @@ const getEtappeInfo = async function (etappeId) {
   }
 };
 
+const getEtappeUserData = async function (etappeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappes/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch('dataHeadGrafiek.json');
+    const data = await response.json();
+    console.table(data);
+    showEtappeUserData(data);
+  } catch (error) {
+    console.error("An error occured, we handled it.", error);
+  }
+};
+
+const getEtappeUserChartData = async function (etappeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappes/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch('dataGrafiek.json');
+    const data = await response.json();
+    console.table(data);
+    showEtappeUserChartData(data);
+  } catch (error) {
+    console.error("An error occured, we handled it.", error);
+  }
+};
+
+
 //#endregion
 
 //#region *** Google Authentication ***
@@ -413,5 +522,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const etappeId = urlParams.get("etappeId");
     getEtappesRanking(etappeId);
     getEtappeInfo(etappeId);
+  }
+  if(document.querySelector('.etappeschart')){
+    let urlParams = new URLSearchParams(window.location.search);
+    const etappeId = urlParams.get("etappeId");
+    getEtappeUserData(etappeId);
+    getEtappeUserChartData(etappeId);
   }
 });
