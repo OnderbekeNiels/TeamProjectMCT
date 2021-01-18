@@ -657,6 +657,7 @@ namespace TeamProjectFunction
                                     {
                                         Deelnemer data = new Deelnemer();
                                         data.GebruikerId = Guid.Parse(readerDeelnemerCheck["GebruikersId"].ToString());
+                                        data.IsActief = bool.Parse(readerDeelnemerCheck["IsActief"].ToString());
                                         deelnemers.Add(data);
                                     }
                                 }
@@ -689,7 +690,7 @@ namespace TeamProjectFunction
 
                             if(laptijden.Count() == 0)
                             {
-                                //Er is nog geen lap gereden is --> kan je nog meedoen.
+                                
 
                                 
                                 //deelnemer doet nog niet mee --> je kan nog meedoen
@@ -709,6 +710,7 @@ namespace TeamProjectFunction
                                             //deelnemer.RondeId = ronde.RondeId;
 
                                             await sqlCommandInsert.ExecuteNonQueryAsync();
+                                            deelnemer.IsActief = true;
 
                                             return new OkObjectResult(deelnemer);
                                         }
@@ -716,8 +718,10 @@ namespace TeamProjectFunction
                                 }
 
                                 // deelnemer heeft al eens meegedaan maar heeft de ronde al eens verlaten
-                                if (deelnemers.Count() == 1)
+                                if (deelnemers.Count() == 1 && deelnemers[0].IsActief == false)
                                 {
+                                    //deelnemer heeft al eens meegedaan, isactief = 0 en de deelnemer kan opnieuw meedoen:
+
                                     //deelnemer opnieuw toevoegen:
                                     using (SqlConnection sqlConnectionUpdate = new SqlConnection(connectionStringInsert))
                                     {
@@ -727,11 +731,12 @@ namespace TeamProjectFunction
                                             sqlCommandUpdate.Connection = sqlConnectionUpdate;
                                             sqlCommandUpdate.CommandText = "UPDATE Deelnemers SET IsActief = 1 where RondeId = @RondeId and GebruikersId = @GebruikersId"; ;
                                             sqlCommandUpdate.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
-                                            sqlCommandUpdate.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+                                            sqlCommandUpdate.Parameters.AddWithValue("@GebruikersId", deelnemer.GebruikerId);
 
                                             //deelnemer.RondeId = ronde.RondeId;
 
-                                            await sqlCommand.ExecuteNonQueryAsync();
+                                            await sqlCommandUpdate.ExecuteNonQueryAsync();
+                                            deelnemer.IsActief = true;
 
                                             return new OkObjectResult(deelnemer);
                                         }
