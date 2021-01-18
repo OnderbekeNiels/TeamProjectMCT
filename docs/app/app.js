@@ -48,7 +48,7 @@ const listenToClickRound = function () {
   const rounds = document.querySelectorAll(".js-rounds-table-row");
   for (const item of rounds) {
     item.addEventListener("click", function () {
-      window.location.pathname = `ronde_detail.html?roundId=${this.getAttribute(
+      window.location.href = `ronde_detail.html?roundId=${this.getAttribute(
         "data-roundId"
       )}`;
     });
@@ -63,7 +63,7 @@ const listenToClickEtappe = function () {
         "etappeTitle",
         this.getAttribute("data-etappeTitle")
       );
-      window.location.pathname = `etappe_detail.html?etappeId=${this.getAttribute(
+      window.location.href = `etappe_detail.html?etappeId=${this.getAttribute(
         "data-etappeId"
       )}`;
     });
@@ -94,7 +94,7 @@ const listenToToggle = function () {
 const listenToClickGraphButton = function () {
   const btn = document.querySelector(".js-graph-button");
   btn.addEventListener("click", function () {
-    window.location.pathname = `etappe_grafiek.html?etappeId=${this.getAttribute(
+    window.location.href = `etappe_grafiek.html?etappeId=${this.getAttribute(
       "data-etappeId"
     )}`;
   });
