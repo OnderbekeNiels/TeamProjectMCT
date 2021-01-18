@@ -48,7 +48,7 @@ const listenToClickRound = function () {
   const rounds = document.querySelectorAll(".js-rounds-table-row");
   for (const item of rounds) {
     item.addEventListener("click", function () {
-      window.location.href = `ronde_detail.html?roundId=${this.getAttribute(
+      window.location.pathname = `ronde_detail.html?roundId=${this.getAttribute(
         "data-roundId"
       )}`;
     });
@@ -63,7 +63,7 @@ const listenToClickEtappe = function () {
         "etappeTitle",
         this.getAttribute("data-etappeTitle")
       );
-      window.location.href = `etappe_detail.html?etappeId=${this.getAttribute(
+      window.location.pathname = `etappe_detail.html?etappeId=${this.getAttribute(
         "data-etappeId"
       )}`;
     });
@@ -94,7 +94,7 @@ const listenToToggle = function () {
 const listenToClickGraphButton = function () {
   const btn = document.querySelector(".js-graph-button");
   btn.addEventListener("click", function () {
-    window.location.href = `etappe_grafiek.html?etappeId=${this.getAttribute(
+    window.location.pathname = `etappe_grafiek.html?etappeId=${this.getAttribute(
       "data-etappeId"
     )}`;
   });
@@ -104,7 +104,7 @@ const listenToClickLogo = function () {
   document
     .querySelector(".js-header-logo")
     .addEventListener("click", function () {
-      window.location.href = "index.html";
+      window.location.pathname = "index.html";
     });
 };
 
@@ -153,7 +153,7 @@ const showRounds = function (data) {
   }
   table.innerHTML = htmlString;
   listenToClickRound();
-  HideLoader();
+  hideLoader();
 };
 
 const showRoundsRanking = function (data) {
@@ -202,7 +202,7 @@ const showRoundsRanking = function (data) {
     }
   }
   table.innerHTML = htmlString;
-  HideLoader();
+  hideLoader();
 };
 
 const showEtappes = function (data) {
@@ -252,7 +252,7 @@ const showEtappes = function (data) {
   }
   table.innerHTML = htmlString;
   listenToClickEtappe();
-  HideLoader();
+  hideLoader();
 };
 
 const showRoundInfo = function (data) {
@@ -314,7 +314,7 @@ const showEtappesRanking = function (data) {
     }
   }
   table.innerHTML = htmlString;
-  HideLoader();
+  hideLoader();
 };
 
 const showEtappeInfo = function (data) {
@@ -419,8 +419,28 @@ const showEtappeUserChartData = function (data) {
     },
   };
   let speedChart = new Chart(ctx, config);
-  HideLoader();
+  hideLoader();
 };
+
+const hideLoader = function () {
+  const loaders = document.querySelectorAll(".js-data-loader");
+  for(const item of loaders){
+    item.classList.add("o-hide-accessible");
+  }
+  
+};
+
+const showLoader = function () {
+  const loaders = document.querySelectorAll(".js-data-loader");
+  for(const item of loaders){
+    item.classList.remove("o-hide-accessible");
+  }
+};
+
+const showUserName = function(userName){
+  userName = userName.split(" ");
+  document.querySelector('.js-user-name').innerText = userName[0];
+}
 
 //#endregion
 
@@ -534,26 +554,6 @@ function signOut() {
 
 //#endregion
 
-const HideLoader = function () {
-  const loaders = document.querySelectorAll(".js-data-loader");
-  for(const item of loaders){
-    item.classList.add("o-hide-accessible");
-  }
-  
-};
-
-const ShowLoader = function () {
-  const loaders = document.querySelectorAll(".js-data-loader");
-  for(const item of loaders){
-    item.classList.remove("o-hide-accessible");
-  }
-};
-
-const ShowUserName = function(userName){
-  userName = userName.split(" ");
-  document.querySelector('.js-user-name').innerText = userName[0];
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
 
@@ -570,15 +570,15 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.pathname = "/index.html";
   } else {
 
-    ShowUserName(userName);
+    showUserName(userName);
 
     if (document.querySelector(".js-ronde-overzicht")) {
-      ShowLoader();
+      showLoader();
       getRounds();
     }
 
     if (document.querySelector(".js-ronde-detail")) {
-      ShowLoader();
+      showLoader();
       let urlParams = new URLSearchParams(window.location.search);
       const roundId = urlParams.get("roundId");
       if (roundId == null) {
@@ -590,7 +590,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (document.querySelector(".js-etappe-detail")) {
-      ShowLoader();
+      showLoader();
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
@@ -605,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (document.querySelector(".js-etappe-grafiek")) {
-      ShowLoader();
+      showLoader();
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
