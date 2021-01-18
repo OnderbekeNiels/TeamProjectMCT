@@ -1100,7 +1100,7 @@ namespace TeamProjectFunction
 
         [FunctionName("GetDeelnemersRonde")]
         public static async Task<IActionResult> GetDeelnemersRonde(
-       [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "ronde/deelnemrs/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
+       [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "ronde/deelnemers/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
         {
             try
             {
