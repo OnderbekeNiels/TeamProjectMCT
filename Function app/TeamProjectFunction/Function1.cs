@@ -513,11 +513,9 @@ namespace TeamProjectFunction
                         Deelnemer deelnemer = new Deelnemer();
                         deelnemer.RondeId = ronde.RondeId;
                         deelnemer.GebruikerId = ronde.Admin;
-                        deelnemer.DeelnemerId = Guid.NewGuid();
 
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2, 1)";
-                        sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@GebruikerId_2, @RondeId_2, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId_2", deelnemer.RondeId);
                         sqlCommandInsert.Parameters.AddWithValue("@GebruikerId_2", deelnemer.GebruikerId);
 
@@ -615,7 +613,6 @@ namespace TeamProjectFunction
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
-                deelnemer.DeelnemerId = Guid.NewGuid();
                 Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
 
                 //controleren als invitecode bestaat
@@ -659,7 +656,7 @@ namespace TeamProjectFunction
                                     while (readerDeelnemerCheck.Read())
                                     {
                                         Deelnemer data = new Deelnemer();
-                                        data.DeelnemerId = Guid.Parse(readerDeelnemerCheck["DeelnemerId"].ToString());
+                                        data.GebruikerId = Guid.Parse(readerDeelnemerCheck["GebruikersId"].ToString());
                                         deelnemers.Add(data);
                                     }
                                 }
@@ -704,8 +701,7 @@ namespace TeamProjectFunction
                                         using (SqlCommand sqlCommandInsert = new SqlCommand())
                                         {
                                             sqlCommandInsert.Connection = sqlConnectionInsert;
-                                            sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId, 1)";
-                                            sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                                            sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES( @GebruikerId, @RondeId, 1)";       
                                             sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
                                             sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
 
@@ -816,37 +812,12 @@ namespace TeamProjectFunction
                     using (SqlCommand sqlCommand = new SqlCommand())
                     {
                         sqlCommand.Connection = sqlConnection;
-                        sqlCommand.CommandText = "select DeelnemerId from Deelnemers where RondeId = @RondeId and GebruikersId = @GebruikersId";
+                        sqlCommand.CommandText = "UPDATE Deelnemers SET IsActief = 0 where RondeId = @RondeId and GebruikersId = @GebruikersId";
                         sqlCommand.Parameters.AddWithValue("@RondeId", RondeId);
                         sqlCommand.Parameters.AddWithValue("@GebruikersId", GebruikerId);
-                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                        await sqlCommand.ExecuteNonQueryAsync();
 
-                        while (reader.Read())
-                        {
-                            Deelnemer deelnemer = new Deelnemer();
-                            deelnemer.DeelnemerId = Guid.Parse(reader["DeelnemerId"].ToString());
-
-                            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
-                            {
-                                await sqlConnectionDel.OpenAsync();
-                                using (SqlCommand sqlCommandDel = new SqlCommand())
-                                {
-                                    sqlCommandDel.Connection = sqlConnectionDel;
-                                    sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
-                                    sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
-
-
-
-
-                                    await sqlCommandDel.ExecuteNonQueryAsync();
-
-                                    
-
-                                }
-                            }
-                        }
-
-
+                        
                         CustomResponse customResponse = new CustomResponse();
                         customResponse.Succes = true;
                         return new OkObjectResult(customResponse);

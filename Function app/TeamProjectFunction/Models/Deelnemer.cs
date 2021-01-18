@@ -8,6 +8,5 @@ namespace TeamProjectFunction.Models
     {
         public Guid GebruikerId { get; set; }
         public Guid RondeId { get; set; }
-        public Guid DeelnemerId { get; set; }
     }
 }
