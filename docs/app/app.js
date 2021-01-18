@@ -550,7 +550,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //Listen to click logo -> go to home
   listenToClickLogo();
 
-  // get userid from user:
+  // get userid and name from user:
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
 
