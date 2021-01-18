@@ -107,7 +107,7 @@ namespace TempoTrack.Views.RondePaginas
                 }
                 else
                 {
-                    if (deelnemerResponse.Succes == null)
+                    if (deelnemerResponse.RondeId != null)
                     {
                         await DisplayAlert("Succes", "Je doet nu mee aan de ronde", "OK");
                         //doorsturen naar ronde pagina
