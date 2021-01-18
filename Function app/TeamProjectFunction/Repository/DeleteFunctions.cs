@@ -79,7 +79,7 @@ namespace TeamProjectFunction.Repository
             }
         }
 
-        public static async Task<CustomResponse> DelDeelnemerFromRonde(Guid deelnemer)
+        public static async Task<CustomResponse> DelDeelnemerFromRonde(Guid gebruiker, Guid ronde)
         {
             string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
             using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
@@ -88,8 +88,9 @@ namespace TeamProjectFunction.Repository
                 using (SqlCommand sqlCommandDel = new SqlCommand())
                 {
                     sqlCommandDel.Connection = sqlConnectionDel;
-                    sqlCommandDel.CommandText = "DELETE FROM Deelnemers WHERE deelnemerId = @deelnemerId";
-                    sqlCommandDel.Parameters.AddWithValue("@deelnemerId", deelnemer);
+                    sqlCommandDel.CommandText = "DELETE FROM Deelnemers WHERE GebruikersId = @GebruikersId and RondeId = @RondeId";
+                    sqlCommandDel.Parameters.AddWithValue("@GebruikersId", gebruiker);
+                    sqlCommandDel.Parameters.AddWithValue("@RondeId", ronde);
 
                     await sqlCommandDel.ExecuteNonQueryAsync();
                     CustomResponse customResponse = new CustomResponse();
@@ -106,7 +107,7 @@ namespace TeamProjectFunction.Repository
             // en controleren als er nog etappes zijn
             //List<Guid> lapTijden = new List<Guid>();
 
-            List<Guid> deelnemerIds = new List<Guid>();
+            List<Guid> gebruikerIds = new List<Guid>();
             string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
             //deelnemers verwijderen:
             using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
@@ -122,13 +123,13 @@ namespace TeamProjectFunction.Repository
 
                     while (reader.Read())
                     {
-                        deelnemerIds.Add(Guid.Parse(reader["DeelnemerId"].ToString()));
+                        gebruikerIds.Add(Guid.Parse(reader["GebruikersId"].ToString()));
                     }
 
                 }
-                foreach (Guid deelnemer in deelnemerIds)
+                foreach (Guid gebruiker in gebruikerIds)
                 {
-                    await DelDeelnemerFromRonde(deelnemer);
+                    await DelDeelnemerFromRonde(gebruiker, ronde);
                 }
             }
             //etappes verwijderen
