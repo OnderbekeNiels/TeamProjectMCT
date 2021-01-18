@@ -1,6 +1,6 @@
 let userId;
 
-// userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
+//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -153,6 +153,7 @@ const showRounds = function (data) {
   }
   table.innerHTML = htmlString;
   listenToClickRound();
+  HideLoader();
 };
 
 const showRoundsRanking = function (data) {
@@ -201,6 +202,7 @@ const showRoundsRanking = function (data) {
     }
   }
   table.innerHTML = htmlString;
+  HideLoader();
 };
 
 const showEtappes = function (data) {
@@ -250,6 +252,7 @@ const showEtappes = function (data) {
   }
   table.innerHTML = htmlString;
   listenToClickEtappe();
+  HideLoader();
 };
 
 const showRoundInfo = function (data) {
@@ -311,6 +314,7 @@ const showEtappesRanking = function (data) {
     }
   }
   table.innerHTML = htmlString;
+  HideLoader();
 };
 
 const showEtappeInfo = function (data) {
@@ -464,6 +468,7 @@ const getEtappesRanking = async function (etappeId) {
     const data = await response.json();
     console.table(data);
     showEtappesRanking(data);
+    getEtappeInfo(etappeId);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
@@ -527,22 +532,27 @@ function signOut() {
   });
 }
 
+//#endregion
+
 const HideLoader = function () {
-  const loader = document.querySelector(".js-data-loader");
-  loader.classList.add("o-hide-accessible");
+  const loaders = document.querySelectorAll(".js-data-loader");
+  for(const item of loaders){
+    item.classList.add("o-hide-accessible");
+  }
+  
 };
 
 const ShowLoader = function () {
-  const loader = document.querySelector(".js-data-loader");
-  loader.classList.remove("o-hide-accessible");
+  const loaders = document.querySelectorAll(".js-data-loader");
+  for(const item of loaders){
+    item.classList.remove("o-hide-accessible");
+  }
 };
 
 const ShowUserName = function(userName){
   userName = userName.split(" ");
   document.querySelector('.js-user-name').innerText = userName[0];
 }
-
-//#endregion
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
@@ -553,6 +563,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // get userid and name from user:
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
+  // userName = "TstUser x";
 
   if (userId == null || userName == null) {
     window.location.href = "index.html";
@@ -561,10 +572,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ShowUserName(userName);
 
     if (document.querySelector(".js-ronde-overzicht")) {
+      ShowLoader();
       getRounds();
     }
 
     if (document.querySelector(".js-ronde-detail")) {
+      ShowLoader();
       let urlParams = new URLSearchParams(window.location.search);
       const roundId = urlParams.get("roundId");
       if (roundId == null) {
@@ -576,13 +589,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (document.querySelector(".js-etappe-detail")) {
+      ShowLoader();
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
         window.location.href = "ronde_detail.html";
       } else {
         getEtappesRanking(etappeId);
-        getEtappeInfo(etappeId);
         document
           .querySelector(".js-graph-button")
           .setAttribute("data-etappeId", etappeId);
