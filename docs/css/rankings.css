@@ -161,7 +161,7 @@
 
 html {
   font-size: 100%;
-  line-height: 1.5;
+  line-height: 1.25;
   font-family: "DIN 2014", sans-serif;
   color: var(--global-color-neutral-xx-dark);
   box-sizing: border-box;
@@ -796,8 +796,9 @@ input:disabled {
 */
 
 .c-home-container {
-  padding: 0 var(--global-whitespace-md) var(--global-whitespace-md)
-    var(--global-whitespace-md);
+  padding: var(--global-whitespace-md);
+  max-width: 36rem;
+  margin: 0 auto;
 }
 
 .c-home-container__item {
@@ -813,31 +814,63 @@ input:disabled {
 }
 
 .c-home-title {
-  font-size: 1.25rem;
-  margin-bottom: var(--global-whitespace-md);
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: var(--global-whitespace-xl);
+  color: var(--global-color-neutral-x-dark);
+}
+
+.c-home-subtitle{
+  font-size: 1rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--global-color-neutral-dark);
+  margin-bottom: var(--global-whitespace-sm);
 }
 
 .c-home-information {
   width: 100%;
   max-width: 35rem;
+  text-align: left;
   margin-bottom: var(--global-whitespace-lg);
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 64rem) {
   .c-home-container {
-    display: grid;
-    grid-template-columns: 25rem 1fr;
-    grid-gap: var(--global-whitespace-md);
-    height: calc(100vh - 4rem);
+    max-width: 72rem;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-items: center;
-    padding: 0 var(--global-whitespace-xxl) var(--global-whitespace-xxl)
-      var(--global-whitespace-xxl);
+    margin: var(--global-whitespace-xxl) auto;
   }
 
-  .c-home-title {
-    font-size: 3rem;
+  .c-home-container__item{
+    flex-basis: calc(100% * (2/5));
   }
+
+  .c-home-container__item:nth-child(2){
+    flex-basis: calc(100% * (3/5));
+    margin-left: var(--global-whitespace-xxl);
+  }
+
+
+
+}
+
+/*
+      COMPONENT: Toggle
+  */
+
+.c-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--global-whitespace-xl);
+  text-align: center;
+  color: var(--global-color-alpha-xx-light);
+  background-color: var(--global-color-alpha);
+  width: 100%;
+  height: 3rem;
 }
 
 /*
