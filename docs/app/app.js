@@ -526,8 +526,8 @@ function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     console.log("User signed out.");
-    localStorage.setItem("gebruikerId", null);
-    localStorage.setItem("name", null);
+    localStorage.removeItem("gebruikerId");
+    localStorage.removeItem("name");
     window.location.pathname = "/index.html";
   });
 }
@@ -563,10 +563,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // get userid and name from user:
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
-  // userName = "TstUser x";
 
   if (userId == null || userName == null) {
-    window.location.href = "index.html";
+    console.log(userId);
+    console.log(userName);
+    window.location.pathname = "/index.html";
   } else {
 
     ShowUserName(userName);
@@ -581,7 +582,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let urlParams = new URLSearchParams(window.location.search);
       const roundId = urlParams.get("roundId");
       if (roundId == null) {
-        window.location.href = "ronde_overzicht.html";
+        window.location.pathname = "/ronde_overzicht.html";
       } else {
         getEtappes(roundId);
         listenToToggle();
@@ -593,7 +594,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
-        window.location.href = "ronde_detail.html";
+        window.location.pathname = "/ronde_detail.html";
       } else {
         getEtappesRanking(etappeId);
         document
@@ -608,7 +609,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
-        window.location.href = "ronde_detail.html";
+        window.location.pathname = "/ronde_detail.html";
       } else {
         getEtappeUserData(etappeId);
         getEtappeUserChartData(etappeId);
