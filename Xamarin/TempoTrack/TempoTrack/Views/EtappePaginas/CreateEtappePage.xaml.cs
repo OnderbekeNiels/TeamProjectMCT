@@ -61,13 +61,13 @@ namespace TempoTrack.Views.EtappePaginas
             if (date < DateTime.Now)
             {
                 //alert
-                await DisplayAlert("Foutmedling", "De etappe kan niet in het verleden plaats vinden", "OK");
+                await DisplayAlert("Foutmelding", "De etappe kan niet in het verleden plaats vinden", "OK");
             }
             // controleren of er 1 of meerdere laps zijn
             if (laps < 1)
             {
                 //alert
-                await DisplayAlert("Foutmedling", "Er moet minstens 1 lap gereden worden", "OK");
+                await DisplayAlert("Foutmelding", "Er moet minstens 1 lap gereden worden", "OK");
             }
             //controleren als alles goed is
             if (date > DateTime.Now && laps > 0)
