@@ -3,10 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tempo Track</title>
+    <title>Tempo Track - Home</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#016fb7">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="./css/normalize.css" />
-    <link rel="stylesheet" href="./css/rankings.css" />
+    <link rel="stylesheet" href="./css/screen.css" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <script src="./app/index.js"></script>
@@ -15,14 +23,14 @@
       content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com"
     />
   </head>
-  <body class="roundsoverview">
+  <body class="homepage">
     <header class="c-header">
       <div
         class="g-signin2"
         data-onsuccess="onSignIn"
         style="display: none"
       ></div>
-      <div class="c-header__logo">
+      <div class="c-header__logo js-header-logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="c-header__logo--svg"
@@ -101,17 +109,25 @@
           </g>
         </svg>
         <h1 class="c-header__logo--title">Tempo Track</h1>
-      </div>
+      </div><div class="g-signin2 c-home-loginBtn c-home-loginBtn--header" data-onsuccess="onSignIn"></div>
     </header>
-    <div class="c-home-container">
-      <div class="c-home-container__item"><h1 class="c-home-title">Tempo Tracking Wielerpiste</h1>
-        <p class="c-home-information">
-          Altijd al aan een Rondekoers willen deelnemen? Met deze app kan
-          het! Maak jouw eigen rondes met etappes en virtuele klassementen!
-          Win jouw gele trui! Win jouw Ronde!
-        </p>
-        <div class="g-signin2 c-home-loginBtn u-mb-lg" data-onsuccess="onSignIn"></div>
-      </div><div class="c-home-container__item"><img class="c-home-picture" src="./img/png/piste.PNG" alt="foto wielerpiste" /></div></div>
-    </div>     
+    <div class="c-home-grid">
+      <div class="c-home-grid__item">
+        <div class="c-home-container">
+          <div class="c-home-container__item"><h1 class="c-home-title">Een nieuwe piste ervaring.</h1>
+            <p class="c-home-subtitle u-max-width-xs">
+              Altijd al aan een etappe wedstrijd willen deelnemen? Met deze Tempo Track kan
+              het!
+            </p>
+            <p class="c-home-information u-max-width-xs">
+               Tempo Track is een applicatie die het mogelijk maakt om zelf virtuele etappekoersen aan te maken. Met enkele klikken heb je een etappe aan gemaakt binnen de etappekoers en je bent klaar om te gaan. Op deze manier wordt het trainen en fietsen op de piste met je kennissen een hele nieuwe ervaring!
+            </p>
+          </div><div class="c-home-container__item"><img class="c-home-picture" src="./img/png/pisteFiets.png" alt="foto pistefiets" /></div></div>
+        </div>
+        <div class="c-home-grid__item"> 
+          <div class="c-footer">Gecreëerd voor Howest door<br>Demets Jelle, Onderbeke Niels, Petit Xander & Reavens Robbe</div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

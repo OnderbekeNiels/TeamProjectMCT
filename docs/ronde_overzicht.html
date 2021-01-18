@@ -3,26 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ronde Overzicht</title>
+    <title>Tempo Track - Ronde overzicht</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#016fb7">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="./css/normalize.css" />
-    <link rel="stylesheet" href="./css/rankings.css" />
+    <link rel="stylesheet" href="./css/screen.css" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <script src="./app/rankings.js"></script>
+    <script src="./app/app.js"></script>
     <meta
       name="google-signin-client_id"
       content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com"
     />
   </head>
-  <body class="roundsoverview">
+  <body class="js-ronde-overzicht">
     <header class="c-header">
       <div
         class="g-signin2"
         data-onsuccess="onSignIn"
         style="display: none"
       ></div>
-      <div class="c-header__logo">
+      <div class="c-header__logo js-header-logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="c-header__logo--svg"
@@ -103,7 +111,7 @@
         <h1 class="c-header__logo--title">Tempo Track</h1>
       </div>
       <div class="c-header__action">
-        <p class="c-header__user">Niels</p>
+        <p class="c-header__user js-user-name">Laden...</p>
         <button class="c-header__logoutBtn o-button-reset" onclick="signOut();">
           Afmelden
         </button>
@@ -145,26 +153,21 @@
       <p class="c-page-subtitle">
         Dit zijn de rondes waar u aan heeft deelgenomen.
       </p>
+      <div class="o-data-loading js-data-loader">
+        <svg class="o-circular-loader" viewBox="25 25 50 50">
+          <circle
+            class="o-loader-path"
+            cx="50"
+            cy="50"
+            r="20"
+            fill="none"
+            stroke="#016fb7"
+            stroke-width="2"
+          />
+        </svg>
+        We halen uw data op.
+      </div>
       <div class="c-ranking-table js-rounds-table">
-        <div class="c-ranking-table__header">
-          <p class="c-ranking-table__header-item">Startdatum</p>
-          <p class="c-ranking-table__header-item u-text-align--left">Ronde</p>
-          <p class="c-ranking-table__header-item">Totale tijd</p>
-          <p class="c-ranking-table__header-item u-mr-clear">Positie</p>
-        </div>
-        <div class="o-data-loading">
-          <svg class="o-circular-loader" viewBox="25 25 50 50">
-            <circle
-              class="o-loader-path"
-              cx="50"
-              cy="50"
-              r="20"
-              fill="none"
-              stroke="#016fb7"
-              stroke-width="2"
-            />
-          </svg>
-          We halen uw data op.
         </div>
       </div>
     </div>
