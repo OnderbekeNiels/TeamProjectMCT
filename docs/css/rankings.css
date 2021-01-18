@@ -605,6 +605,8 @@ input:disabled {
 
 .c-main-container {
   padding: var(--global-whitespace-md) var(--global-whitespace-sm) 0;
+  max-width: 74rem;
+  margin: 0 auto;
 }
 
 .c-data {
@@ -645,6 +647,8 @@ input:disabled {
 
 .c-ranking-table {
   width: 100%;
+  max-width: 74rem;
+  margin: 0 auto;
 }
 
 .c-ranking-table--rounds {
@@ -850,6 +854,11 @@ input:disabled {
   margin-bottom: var(--global-whitespace-lg);
 }
 
+.c-home-loginBtn{
+  margin-left: var(--global-whitespace-md);
+}
+
+
 @media (min-width: 64rem) {
   .c-home-container {
     max-width: 72rem;
@@ -870,6 +879,7 @@ input:disabled {
     flex-basis: calc(100% * (3/5));
     margin-left: var(--global-whitespace-xxl);
   }
+
 }
 
 /*
@@ -882,8 +892,8 @@ input:disabled {
   align-items: center;
   padding: var(--global-whitespace-md);
   text-align: center;
-  color: var(--global-color-alpha-xx-light);
-  background-color: var(--global-color-alpha);
+  color: var(--global-color-neutral-dark);
+  /* background-color: var(--global-color-alpha); */
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -908,7 +918,7 @@ input:disabled {
   display: flex;
   justify-content: center;
   height: 100%;
-  margin: var(--global-whitespace-md) auto;
+  margin: var(--global-whitespace-md) auto var(--global-whitespace-xl);
 }
 
 .c-toggle-option {
@@ -965,7 +975,7 @@ input:disabled {
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  margin-bottom: var(--global-whitespace-md);
+  margin: var(--global-whitespace-xl) 0;
 }
 
 .c-etappe-info-container__item{
@@ -1005,6 +1015,7 @@ input:disabled {
   justify-content: center;
   position: relative;
   height: 40vh;
+  margin-bottom: var(--global-whitespace-md);
 }
 
 .c-etappe-chart-button{
