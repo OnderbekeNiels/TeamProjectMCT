@@ -19,7 +19,7 @@ namespace TempoTrack.Views.EtappePaginas
         public CreateEtappePage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
             RondeInfo = rondeInfo;
-            gebruikersInfo = gebruikersInfo;
+            GebruikersInfo = gebruikersInfo;
 
             InitializeComponent();
             laps = 1;
@@ -92,13 +92,11 @@ namespace TempoTrack.Views.EtappePaginas
                     await DisplayAlert("Succes", "Etappe is succesvol aangemaakt", "OK");
 
                     //Etappe aangemaakt doorgaan naar etappe pagina
-                    await Navigation.PushAsync(new EtappeOverzichtPage(RondeInfo,GebruikersInfo));
+                    Navigation.PushAsync(new EtappeOverzichtPage(RondeInfo,GebruikersInfo));
+                    //Navigation.PopAsync();
                 }
-
             }
             //anders niets doen
         }
-    }
-
-    
+    }   
 }

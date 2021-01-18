@@ -513,11 +513,9 @@ namespace TeamProjectFunction
                         Deelnemer deelnemer = new Deelnemer();
                         deelnemer.RondeId = ronde.RondeId;
                         deelnemer.GebruikerId = ronde.Admin;
-                        deelnemer.DeelnemerId = Guid.NewGuid();
 
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId_2, @RondeId_2, 1)";
-                        sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                        sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@GebruikerId_2, @RondeId_2, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId_2", deelnemer.RondeId);
                         sqlCommandInsert.Parameters.AddWithValue("@GebruikerId_2", deelnemer.GebruikerId);
 
@@ -615,7 +613,6 @@ namespace TeamProjectFunction
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 Deelnemer deelnemer = JsonConvert.DeserializeObject<Deelnemer>(requestBody);
-                deelnemer.DeelnemerId = Guid.NewGuid();
                 Ronde ronde = JsonConvert.DeserializeObject<Ronde>(requestBody);
 
                 //controleren als invitecode bestaat
@@ -659,43 +656,45 @@ namespace TeamProjectFunction
                                     while (readerDeelnemerCheck.Read())
                                     {
                                         Deelnemer data = new Deelnemer();
-                                        data.DeelnemerId = Guid.Parse(readerDeelnemerCheck["DeelnemerId"].ToString());
+                                        data.GebruikerId = Guid.Parse(readerDeelnemerCheck["GebruikersId"].ToString());
+                                        data.IsActief = bool.Parse(readerDeelnemerCheck["IsActief"].ToString());
                                         deelnemers.Add(data);
                                     }
                                 }
 
                             }
 
-                            if (deelnemers.Count() == 0)
+                            List<LapTijd> laptijden = new List<LapTijd>();
+
+                            //Controleren of er al een lap gereden is binnen een etappe
+                            using (SqlConnection sqlConnectionEtappesCheck = new SqlConnection(connectionStringInsert))
                             {
-                                //deelnemer doet nog niet mee --> je kan nog meedoen
-
-                                List<LapTijd> laptijden = new List<LapTijd>();
-
-                                //Controleren of er al een lap gereden is binnen een etappe
-                                using (SqlConnection sqlConnectionEtappesCheck = new SqlConnection(connectionStringInsert))
+                                await sqlConnectionEtappesCheck.OpenAsync();
+                                using (SqlCommand sqlCommandEtappesCheck = new SqlCommand())
                                 {
-                                    await sqlConnectionEtappesCheck.OpenAsync();
-                                    using (SqlCommand sqlCommandEtappesCheck = new SqlCommand())
+                                    sqlCommandEtappesCheck.Connection = sqlConnectionEtappesCheck;
+                                    sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
+                                    sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
+
+                                    SqlDataReader readerEtappesCheck = await sqlCommandEtappesCheck.ExecuteReaderAsync();
+
+                                    while (readerEtappesCheck.Read())
                                     {
-                                        sqlCommandEtappesCheck.Connection = sqlConnectionEtappesCheck;
-                                        sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
-                                        sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
 
-                                        SqlDataReader readerEtappesCheck = await sqlCommandEtappesCheck.ExecuteReaderAsync();
-
-                                        while (readerEtappesCheck.Read())
-                                        {
-
-                                            LapTijd data = new LapTijd();
-                                            data.LapTijdId = Guid.Parse(readerEtappesCheck["LapTijdId"].ToString());
-                                            laptijden.Add(data);
-                                        }
+                                        LapTijd data = new LapTijd();
+                                        data.LapTijdId = Guid.Parse(readerEtappesCheck["LapTijdId"].ToString());
+                                        laptijden.Add(data);
                                     }
                                 }
+                            }
 
-                                //Als er geen lap gereden is --> kan je nog meedoen.
-                                if (laptijden.Count() == 0)
+                            if(laptijden.Count() == 0)
+                            {
+                                
+
+                                
+                                //deelnemer doet nog niet mee --> je kan nog meedoen
+                                if (deelnemers.Count() == 0)
                                 {
                                     //Deelnemer toevoegen aan de ronde
                                     using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
@@ -704,35 +703,70 @@ namespace TeamProjectFunction
                                         using (SqlCommand sqlCommandInsert = new SqlCommand())
                                         {
                                             sqlCommandInsert.Connection = sqlConnectionInsert;
-                                            sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES(@DeelnemerId, @GebruikerId, @RondeId, 1)";
-                                            sqlCommandInsert.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
+                                            sqlCommandInsert.CommandText = "INSERT INTO Deelnemers VALUES( @GebruikerId, @RondeId, 1)";       
                                             sqlCommandInsert.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
                                             sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
 
                                             //deelnemer.RondeId = ronde.RondeId;
 
                                             await sqlCommandInsert.ExecuteNonQueryAsync();
+                                            deelnemer.IsActief = true;
 
                                             return new OkObjectResult(deelnemer);
                                         }
                                     }
                                 }
-                                //Als er wel al een lap gereden is kan je niet meer meedoen.
+
+                                // deelnemer heeft al eens meegedaan maar heeft de ronde al eens verlaten
+                                if (deelnemers.Count() == 1 && deelnemers[0].IsActief == false)
+                                {
+                                    //deelnemer heeft al eens meegedaan, isactief = 0 en de deelnemer kan opnieuw meedoen:
+
+                                    //deelnemer opnieuw toevoegen:
+                                    using (SqlConnection sqlConnectionUpdate = new SqlConnection(connectionStringInsert))
+                                    {
+                                        await sqlConnectionUpdate.OpenAsync();
+                                        using (SqlCommand sqlCommandUpdate = new SqlCommand())
+                                        {
+                                            sqlCommandUpdate.Connection = sqlConnectionUpdate;
+                                            sqlCommandUpdate.CommandText = "UPDATE Deelnemers SET IsActief = 1 where RondeId = @RondeId and GebruikersId = @GebruikersId"; ;
+                                            sqlCommandUpdate.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
+                                            sqlCommandUpdate.Parameters.AddWithValue("@GebruikersId", deelnemer.GebruikerId);
+
+                                            //deelnemer.RondeId = ronde.RondeId;
+
+                                            await sqlCommandUpdate.ExecuteNonQueryAsync();
+                                            deelnemer.IsActief = true;
+
+                                            return new OkObjectResult(deelnemer);
+                                        }
+                                    }
+
+
+                                }
+
+
                                 else
                                 {
+
+                                    //Als de deelnemer al meedoet controleren als Is
+                                    //Als de deelenemer meedoet: je kan maar 1 keer meedoen :p
                                     CustomResponse customResponse = new CustomResponse();
                                     customResponse.Succes = false;
-                                    customResponse.Message = "Invitecode is niet meer geldig.";
+                                    customResponse.Message = "Je doet al mee aan deze ronde.";
                                     return new OkObjectResult(customResponse);
+                                    
                                 }
+
+                                
                             }
 
                             else
                             {
-                                //Als de deelenemer meedoet: je kan maar 1 keer meedoen :p
+                                //Als er wel al een lap gereden is kan je niet meer meedoen.
                                 CustomResponse customResponse = new CustomResponse();
                                 customResponse.Succes = false;
-                                customResponse.Message = "Je doet al mee aan deze ronde.";
+                                customResponse.Message = "Invitecode is niet meer geldig.";
                                 return new OkObjectResult(customResponse);
                             }
 
@@ -816,37 +850,12 @@ namespace TeamProjectFunction
                     using (SqlCommand sqlCommand = new SqlCommand())
                     {
                         sqlCommand.Connection = sqlConnection;
-                        sqlCommand.CommandText = "select DeelnemerId from Deelnemers where RondeId = @RondeId and GebruikersId = @GebruikersId";
+                        sqlCommand.CommandText = "UPDATE Deelnemers SET IsActief = 0 where RondeId = @RondeId and GebruikersId = @GebruikersId";
                         sqlCommand.Parameters.AddWithValue("@RondeId", RondeId);
                         sqlCommand.Parameters.AddWithValue("@GebruikersId", GebruikerId);
-                        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+                        await sqlCommand.ExecuteNonQueryAsync();
 
-                        while (reader.Read())
-                        {
-                            Deelnemer deelnemer = new Deelnemer();
-                            deelnemer.DeelnemerId = Guid.Parse(reader["DeelnemerId"].ToString());
-
-                            using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
-                            {
-                                await sqlConnectionDel.OpenAsync();
-                                using (SqlCommand sqlCommandDel = new SqlCommand())
-                                {
-                                    sqlCommandDel.Connection = sqlConnectionDel;
-                                    sqlCommandDel.CommandText = "UPDATE Deelnemers SET IsActief = 0 WHERE DeelnemerId = @DeelnemerId";
-                                    sqlCommandDel.Parameters.AddWithValue("@DeelnemerId", deelnemer.DeelnemerId);
-
-
-
-
-                                    await sqlCommandDel.ExecuteNonQueryAsync();
-
-                                    
-
-                                }
-                            }
-                        }
-
-
+                        
                         CustomResponse customResponse = new CustomResponse();
                         customResponse.Succes = true;
                         return new OkObjectResult(customResponse);
@@ -1123,6 +1132,47 @@ namespace TeamProjectFunction
 
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
+            }
+
+        }
+
+        [FunctionName("GetDeelnemersRonde")]
+        public static async Task<IActionResult> GetDeelnemersRonde(
+       [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "ronde/deelnemers/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<DeelnemerRonde> deelnemers = new List<DeelnemerRonde>();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        command.CommandText = "select d.GebruikersId, g.GebruikersNaam from Rondes as r join Deelnemers as d on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where r.RondeId = @RondeId";
+                        command.Parameters.AddWithValue("@RondeId", RondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            DeelnemerRonde data = new DeelnemerRonde();
+                            data.GebruikersId = Guid.Parse(reader["GebruikersId"].ToString());
+                            data.GebruikersNaam = reader["GebruikersNaam"].ToString();
+
+                            deelnemers.Add(data);
+
+                        }
+                    }
+                }
+                return new OkObjectResult(deelnemers);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
             }
 
         }
