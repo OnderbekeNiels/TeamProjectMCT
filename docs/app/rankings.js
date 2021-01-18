@@ -97,6 +97,12 @@ const listenToClickGraphButton = function(){
   })
 }
 
+const listenToClickLogo = function(){
+  document.querySelector('.js-header-logo').addEventListener('click', function(){
+    window.location.href = 'index.html';
+  })
+}
+
 //#endregion
 
 //#region *** Show Data Functions ***
@@ -120,7 +126,7 @@ const showRounds = function (data) {
 </div>`;
   for (const item of data) {
       htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row" data-roundId='${
+        <div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundId='${
           item.rondeId
         }'>
       <p class="c-ranking-table__row-item">
@@ -218,7 +224,7 @@ const showEtappes = function (data) {
   for (const item of data) {
     if (item.etappeActief != true) {
       htmlString += `
-      <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
+      <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
         item.etappeId
       }' data-etappeTitle='Etappe ${
         aantalEtappes 
@@ -355,7 +361,7 @@ const showEtappeUserChartData = function (data) {
           datasets: [
               {
                   label: "seconden",
-                  backgroundColor: "#2d2d2d",
+                  backgroundColor: "#016fb7",
                   borderColor: "#016fb7",
                   data: converted_data,
                   pointRadius: 3,
@@ -529,16 +535,19 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
   // get userid from user:
   //userId = sessionStorage.getItem("gebruikerId");
-  if (document.querySelector(".roundsoverview")) {
+
+  listenToClickLogo();
+
+  if (document.querySelector(".js-ronde-overzicht")) {
     getRounds();
   }
-  if (document.querySelector(".roundsdetail")) {
+  if (document.querySelector(".js-ronde-detail")) {
     let urlParams = new URLSearchParams(window.location.search);
     const roundId = urlParams.get("roundId");
     getEtappes(roundId);
     listenToToggle();
   }
-  if (document.querySelector(".etappesdetail")) {
+  if (document.querySelector(".js-etappe-detail")) {
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
     getEtappesRanking(etappeId);
@@ -546,7 +555,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.js-graph-button').setAttribute('data-etappeId',  etappeId);
     listenToClickGraphButton();
   }
-  if(document.querySelector('.etappesgraph')){
+  if(document.querySelector('.js-etappe-grafiek')){
     let urlParams = new URLSearchParams(window.location.search);
     const etappeId = urlParams.get("etappeId");
     ShowLoader();

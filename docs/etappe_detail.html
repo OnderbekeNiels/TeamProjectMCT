@@ -23,10 +23,10 @@
       content="1099262792150-6de5i646pojoourfmi29nlitsr9i5laa.apps.googleusercontent.com"
     />
   </head>
-  <body class="etappesdetail">
+  <body class="js-etappe-detail">
     <header class="c-header">
         <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
-        <div class="c-header__logo">
+        <div class="c-header__logo js-header-logo">
           <svg xmlns="http://www.w3.org/2000/svg"
          class="c-header__logo--svg" width="283.384" height="146.182" viewBox="0 0 283.384 146.182">
           <g id="logoTempoTrack" transform="translate(-40.089 -190.972)">
@@ -49,8 +49,8 @@
         </div>    
         <div class="c-header__action">
           <p class="c-header__user">Niels</p>
-          <button class="c-header__logoutBtn o-button-reset" onclick="signOut();">Afmelden</button>
-          <button class="c-header__logoutBtn--icon o-button-reset" onclick="signOut();"><svg id="login-24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <button class="c-header__logoutBtn o-button-reset " onclick="signOut();">Afmelden</button>
+          <button class="c-header__logoutBtn--icon o-button-reset " onclick="signOut();"><svg id="login-24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <g id="Group_7" data-name="Group 7">
               <rect id="Rectangle_5" data-name="Rectangle 5" width="24" height="24" fill="none"/>
             </g>
@@ -63,7 +63,7 @@
       </header>
     <div class="c-main-container">
       <h1 class="c-page-title js-etappe-name">Etappe Details</h1>
-      <button class="c-etappe-chart-button o-button-reset js-graph-button">Grafiek <svg class="c-etappe-chart-icon js-etappe-graph" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16"><path d="M0 0h24v24H0z" fill="none"/><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg></button>
+      <button class="c-etappe-chart-button o-button-reset js-graph-button u-show-pointer">Grafiek <svg class="c-etappe-chart-icon js-etappe-graph" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16"><path d="M0 0h24v24H0z" fill="none"/><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg></button>
       <p class="c-page-subtitle js-etappe-info">RNDS: 0 - DLN 0 - AFSTD: 0.00 Km - GEM SN: 0.00 Km/u</p>
         <div class="c-ranking-table js-etappes-ranking-table">
             <div class="c-ranking-table__header">

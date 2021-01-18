@@ -490,6 +490,7 @@ input:disabled {
 .c-header__logo {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .c-header__logo--svg {
@@ -534,12 +535,13 @@ input:disabled {
   color: var(--global-color-neutral-x-light);
   font-size: 1rem;
   line-height: 1.25;
+  cursor: pointer;
 }
 
 .c-header__logoutBtn--icon {
   display: flex;
   align-items: center;
-
+  cursor: pointer;
 }
 
 .c-header__logoutBtn:hover {
@@ -579,7 +581,7 @@ input:disabled {
 */
 
 .c-page-title {
-  line-height: 1.333;
+  line-height: 1.25;
   font-size: 3rem;
   text-align: center;
   margin-bottom: 0;
@@ -648,7 +650,7 @@ input:disabled {
 .c-ranking-table {
   width: 100%;
   max-width: 74rem;
-  margin: 0 auto;
+  margin: 0 auto var(--global-whitespace-md);
 }
 
 .c-ranking-table--rounds {
@@ -1247,6 +1249,14 @@ input:disabled {
 
 .u-flex-basis-1-of-3 {
   flex-basis: calc(100% / 3);
+}
+
+/*
+    Utilities: pointer
+*/
+
+.u-show-pointer {
+  cursor: pointer;
 }
 
 /*
