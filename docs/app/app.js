@@ -1,6 +1,6 @@
 let userId;
 
-userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
+//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -59,7 +59,10 @@ const listenToClickEtappe = function () {
   const rounds = document.querySelectorAll(".js-etappes-table-row");
   for (const item of rounds) {
     item.addEventListener("click", function () {
-      localStorage.setItem("etappeTitle", this.getAttribute("data-etappeTitle"));
+      localStorage.setItem(
+        "etappeTitle",
+        this.getAttribute("data-etappeTitle")
+      );
       window.location.href = `etappe_detail.html?etappeId=${this.getAttribute(
         "data-etappeId"
       )}`;
@@ -88,14 +91,22 @@ const listenToToggle = function () {
   }
 };
 
-const listenToClickGraphButton = function(){
-  const btn = document.querySelector('.js-graph-button');
-  btn.addEventListener('click', function(){
+const listenToClickGraphButton = function () {
+  const btn = document.querySelector(".js-graph-button");
+  btn.addEventListener("click", function () {
     window.location.href = `etappe_grafiek.html?etappeId=${this.getAttribute(
       "data-etappeId"
     )}`;
-  })
-}
+  });
+};
+
+const listenToClickLogo = function () {
+  document
+    .querySelector(".js-header-logo")
+    .addEventListener("click", function () {
+      window.location.href = "index.html";
+    });
+};
 
 //#endregion
 
@@ -119,8 +130,8 @@ const showRounds = function (data) {
   </p>
 </div>`;
   for (const item of data) {
-      htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row" data-roundId='${
+    htmlString += `
+        <div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundId='${
           item.rondeId
         }'>
       <p class="c-ranking-table__row-item">
@@ -139,9 +150,10 @@ const showRounds = function (data) {
       #${item.plaats}
       </p>
     </div>`;
-    }
+  }
   table.innerHTML = htmlString;
   listenToClickRound();
+  HideLoader();
 };
 
 const showRoundsRanking = function (data) {
@@ -190,6 +202,7 @@ const showRoundsRanking = function (data) {
     }
   }
   table.innerHTML = htmlString;
+  HideLoader();
 };
 
 const showEtappes = function (data) {
@@ -210,19 +223,17 @@ const showEtappes = function (data) {
   </p>
 </div>`;
   let aantalEtappes = 0;
-  for(const item of data){
-    if(item.etappeActief == false){
+  for (const item of data) {
+    if (item.etappeActief == false) {
       aantalEtappes++;
     }
   }
   for (const item of data) {
     if (item.etappeActief != true) {
       htmlString += `
-      <div class="c-ranking-table__row js-etappes-table-row" data-etappeId='${
+      <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
         item.etappeId
-      }' data-etappeTitle='Etappe ${
-        aantalEtappes 
-      }'>
+      }' data-etappeTitle='Etappe ${aantalEtappes}'>
     <p class="c-ranking-table__row-item">
     ${datetimeToDateNotation(item.startTijd)}
     </p>
@@ -241,6 +252,7 @@ const showEtappes = function (data) {
   }
   table.innerHTML = htmlString;
   listenToClickEtappe();
+  HideLoader();
 };
 
 const showRoundInfo = function (data) {
@@ -302,6 +314,7 @@ const showEtappesRanking = function (data) {
     }
   }
   table.innerHTML = htmlString;
+  HideLoader();
 };
 
 const showEtappeInfo = function (data) {
@@ -316,10 +329,12 @@ const showEtappeInfo = function (data) {
       ((3600 / data.totaalTijd) * data.afstand + Number.EPSILON) * 100
     ) / 100
   } Km/u`;
-  etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem('etappeTitle')}`;
+  etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem(
+    "etappeTitle"
+  )}`;
 };
 
-const showEtappeUserData = function(data){
+const showEtappeUserData = function (data) {
   const etappeInfo = document.querySelector(".js-etappe-info");
   etappeInfo.innerHTML = `<div class="c-etappe-info-container__item">
   <p class="c-etappe-info-subtitle">Gemiddelde rondetijd</p>
@@ -333,77 +348,79 @@ const showEtappeUserData = function(data){
 <p class="c-etappe-info-subtitle">Traagste rondetijd</p>
 <p class="c-etappe-info-data">${secToTimeNotation(data.traagsteLapTijd)}</p>
 </div>
-  `
-  document.querySelector('.js-etappe-head').innerText = `${data.rondeNaam} - ${localStorage.getItem('etappeTitle')}`;
-}
+  `;
+  document.querySelector(".js-etappe-head").innerText = `${
+    data.rondeNaam
+  } - ${localStorage.getItem("etappeTitle")}`;
+};
 
 const showEtappeUserChartData = function (data) {
   let converted_labels = [];
   let converted_data = [];
-  console.log(data)
+  console.log(data);
   for (const item of data) {
-      converted_labels.push(item.lapNummer);
-      converted_data.push(item.tijdLap);
+    converted_labels.push(item.lapNummer);
+    converted_data.push(item.tijdLap);
   }
 
   let ctx = document.querySelector(".js-etappe-chart").getContext("2d");
 
   let config = {
-      type: "line",
-      data: {
-          labels: converted_labels,
-          datasets: [
-              {
-                  label: "seconden",
-                  backgroundColor: "#2d2d2d",
-                  borderColor: "#016fb7",
-                  data: converted_data,
-                  pointRadius: 3,
-                  pointHoverRadius: 8,
-                  fill: false
-              }
-          ]
+    type: "line",
+    data: {
+      labels: converted_labels,
+      datasets: [
+        {
+          label: "seconden",
+          backgroundColor: "#016fb7",
+          borderColor: "#016fb7",
+          data: converted_data,
+          pointRadius: 3,
+          pointHoverRadius: 8,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      title: {
+        display: true,
+        text: "Afgewerkte rondes",
       },
-      options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          title: {
+      tooltips: {
+        mode: "index",
+        intersect: true,
+      },
+      hover: {
+        mode: "nearest",
+        intersect: true,
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            scaleLabel: {
               display: true,
-              text: "Afgewerkte rondes"
+              labelString: "Rondes",
+            },
           },
-          tooltips: {
-              mode: "index",
-              intersect: true
+        ],
+        yAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: "Ronde Tijd",
+            },
           },
-          hover: {
-              mode: "nearest",
-              intersect: true
-          },
-          scales: {
-              xAxes: [
-                  {
-                      display: true,
-                      scaleLabel: {
-                          display: true,
-                          labelString: "Rondes"
-                      }
-                  }
-              ],
-              yAxes: [
-                  {
-                      display: true,
-                      scaleLabel: {
-                          display: true,
-                          labelString: "Ronde Tijd"
-                      }
-                  }
-              ]
-          }
-      }
+        ],
+      },
+    },
   };
   let speedChart = new Chart(ctx, config);
   HideLoader();
-}
+};
 
 //#endregion
 
@@ -451,6 +468,7 @@ const getEtappesRanking = async function (etappeId) {
     const data = await response.json();
     console.table(data);
     showEtappesRanking(data);
+    getEtappeInfo(etappeId);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
   }
@@ -492,7 +510,6 @@ const getEtappeUserChartData = async function (etappeId) {
   }
 };
 
-
 //#endregion
 
 //#region *** Google Authentication ***
@@ -509,48 +526,93 @@ function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     console.log("User signed out.");
+    localStorage.setItem("gebruikerId", null);
+    localStorage.setItem("name", null);
     window.location.pathname = "/index.html";
   });
 }
 
-const HideLoader = function(){
-  const loader = document.querySelector('.js-data-loader');
-  loader.classList.add('o-hide-accessible');
-}
-
-const ShowLoader = function(){
-  const loader = document.querySelector('.js-data-loader');
-  loader.classList.remove('o-hide-accessible');
-}
-
 //#endregion
+
+const HideLoader = function () {
+  const loaders = document.querySelectorAll(".js-data-loader");
+  for(const item of loaders){
+    item.classList.add("o-hide-accessible");
+  }
+  
+};
+
+const ShowLoader = function () {
+  const loaders = document.querySelectorAll(".js-data-loader");
+  for(const item of loaders){
+    item.classList.remove("o-hide-accessible");
+  }
+};
+
+const ShowUserName = function(userName){
+  userName = userName.split(" ");
+  document.querySelector('.js-user-name').innerText = userName[0];
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM loaded :)");
-  // get userid from user:
-  //userId = sessionStorage.getItem("gebruikerId");
-  if (document.querySelector(".roundsoverview")) {
-    getRounds();
-  }
-  if (document.querySelector(".roundsdetail")) {
-    let urlParams = new URLSearchParams(window.location.search);
-    const roundId = urlParams.get("roundId");
-    getEtappes(roundId);
-    listenToToggle();
-  }
-  if (document.querySelector(".etappesdetail")) {
-    let urlParams = new URLSearchParams(window.location.search);
-    const etappeId = urlParams.get("etappeId");
-    getEtappesRanking(etappeId);
-    getEtappeInfo(etappeId);
-    document.querySelector('.js-graph-button').setAttribute('data-etappeId',  etappeId);
-    listenToClickGraphButton();
-  }
-  if(document.querySelector('.etappesgraph')){
-    let urlParams = new URLSearchParams(window.location.search);
-    const etappeId = urlParams.get("etappeId");
-    ShowLoader();
-    getEtappeUserData(etappeId);
-    getEtappeUserChartData(etappeId);
+
+  //Listen to click logo -> go to home
+  listenToClickLogo();
+
+  // get userid and name from user:
+  userId = localStorage.getItem("gebruikerId");
+  userName = localStorage.getItem("name");
+  // userName = "TstUser x";
+
+  if (userId == null || userName == null) {
+    window.location.href = "index.html";
+  } else {
+
+    ShowUserName(userName);
+
+    if (document.querySelector(".js-ronde-overzicht")) {
+      ShowLoader();
+      getRounds();
+    }
+
+    if (document.querySelector(".js-ronde-detail")) {
+      ShowLoader();
+      let urlParams = new URLSearchParams(window.location.search);
+      const roundId = urlParams.get("roundId");
+      if (roundId == null) {
+        window.location.href = "ronde_overzicht.html";
+      } else {
+        getEtappes(roundId);
+        listenToToggle();
+      }
+    }
+
+    if (document.querySelector(".js-etappe-detail")) {
+      ShowLoader();
+      let urlParams = new URLSearchParams(window.location.search);
+      const etappeId = urlParams.get("etappeId");
+      if (etappeId == null) {
+        window.location.href = "ronde_detail.html";
+      } else {
+        getEtappesRanking(etappeId);
+        document
+          .querySelector(".js-graph-button")
+          .setAttribute("data-etappeId", etappeId);
+        listenToClickGraphButton();
+      }
+    }
+
+    if (document.querySelector(".js-etappe-grafiek")) {
+      ShowLoader();
+      let urlParams = new URLSearchParams(window.location.search);
+      const etappeId = urlParams.get("etappeId");
+      if (etappeId == null) {
+        window.location.href = "ronde_detail.html";
+      } else {
+        getEtappeUserData(etappeId);
+        getEtappeUserChartData(etappeId);
+      }
+    }
   }
 });

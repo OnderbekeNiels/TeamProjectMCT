@@ -161,7 +161,7 @@
 
 html {
   font-size: 100%;
-  line-height: 1.5;
+  line-height: 1.25;
   font-family: "DIN 2014", sans-serif;
   color: var(--global-color-neutral-xx-dark);
   box-sizing: border-box;
@@ -490,6 +490,7 @@ input:disabled {
 .c-header__logo {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .c-header__logo--svg {
@@ -534,12 +535,13 @@ input:disabled {
   color: var(--global-color-neutral-x-light);
   font-size: 1rem;
   line-height: 1.25;
+  cursor: pointer;
 }
 
 .c-header__logoutBtn--icon {
   display: flex;
   align-items: center;
-
+  cursor: pointer;
 }
 
 .c-header__logoutBtn:hover {
@@ -579,7 +581,7 @@ input:disabled {
 */
 
 .c-page-title {
-  line-height: 1.333;
+  line-height: 1.25;
   font-size: 3rem;
   text-align: center;
   margin-bottom: 0;
@@ -605,6 +607,8 @@ input:disabled {
 
 .c-main-container {
   padding: var(--global-whitespace-md) var(--global-whitespace-sm) 0;
+  max-width: 74rem;
+  margin: 0 auto;
 }
 
 .c-data {
@@ -645,6 +649,8 @@ input:disabled {
 
 .c-ranking-table {
   width: 100%;
+  max-width: 74rem;
+  margin: 0 auto var(--global-whitespace-md);
 }
 
 .c-ranking-table--rounds {
@@ -795,9 +801,25 @@ input:disabled {
     ---
 */
 
+.c-home-grid{
+  display: grid;
+  min-height: calc(100vh - 5rem);
+  grid-template-rows: 1fr auto;
+  gap: var(--global-whitespace-xxxl);
+}
+
+.c-home-grid__item:nth-child(1){
+  padding-top: var(--global-whitespace-md);
+}
+
+.c-home-grid__item:nth-child(2){
+  position: relative;
+}
+
 .c-home-container {
-  padding: 0 var(--global-whitespace-md) var(--global-whitespace-md)
-    var(--global-whitespace-md);
+  padding: var(--global-whitespace-md) var(--global-whitespace-md) var(--global-whitespace-xxl);
+  max-width: 36rem;
+  margin: 0 auto;
 }
 
 .c-home-container__item {
@@ -813,31 +835,70 @@ input:disabled {
 }
 
 .c-home-title {
-  font-size: 1.25rem;
-  margin-bottom: var(--global-whitespace-md);
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: var(--global-whitespace-xl);
+  color: var(--global-color-neutral-x-dark);
+}
+
+.c-home-subtitle{
+  font-size: 1rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--global-color-neutral-dark);
+  margin-bottom: var(--global-whitespace-sm);
 }
 
 .c-home-information {
   width: 100%;
   max-width: 35rem;
+  text-align: left;
   margin-bottom: var(--global-whitespace-lg);
 }
 
-@media (min-width: 40rem) {
+.c-home-loginBtn{
+  margin-left: var(--global-whitespace-md);
+}
+
+
+@media (min-width: 64rem) {
   .c-home-container {
-    display: grid;
-    grid-template-columns: 25rem 1fr;
-    grid-gap: var(--global-whitespace-md);
-    height: calc(100vh - 4rem);
+    max-width: 72rem;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-items: center;
-    padding: 0 var(--global-whitespace-xxl) var(--global-whitespace-xxl)
-      var(--global-whitespace-xxl);
   }
 
-  .c-home-title {
-    font-size: 3rem;
+  .c-home-grid__item:nth-child(1){
+    padding-top: var(--global-whitespace-xxxl);
   }
+
+  .c-home-container__item{
+    flex-basis: calc(100% * (2/5));
+  }
+
+  .c-home-container__item:nth-child(2){
+    flex-basis: calc(100% * (3/5));
+    margin-left: var(--global-whitespace-xxl);
+  }
+
+}
+
+/*
+      COMPONENT: Toggle
+  */
+
+.c-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--global-whitespace-md);
+  text-align: center;
+  color: var(--global-color-neutral-dark);
+  /* background-color: var(--global-color-alpha); */
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 
 /*
@@ -859,7 +920,7 @@ input:disabled {
   display: flex;
   justify-content: center;
   height: 100%;
-  margin: var(--global-whitespace-md) auto;
+  margin: var(--global-whitespace-md) auto var(--global-whitespace-xl);
 }
 
 .c-toggle-option {
@@ -916,7 +977,7 @@ input:disabled {
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  margin-bottom: var(--global-whitespace-md);
+  margin: var(--global-whitespace-xl) 0;
 }
 
 .c-etappe-info-container__item{
@@ -956,6 +1017,7 @@ input:disabled {
   justify-content: center;
   position: relative;
   height: 40vh;
+  margin-bottom: var(--global-whitespace-md);
 }
 
 .c-etappe-chart-button{
@@ -1187,6 +1249,14 @@ input:disabled {
 
 .u-flex-basis-1-of-3 {
   flex-basis: calc(100% / 3);
+}
+
+/*
+    Utilities: pointer
+*/
+
+.u-show-pointer {
+  cursor: pointer;
 }
 
 /*
