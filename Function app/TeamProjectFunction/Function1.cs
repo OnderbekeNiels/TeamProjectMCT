@@ -663,36 +663,37 @@ namespace TeamProjectFunction
 
                             }
 
-                            if (deelnemers.Count() == 0)
+                            List<LapTijd> laptijden = new List<LapTijd>();
+
+                            //Controleren of er al een lap gereden is binnen een etappe
+                            using (SqlConnection sqlConnectionEtappesCheck = new SqlConnection(connectionStringInsert))
                             {
-                                //deelnemer doet nog niet mee --> je kan nog meedoen
-
-                                List<LapTijd> laptijden = new List<LapTijd>();
-
-                                //Controleren of er al een lap gereden is binnen een etappe
-                                using (SqlConnection sqlConnectionEtappesCheck = new SqlConnection(connectionStringInsert))
+                                await sqlConnectionEtappesCheck.OpenAsync();
+                                using (SqlCommand sqlCommandEtappesCheck = new SqlCommand())
                                 {
-                                    await sqlConnectionEtappesCheck.OpenAsync();
-                                    using (SqlCommand sqlCommandEtappesCheck = new SqlCommand())
+                                    sqlCommandEtappesCheck.Connection = sqlConnectionEtappesCheck;
+                                    sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
+                                    sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
+
+                                    SqlDataReader readerEtappesCheck = await sqlCommandEtappesCheck.ExecuteReaderAsync();
+
+                                    while (readerEtappesCheck.Read())
                                     {
-                                        sqlCommandEtappesCheck.Connection = sqlConnectionEtappesCheck;
-                                        sqlCommandEtappesCheck.CommandText = "select l.LapTijdId from Etappes as e right join LapTijden as l on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId where r.RondeId = @RondeId";
-                                        sqlCommandEtappesCheck.Parameters.AddWithValue("@RondeId", rondeDb.RondeId);
 
-                                        SqlDataReader readerEtappesCheck = await sqlCommandEtappesCheck.ExecuteReaderAsync();
-
-                                        while (readerEtappesCheck.Read())
-                                        {
-
-                                            LapTijd data = new LapTijd();
-                                            data.LapTijdId = Guid.Parse(readerEtappesCheck["LapTijdId"].ToString());
-                                            laptijden.Add(data);
-                                        }
+                                        LapTijd data = new LapTijd();
+                                        data.LapTijdId = Guid.Parse(readerEtappesCheck["LapTijdId"].ToString());
+                                        laptijden.Add(data);
                                     }
                                 }
+                            }
 
-                                //Als er geen lap gereden is --> kan je nog meedoen.
-                                if (laptijden.Count() == 0)
+                            if(laptijden.Count() == 0)
+                            {
+                                //Er is nog geen lap gereden is --> kan je nog meedoen.
+
+                                
+                                //deelnemer doet nog niet mee --> je kan nog meedoen
+                                if (deelnemers.Count() == 0)
                                 {
                                     //Deelnemer toevoegen aan de ronde
                                     using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
@@ -713,22 +714,54 @@ namespace TeamProjectFunction
                                         }
                                     }
                                 }
-                                //Als er wel al een lap gereden is kan je niet meer meedoen.
+
+                                // deelnemer heeft al eens meegedaan maar heeft de ronde al eens verlaten
+                                if (deelnemers.Count() == 1)
+                                {
+                                    //deelnemer opnieuw toevoegen:
+                                    using (SqlConnection sqlConnectionUpdate = new SqlConnection(connectionStringInsert))
+                                    {
+                                        await sqlConnectionUpdate.OpenAsync();
+                                        using (SqlCommand sqlCommandUpdate = new SqlCommand())
+                                        {
+                                            sqlCommandUpdate.Connection = sqlConnectionUpdate;
+                                            sqlCommandUpdate.CommandText = "UPDATE Deelnemers SET IsActief = 1 where RondeId = @RondeId and GebruikersId = @GebruikersId"; ;
+                                            sqlCommandUpdate.Parameters.AddWithValue("@RondeId", deelnemer.RondeId);
+                                            sqlCommandUpdate.Parameters.AddWithValue("@GebruikerId", deelnemer.GebruikerId);
+
+                                            //deelnemer.RondeId = ronde.RondeId;
+
+                                            await sqlCommand.ExecuteNonQueryAsync();
+
+                                            return new OkObjectResult(deelnemer);
+                                        }
+                                    }
+
+
+                                }
+
+
                                 else
                                 {
+
+                                    //Als de deelnemer al meedoet controleren als Is
+                                    //Als de deelenemer meedoet: je kan maar 1 keer meedoen :p
                                     CustomResponse customResponse = new CustomResponse();
                                     customResponse.Succes = false;
-                                    customResponse.Message = "Invitecode is niet meer geldig.";
+                                    customResponse.Message = "Je doet al mee aan deze ronde.";
                                     return new OkObjectResult(customResponse);
+                                    
                                 }
+
+                                
                             }
 
                             else
                             {
-                                //Als de deelenemer meedoet: je kan maar 1 keer meedoen :p
+                                //Als er wel al een lap gereden is kan je niet meer meedoen.
                                 CustomResponse customResponse = new CustomResponse();
                                 customResponse.Succes = false;
-                                customResponse.Message = "Je doet al mee aan deze ronde.";
+                                customResponse.Message = "Invitecode is niet meer geldig.";
                                 return new OkObjectResult(customResponse);
                             }
 
