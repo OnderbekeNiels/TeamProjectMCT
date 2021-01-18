@@ -1098,6 +1098,47 @@ namespace TeamProjectFunction
 
         }
 
+        [FunctionName("GetDeelnemersRonde")]
+        public static async Task<IActionResult> GetDeelnemersRonde(
+       [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "ronde/deelnemrs/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<DeelnemerRonde> deelnemers = new List<DeelnemerRonde>();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        command.CommandText = "select d.GebruikersId, g.GebruikersNaam from Rondes as r join Deelnemers as d on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where r.RondeId = @RondeId";
+                        command.Parameters.AddWithValue("@RondeId", RondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            DeelnemerRonde data = new DeelnemerRonde();
+                            data.GebruikersId = Guid.Parse(reader["GebruikersId"].ToString());
+                            data.GebruikersNaam = reader["GebruikersNaam"].ToString();
+
+                            deelnemers.Add(data);
+
+                        }
+                    }
+                }
+                return new OkObjectResult(deelnemers);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
         //Toont alle rondes van een gebruiker - voor in xamarin app
         [FunctionName("GetRondesUser")]
         public static async Task<IActionResult> GetRondesUser(
