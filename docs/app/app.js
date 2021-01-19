@@ -320,15 +320,15 @@ const showEtappesRanking = function (data) {
 const showEtappeInfo = function (data) {
   const etappeInfo = document.querySelector(".js-etappe-info"),
     etappeName = document.querySelector(".js-etappe-name");
-  etappeInfo.innerText = `RNDS: ${data.laps} - DLN ${
+  etappeInfo.innerText = `RNDS: ${data.laps} - DLN: ${
     data.aantalDeelnemers
-  } - AFSTD: ${
+  } - AFSTAND: ${
     Math.round((data.afstand + Number.EPSILON) * 100) / 100
-  } Km - GEM SN: ${
+  } KM - GEM SN: ${
     Math.round(
       ((3600 / data.totaalTijd) * data.afstand + Number.EPSILON) * 100
     ) / 100
-  } Km/u`;
+  } KM/U`;
   etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem(
     "etappeTitle"
   )}`;
