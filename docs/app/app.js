@@ -104,7 +104,7 @@ const listenToClickLogo = function () {
   document
     .querySelector(".js-header-logo")
     .addEventListener("click", function () {
-      window.location.pathname = "index.html";
+      window.location.pathname = "ronde_overzicht.html";
     });
 };
 

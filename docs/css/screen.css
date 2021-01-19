@@ -1259,6 +1259,10 @@ input:disabled {
   cursor: pointer;
 }
 
+.u-hide-pointer {
+  cursor: none;
+}
+
 /*
     Utilities: color
 */
