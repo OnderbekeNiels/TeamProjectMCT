@@ -438,7 +438,7 @@ const showLoader = function () {
 
 const showUserName = function(userName){
   userName = userName.split(" ");
-  document.querySelector('.js-user-name').innerText = userName[0];
+  document.querySelector('.js-user-name').innerText = userName[0].toUpperCase();
 }
 
 //#endregion
