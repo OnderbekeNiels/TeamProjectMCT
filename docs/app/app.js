@@ -104,7 +104,7 @@ const listenToClickLogo = function () {
   document
     .querySelector(".js-header-logo")
     .addEventListener("click", function () {
-      window.location.pathname = "index.html";
+      window.location.pathname = "ronde_overzicht.html";
     });
 };
 
@@ -320,15 +320,15 @@ const showEtappesRanking = function (data) {
 const showEtappeInfo = function (data) {
   const etappeInfo = document.querySelector(".js-etappe-info"),
     etappeName = document.querySelector(".js-etappe-name");
-  etappeInfo.innerText = `RNDS: ${data.laps} - DLN ${
+  etappeInfo.innerText = `RNDS: ${data.laps} - DLN: ${
     data.aantalDeelnemers
-  } - AFSTD: ${
+  } - AFSTAND: ${
     Math.round((data.afstand + Number.EPSILON) * 100) / 100
-  } Km - GEM SN: ${
+  } KM - GEM SN: ${
     Math.round(
       ((3600 / data.totaalTijd) * data.afstand + Number.EPSILON) * 100
     ) / 100
-  } Km/u`;
+  } KM/U`;
   etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem(
     "etappeTitle"
   )}`;
@@ -357,7 +357,6 @@ const showEtappeUserData = function (data) {
 const showEtappeUserChartData = function (data) {
   let converted_labels = [];
   let converted_data = [];
-  console.log(data);
   for (const item of data) {
     converted_labels.push(item.lapNummer);
     converted_data.push(item.tijdLap);
@@ -413,6 +412,10 @@ const showEtappeUserChartData = function (data) {
               display: true,
               labelString: "Ronde Tijd",
             },
+              ticks : {
+                reverse : true
+            },
+            
           },
         ],
       },
@@ -439,7 +442,7 @@ const showLoader = function () {
 
 const showUserName = function(userName){
   userName = userName.split(" ");
-  document.querySelector('.js-user-name').innerText = userName[0];
+  document.querySelector('.js-user-name').innerText = userName[0].toUpperCase();
 }
 
 //#endregion
@@ -486,7 +489,6 @@ const getEtappesRanking = async function (etappeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.table(data);
     showEtappesRanking(data);
     getEtappeInfo(etappeId);
   } catch (error) {
@@ -499,7 +501,6 @@ const getEtappeInfo = async function (etappeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.table(data);
     showEtappeInfo(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
@@ -511,7 +512,6 @@ const getEtappeUserData = async function (etappeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.table(data);
     showEtappeUserData(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
@@ -523,7 +523,6 @@ const getEtappeUserChartData = async function (etappeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.table(data);
     showEtappeUserChartData(data);
   } catch (error) {
     console.error("An error occured, we handled it.", error);
@@ -535,17 +534,17 @@ const getEtappeUserChartData = async function (etappeId) {
 //#region *** Google Authentication ***
 
 function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log("Name: " + profile.getName());
-  console.log("Image URL: " + profile.getImageUrl());
-  console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+  // var profile = googleUser.getBasicProfile();
+  // console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  // console.log("Name: " + profile.getName());
+  // console.log("Image URL: " + profile.getImageUrl());
+  // console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
 }
 
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
-    console.log("User signed out.");
+    // console.log("User signed out.");
     localStorage.removeItem("gebruikerId");
     localStorage.removeItem("name");
     window.location.pathname = "/index.html";
@@ -555,7 +554,6 @@ function signOut() {
 //#endregion
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM loaded :)");
 
   //Listen to click logo -> go to home
   listenToClickLogo();
@@ -565,8 +563,6 @@ document.addEventListener("DOMContentLoaded", function () {
   userName = localStorage.getItem("name");
 
   if (userId == null || userName == null) {
-    console.log(userId);
-    console.log(userName);
     window.location.pathname = "/index.html";
   } else {
 
