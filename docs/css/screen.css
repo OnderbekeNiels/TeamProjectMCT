@@ -634,8 +634,7 @@ input:disabled {
 .c-ranking-container__item {
   width: 100vw;
   height: 100%;
-  padding: 0 var(--global-whitespace-sm) var(--global-whitespace-sm)
-    var(--global-whitespace-sm);
+  padding: var(--global-whitespace-sm);
 }
 
 .c-rounds-ranking--visible {
@@ -920,7 +919,7 @@ input:disabled {
   display: flex;
   justify-content: center;
   height: 100%;
-  margin: var(--global-whitespace-md) auto var(--global-whitespace-xl);
+  margin: var(--global-whitespace-md) auto var(--global-whitespace-md);
 }
 
 .c-toggle-option {
