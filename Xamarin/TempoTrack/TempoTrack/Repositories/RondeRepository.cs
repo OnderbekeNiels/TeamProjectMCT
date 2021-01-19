@@ -140,7 +140,7 @@ namespace TempoTrack.Repositories
 
         public static async Task<int> DeleteRonde(Guid rondeId)
         {
-            string url = $"{_BASEURI}/{rondeId}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/rondes/{rondeId}?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
