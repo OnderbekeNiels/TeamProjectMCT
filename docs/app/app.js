@@ -411,6 +411,9 @@ const showEtappeUserChartData = function (data) {
             scaleLabel: {
               display: true,
               labelString: "Ronde Tijd",
+              ticks : {
+                reverse : true
+            },
             },
           },
         ],
