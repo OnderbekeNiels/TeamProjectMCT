@@ -52,10 +52,22 @@ namespace TempoTrack.Views.EtappePaginas
             }
 
             LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
-            Title = RondeInfo.RondeNaam;
+
+            LoadTitle();
         }
 
-
+        private void LoadTitle()
+        {
+            if(RondeInfo.RondeNaam.Length >= 20)
+            {
+                lblRondeNaam.FontSize = 16;
+            }
+            else
+            {
+                lblRondeNaam.FontSize = 24;
+            }
+            lblRondeNaam.Text = RondeInfo.RondeNaam;
+        }
 
         private static async Task LoadEtappesAsync(Guid rondeId, Guid gebruikersId, Xamarin.Forms.ListView lvw, Xamarin.Forms.Label lblRondePlaats, Xamarin.Forms.Label lblRondeTijd)
         {
@@ -112,7 +124,6 @@ namespace TempoTrack.Views.EtappePaginas
 
             }
 
-            
         }
 
         private void BtnInvite_Clicked(object sender, EventArgs e)
