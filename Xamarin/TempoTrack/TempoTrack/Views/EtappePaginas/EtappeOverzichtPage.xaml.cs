@@ -37,6 +37,8 @@ namespace TempoTrack.Views.EtappePaginas
             btnInviteAdmin.Clicked += BtnInviteAdmin_Clicked;
             btnVerwijder.Clicked += BtnVerwijder_Clicked;
 
+            btnDeelnemers.Clicked += BtnDeelnemers_Clicked;
+
             if(GebruikersInfo.GebruikerId == RondeInfo.Admin)
             {
                 //AdminControls tonen
@@ -52,6 +54,8 @@ namespace TempoTrack.Views.EtappePaginas
             LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
             Title = RondeInfo.RondeNaam;
         }
+
+
 
         private static async Task LoadEtappesAsync(Guid rondeId, Guid gebruikersId, Xamarin.Forms.ListView lvw, Xamarin.Forms.Label lblRondePlaats, Xamarin.Forms.Label lblRondeTijd)
         {
@@ -199,6 +203,11 @@ namespace TempoTrack.Views.EtappePaginas
             {
                Navigation.PushAsync(new ActivityPage(RondeInfo.RondeId, GebruikersInfo));
             }
+        }
+
+        private void BtnDeelnemers_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new DeelnemersOverzichtPage(RondeInfo.RondeId));
         }
     }
 }

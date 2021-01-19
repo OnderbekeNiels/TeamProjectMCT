@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TempoTrack.Models;
+using TempoTrack.Repositories;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace TempoTrack.Views.RondePaginas
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class DeelnemersOverzichtPage : ContentPage
+    {
+        private static Guid RondeId;
+        public DeelnemersOverzichtPage(Guid rondeId)
+        {
+            RondeId = rondeId;
+
+            InitializeComponent();
+
+            btnRefresh.Clicked += BtnRefresh_Clicked;
+
+            LoadDeelnemersAsync();
+        }
+
+        private async Task LoadDeelnemersAsync()
+        {
+            int teller = 0;
+            List<DeelnemersRonde> deelnemers = await RondeRepository.GetDeelnemersRonde(RondeId);
+
+            foreach(DeelnemersRonde item in deelnemers)
+            {
+                teller += 1;
+                item.Nummer = teller;
+            }
+
+            lvwDeelnemers.ItemsSource = deelnemers;
+            lblTotaalDeelnemers.Text = $"{teller.ToString()} deelnemers";
+        }
+
+        private void BtnRefresh_Clicked(object sender, EventArgs e)
+        {
+            lvwDeelnemers.ItemsSource = null;
+            lblTotaalDeelnemers.Text = "";
+            LoadDeelnemersAsync();
+        }
+    }
+}
