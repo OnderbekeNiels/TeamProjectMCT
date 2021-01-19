@@ -10,10 +10,8 @@ namespace TempoTrack.Repositories
 {
     public class RondeRepository
     {
-        private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api/rondes";
-        private const string _BASEURI2 = "https://temptrackingfunction.azurewebsites.net/api/ronde/klassement/";
-        private const string _BASEURI3 = "https://temptrackingfunction.azurewebsites.net/api/gebruiker/rondes/";
-        private const string _BASEURI4 = "https://temptrackingfunction.azurewebsites.net/api/deelnemer";
+        private const string _BASEURI = "https://temptrackingfunction.azurewebsites.net/api";
+
         private const string _FUNCTIONKEY = "WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==";
         public static HttpClient GetHttpClient()
         {
@@ -24,7 +22,7 @@ namespace TempoTrack.Repositories
 
         public static async Task<Ronde> CreateRonde(Ronde ronde)
         {
-            string url = $"{_BASEURI}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/rondes?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
@@ -41,7 +39,7 @@ namespace TempoTrack.Repositories
                         Console.WriteLine($"Unsuccesful POST to url: {url}, object; {json}");
                         return null;
                     }
-                    else 
+                    else
                     {
                         //Extra check of de status code success is
                         response.EnsureSuccessStatusCode();
@@ -64,7 +62,7 @@ namespace TempoTrack.Repositories
 
         public static async Task<DeelnemerResponse> AddDeelnemer(Deelnemer deelnemer)
         {
-            string url = $"{_BASEURI4}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/deelnemer?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
@@ -104,7 +102,7 @@ namespace TempoTrack.Repositories
 
         public static async Task<List<RondesGebruiker>> GetRondesGebruiker(Guid gebruikerId)
         {
-            string url = $"{_BASEURI3}{gebruikerId}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/gebruiker/rondes/{gebruikerId}?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
@@ -123,7 +121,7 @@ namespace TempoTrack.Repositories
 
         public static async Task<List<RondeKlassement>> GetRondeKlassement(Guid rondeId)
         {
-            string url = $"{_BASEURI2}{rondeId}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/ronde/klassement/{rondeId}?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
@@ -149,7 +147,7 @@ namespace TempoTrack.Repositories
                 {
                     var response = await client.DeleteAsync(url);
 
-                    if(response.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
                         return 1;
                     }
@@ -157,7 +155,26 @@ namespace TempoTrack.Repositories
                     {
                         return 0;
                     }
-                    
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
+        }
+
+        public static async Task<List<DeelnemersRonde>> GetDeelnemersRonde(Guid rondeId)
+        {
+            string url = $"{_BASEURI}/ronde/deelnemers/{rondeId}?code={_FUNCTIONKEY}";
+            using (HttpClient client = GetHttpClient())
+            {
+                try
+                {
+                    string json = await client.GetStringAsync(url);
+                    List<DeelnemersRonde> list = JsonConvert.DeserializeObject<List<DeelnemersRonde>>(json);
+                    return list;
                 }
                 catch (Exception ex)
                 {
