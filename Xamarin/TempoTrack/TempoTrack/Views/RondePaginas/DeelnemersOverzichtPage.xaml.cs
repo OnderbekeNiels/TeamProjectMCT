@@ -37,7 +37,15 @@ namespace TempoTrack.Views.RondePaginas
             }
 
             lvwDeelnemers.ItemsSource = deelnemers;
-            lblTotaalDeelnemers.Text = $"{teller.ToString()} deelnemers";
+
+            if(teller > 1)
+            {
+                lblTotaalDeelnemers.Text = $"{teller.ToString()} deelnemers";
+            }
+            else
+            {
+                lblTotaalDeelnemers.Text = $"{teller.ToString()} deelnemer";
+            }
         }
 
         private void BtnRefresh_Clicked(object sender, EventArgs e)
