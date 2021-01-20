@@ -910,15 +910,13 @@ namespace TeamProjectFunction
                     using (SqlCommand sqlCommandInsert = new SqlCommand())
                     {
                         sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, @LapAfstand, 1)";
+                        sqlCommandInsert.CommandText = "INSERT INTO Etappes VALUES(@EtappeId, @Laps, @RondeId, @StartTijd, 333.33, 1)";
                         sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
                         sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
                         sqlCommandInsert.Parameters.AddWithValue("@RondeId", etappe.RondeId);
-                        sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
                         sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
 
-
-
+                        etappe.LapAfstand = float.Parse("333,33".ToString());
                         await sqlCommandInsert.ExecuteNonQueryAsync();
 
                         return new OkObjectResult(etappe);
@@ -937,49 +935,35 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("UpdateEtappe")]
-        public static async Task<IActionResult> UpdateEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe")] HttpRequest req,
-          ILogger log)
+        [FunctionName("StopEtappe")]
+        public static async Task<IActionResult> StopEtappe(
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{etappeId}")] HttpRequest req,
+          ILogger log, Guid etappeId)
         {
 
-            //Account create:
-            //naar api sturen email en gebruikersnaam via json gebruikersnaam is optioneel, vb:
-            //{
-            //"laps" : 3,
-            //"rondeid": "55c83dc3-8bc6-43de-b1ae-50fdf9a10590",
-            //"lapafstand": 105.33,
-            //"starttijd": "2021-01-05T15:00:00",
-            //"EtappeId" : "6B2C2BE0-C30C-4742-8ED2-83A14B4FE066"
-            //}
-
-            //mogelijke returns:
-            //als etappe aangepast is wordt het model etappe met alle params terug gestuurd
+           
 
             try
             {
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
-
-
-                string connectionStringInsert = Environment.GetEnvironmentVariable("ConnectionString");
-                using (SqlConnection sqlConnectionInsert = new SqlConnection(connectionStringInsert))
+                
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 {
-                    await sqlConnectionInsert.OpenAsync();
-                    using (SqlCommand sqlCommandInsert = new SqlCommand())
+                    await sqlConnection.OpenAsync();
+                    using (SqlCommand sqlCommand = new SqlCommand())
                     {
-                        sqlCommandInsert.Connection = sqlConnectionInsert;
-                        sqlCommandInsert.CommandText = "UPDATE Etappes SET Laps = @Laps, StartTijd = @StartTijd, LapAfstand = @LapAfstand WHERE EtappeId = @EtappeId";
-                        sqlCommandInsert.Parameters.AddWithValue("@EtappeId", etappe.EtappeId);
-                        sqlCommandInsert.Parameters.AddWithValue("@Laps", etappe.Laps);
-                        sqlCommandInsert.Parameters.AddWithValue("@StartTijd", etappe.StartTijd);
-                        sqlCommandInsert.Parameters.AddWithValue("@LapAfstand", etappe.LapAfstand);
+                        sqlCommand.Connection = sqlConnection;
+                        sqlCommand.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
+                        sqlCommand.Parameters.AddWithValue("@EtappeId", etappeId);
 
 
 
-                        await sqlCommandInsert.ExecuteNonQueryAsync();
+                        await sqlCommand.ExecuteNonQueryAsync();
 
-                        return new OkObjectResult(etappe);
+                        CustomResponse customResponse = new CustomResponse();
+                        customResponse.Succes = true;
+
+                        return new OkObjectResult(customResponse);
 
                     }
                 }
@@ -1078,43 +1062,43 @@ namespace TeamProjectFunction
         }
 
 
-        [FunctionName("DelEtappeIsActief")]
-        public static async Task<IActionResult> DelEtappeIsActief(
-          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{EtappeId}")] HttpRequest req,
-          ILogger log, Guid EtappeId)
-        {
-            try
-            {
-                string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
-                using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
-                {
-                    await sqlConnectionDel.OpenAsync();
-                    using (SqlCommand sqlCommandDel = new SqlCommand())
-                    {
-                        sqlCommandDel.Connection = sqlConnectionDel;
-                        sqlCommandDel.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
-                        sqlCommandDel.Parameters.AddWithValue("@EtappeId", EtappeId);
+        //[FunctionName("DelEtappeIsActief")]
+        //public static async Task<IActionResult> DelEtappeIsActief(
+        //  [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{EtappeId}")] HttpRequest req,
+        //  ILogger log, Guid EtappeId)
+        //{
+        //    try
+        //    {
+        //        string connectionStringDel = Environment.GetEnvironmentVariable("ConnectionString");
+        //        using (SqlConnection sqlConnectionDel = new SqlConnection(connectionStringDel))
+        //        {
+        //            await sqlConnectionDel.OpenAsync();
+        //            using (SqlCommand sqlCommandDel = new SqlCommand())
+        //            {
+        //                sqlCommandDel.Connection = sqlConnectionDel;
+        //                sqlCommandDel.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
+        //                sqlCommandDel.Parameters.AddWithValue("@EtappeId", EtappeId);
 
 
 
 
-                        await sqlCommandDel.ExecuteNonQueryAsync();
+        //                await sqlCommandDel.ExecuteNonQueryAsync();
 
-                        CustomResponse customResponse = new CustomResponse();
-                        customResponse.Succes = true;
-                        return new OkObjectResult(customResponse);
+        //                CustomResponse customResponse = new CustomResponse();
+        //                customResponse.Succes = true;
+        //                return new OkObjectResult(customResponse);
 
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                Console.WriteLine($"Error: {ex}");
-                return new BadRequestResult(); ;
-            }
+        //        Console.WriteLine($"Error: {ex}");
+        //        return new BadRequestResult(); ;
+        //    }
 
-        }
+        //}
 
 
         [FunctionName("DelRonde")]
