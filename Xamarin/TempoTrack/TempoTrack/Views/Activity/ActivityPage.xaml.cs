@@ -15,15 +15,21 @@ namespace TempoTrack.Views.Activity
     public partial class ActivityPage : ContentPage
     {
         //Navigation.PushAsync(new ActivityPage(RondeInfo.rondeId, GebruikersInfo.gerbruikersId));
-        Guid rondeId;
-        GebruikerV2 gebruikersInfo;
-        public ActivityPage(Guid parRondeId, GebruikerV2 parGebruikersInfo)
+        RondesGebruiker RondeInfo;
+        GebruikerV2 GebruikersInfo;
+        public ActivityPage(RondesGebruiker parRondesGebruiker, GebruikerV2 parGebruikersInfo)
         {
             InitializeComponent();
             btnStoppen.Clicked += btnStoppen_clicked;
 
-            rondeId = parRondeId;
-            gebruikersInfo = parGebruikersInfo;
+            RondeInfo = parRondesGebruiker;
+            GebruikersInfo = parGebruikersInfo;
+
+            /*if (GebruikersInfo.GebruikerId == RondeInfo.Admin)
+            {
+                //AdminControls tonen
+                btnEtappeStoppen.IsVisible = true;
+            }*/
         }
 
         private void btnStoppen_clicked(object sender, EventArgs e)
@@ -40,8 +46,8 @@ namespace TempoTrack.Views.Activity
             if (answer == true)
             {
                 //Deelnemer uit de ronde smijten
-                await EtappeRepository.UpdateDeelnemerGestopt(rondeId, gebruikersInfo.GebruikerId);
-                Navigation.PushAsync(new RondeOverzichtPage(gebruikersInfo));
+                await EtappeRepository.UpdateDeelnemerGestopt(RondeInfo.RondeId, GebruikersInfo.GebruikerId);
+                Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
             }
         }
     }
