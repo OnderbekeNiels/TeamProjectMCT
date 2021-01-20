@@ -28,7 +28,14 @@ namespace TempoTrack.Models
         {
             get
             {
-                return $"#{Plaats}";
+                if (IsAdmin)
+                {
+                    return "";
+                }
+                else
+                {
+                    return $"#{Plaats}";
+                }  
             }
         }
 
@@ -39,8 +46,21 @@ namespace TempoTrack.Models
         public Guid Admin { get; set; }
         public int AantalEtappes { get; set; }
         public int AantalDeelnemers { get; set; }
-
-        public string IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
+        public string IsAdminColor
+        {
+            get
+            {
+                if (IsAdmin)
+                {
+                    return "#015D99";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         public override string ToString()
         {

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.Activity.ActivityPage"
              NavigationPage.HasNavigationBar="True"
-             NavigationPage.HasBackButton="False"
+             NavigationPage.HasBackButton="True"
              Title="Etappe opnemen"
              BackgroundColor="#FFFFFF">
     <ContentPage.Content>

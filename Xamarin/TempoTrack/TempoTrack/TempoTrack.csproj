@@ -38,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Activity\ActivityPageAdmin.xaml.cs">
+      <DependentUpon>ActivityPageAdmin.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Onboarding\OnboardingEtappes.xaml.cs">
       <DependentUpon>OnboardingEtappes.xaml</DependentUpon>
     </Compile>
