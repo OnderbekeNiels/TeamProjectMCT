@@ -109,3 +109,4 @@ C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
+C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs

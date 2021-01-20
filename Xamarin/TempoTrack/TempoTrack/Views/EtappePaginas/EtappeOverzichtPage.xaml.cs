@@ -36,6 +36,7 @@ namespace TempoTrack.Views.EtappePaginas
             btnCreateEtappe.Clicked += BtnCreateEtappe_Clicked;
             btnInviteAdmin.Clicked += BtnInviteAdmin_Clicked;
             btnVerwijder.Clicked += BtnVerwijder_Clicked;
+            lvwEtappesAdmin.ItemSelected += LvwEtappesAdmin_ItemSelected;
 
             btnDeelnemers.Clicked += BtnDeelnemers_Clicked;
 
@@ -45,15 +46,46 @@ namespace TempoTrack.Views.EtappePaginas
                 btnCreateEtappe.IsVisible = true;
                 btnInviteAdmin.IsVisible = true;
                 btnVerwijder.IsVisible = true;
+                lvwEtappesAdmin.IsVisible = true;
+
 
                 //UserControls niet tonen
                 btnStoppen.IsVisible = false;
                 btnInvite.IsVisible = false;
+                grdUserStanding.IsVisible = false;
+                lvwEtappes.IsVisible = false;
             }
 
-            LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
+            LoadEtappesAsync();
 
             LoadTitle();
+        }
+
+        protected override void OnAppearing()
+        {
+            //Tonen van etappe bij terecht komen op deze pagina 
+            LoadEtappesAsync();
+            base.OnAppearing();
+        }
+
+        private void LvwEtappesAdmin_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            EtappesRonde etappe = lvwEtappesAdmin.SelectedItem as EtappesRonde;
+            if(etappe != null)
+            {
+                if (etappe.EtappeActief)
+                {
+                    Navigation.PushAsync(new ActivityPageAdmin(etappe));
+                }
+                else
+                {
+                    lvwEtappesAdmin.SelectedItem = null;
+                }
+            }
+            else
+            {
+                lvwEtappesAdmin.SelectedItem = null;
+            }
         }
 
         private void LoadTitle()
@@ -69,9 +101,9 @@ namespace TempoTrack.Views.EtappePaginas
             lblRondeNaam.Text = RondeInfo.RondeNaam;
         }
 
-        private static async Task LoadEtappesAsync(Guid rondeId, Guid gebruikersId, Xamarin.Forms.ListView lvw, Xamarin.Forms.Label lblRondePlaats, Xamarin.Forms.Label lblRondeTijd)
+        private async Task LoadEtappesAsync()
         {
-           List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(rondeId, gebruikersId);
+           List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(RondeInfo.RondeId, GebruikersInfo.GebruikerId);
 
             etappeTeller += etappes.Count();
 
@@ -87,12 +119,21 @@ namespace TempoTrack.Views.EtappePaginas
             }
 
             //etappes.Reverse();
+                       
 
-            lvw.ItemsSource = etappes;
+            if (GebruikersInfo.GebruikerId != RondeInfo.Admin)
+            {
+                lvwEtappes.ItemsSource = etappes;
+                lblRondePlaats.Text = RondeInfo.Ranking;
+                lblRondeTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
+            }
+            else
+            {
+                lvwEtappesAdmin.ItemsSource = etappes;
+            }
 
-            lblRondePlaats.Text = RondeInfo.Ranking;
-            lblRondeTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
-            lvw.EndRefresh();
+            lvwEtappes.EndRefresh();
+            lvwEtappesAdmin.EndRefresh();
         }
 
         private void BtnStoppen_Clicked(object sender, EventArgs e)
@@ -142,7 +183,7 @@ namespace TempoTrack.Views.EtappePaginas
             lvwEtappes.ItemsSource = null;
             lblRondeTijd.Text = "";
             lblRondePlaats.Text = "";
-            LoadEtappesAsync(RondeInfo.RondeId, RondeInfo.GebruikersId, lvwEtappes, lblRondePlaats, lblRondeTijd);
+            LoadEtappesAsync();
             LoadRondesAsync(RondeInfo.RondeId, lblRondePlaats, lblRondeTijd);
         }
 
@@ -210,10 +251,29 @@ namespace TempoTrack.Views.EtappePaginas
         private void lvwEtappes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             EtappesRonde etappe = lvwEtappes.SelectedItem as EtappesRonde;
-            if (etappe.StartTijd > DateTime.Now)
+            if(etappe != null)
             {
-               Navigation.PushAsync(new ActivityPage(etappe, GebruikersInfo));
+                if (etappe.StartTijd > DateTime.Now)
+                {
+                    if (etappe.EtappeActief)
+                    {
+                        Navigation.PushAsync(new ActivityPage(etappe, GebruikersInfo));
+                    }
+                    else
+                    {
+                        lvwEtappes.SelectedItem = null;
+                    }
+                }
+                else
+                {
+                    lvwEtappes.SelectedItem = null;
+                }
             }
+            else
+            {
+                lvwEtappes.SelectedItem = null;
+            }
+            
         }
 
         private void BtnDeelnemers_Clicked(object sender, EventArgs e)

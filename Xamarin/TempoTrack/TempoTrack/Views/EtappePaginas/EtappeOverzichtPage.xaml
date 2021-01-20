@@ -7,8 +7,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/> <!--label-->
-                <RowDefinition Height="200"/> <!--Grid etappes-->
-                <RowDefinition /> <!--Positie ronde / totale tijd-->
+                <RowDefinition Height="*"/> <!--Grid etappes-->
+                <RowDefinition Height="164" /> <!--Positie ronde / totale tijd-->
                 <RowDefinition Height="196"/> <!--Etappe maken (Admin)-->
                 <!--<RowDefinition Height="60"/> --><!--Button stoppen--><!--
                 <RowDefinition Height="60"/> --><!--Button Invite-->
@@ -50,7 +50,29 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwEtappesAdmin" RowHeight="50" Margin="0" SeparatorVisibility="None" IsVisible="false" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="White" Margin="10,0,12,10" Padding="0" HasShadow="True" CornerRadius="5" BorderColor= '{Binding Color}'>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding EtappeNaam}' TextColor="#707070" FontSize="16"/>
+                                    <Label Grid.Column="1" x:Name="lblStartTijd" HorizontalOptions="End" VerticalOptions="Center" Margin="8,0,16,0" Text='{Binding StringStartTijd}' TextColor="#015D99" FontSize="16" />
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid x:Name="grdUserStanding" Grid.Row="2" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="64"/>
                     <RowDefinition Height="100"/>

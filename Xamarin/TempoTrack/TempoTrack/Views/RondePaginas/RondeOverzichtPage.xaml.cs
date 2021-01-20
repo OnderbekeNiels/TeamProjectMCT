@@ -53,17 +53,16 @@ namespace TempoTrack.Views.RondePaginas
             {
                 if(item.Admin == GebruikersInfo.GebruikerId)
                 {
-                    item.IsAdmin = "#015D99";
+                    item.IsAdmin = true;
                 }
                 else
                 {
-                    item.IsAdmin = null;
+                    item.IsAdmin = false;
                 }
                 //Debug.WriteLine(item.ToString());
             }
 
             lvw.ItemsSource = rondesGebruiker;
-
             lvw.EndRefresh();
         }
 

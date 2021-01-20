@@ -140,6 +140,33 @@ namespace TempoTrack.Repositories
             }
         }
 
+        public static async Task<bool> StopEtappe(Guid etappeId)
+        {
+            string url = $"{_BASEURI}/etappe/{etappeId}?code={_FUNCTIONKEY}";
+            using (HttpClient client = GetHttpClient())
+            {
+                try
+                {
+                    HttpContent content = null;
+                    var response = await client.PutAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                { 
+                    throw ex;
+                }
+            }
+        }
+
         public static async Task<int> RemoveDeelnemerRonde(Guid gebruikersId,Guid rondeId)
         {
             string url = $"{_BASEURI}/deelnemer/{gebruikersId}/{rondeId}?code={_FUNCTIONKEY}";

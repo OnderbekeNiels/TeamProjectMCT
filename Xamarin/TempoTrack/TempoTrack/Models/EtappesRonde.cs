@@ -16,9 +16,9 @@ namespace TempoTrack.Models
         {
             get 
             {
-                if (StartTijd > DateTime.Now)
+                if (EtappeActief && StartTijd > DateTime.Now)
                 {
-                    return StartTijd.ToString("dd/MM/yyyy HH:mm:ss");
+                    return $"{StartTijd.ToString("dd/MM/yyyy HH:mm:ss")}";
                 }
                 else
                 {
@@ -32,12 +32,28 @@ namespace TempoTrack.Models
         public Guid Admin { get; set; }
         public int Plaats { get; set; }
 
+        public string Color
+        {
+            get
+            {
+                if (EtappeActief && StartTijd > DateTime.Now)
+                {
+                    return "#015D99";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        public bool EtappeActief { get; set; }
+
         public string Ranking
         {
             get
             {
                 //Controle of de etappe zich nog moet afspeeln => zoja geen ranking zichtbaar => deelnemen
-                if (StartTijd > DateTime.Now)
+                if (StartTijd > DateTime.Now && EtappeActief == true)
                 {
                     return "Deelnemen";
                 }
