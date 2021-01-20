@@ -59,6 +59,44 @@ namespace TempoTrack.Repositories
             }
         }
 
+        public static async Task<bool> SaveRiddenEtappe(List<LapTijd> timeRegistrations)
+        {
+            string url = $"{_BASEURI}/laptijden?code={_FUNCTIONKEY}";
+            using (HttpClient client = GetHttpClient())
+            {
+                try
+                {
+                    //Creeren van een json
+                    string json = JsonConvert.SerializeObject(timeRegistrations);
+                    //aanduiden dat het geen dat we willen doorsturen van het type application json moet zijn
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    //request doen naar api
+                    var response = await client.PostAsync(url, content);
+                    //controleren of de put gelukt is
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine($"Unsuccesful POST to url: {url}, object; {json}");
+                        return false;
+                    }
+                    else
+                    {
+                        //Extra check of de status code success is
+                        response.EnsureSuccessStatusCode();
+                        //Bode van de response inlezen
+                        var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        //Nieuw object ronde aanmaken met de data van de response
+                        CustomResponse saveResponse = JsonConvert.DeserializeObject<CustomResponse>(Convert.ToString(responseBody));
+
+                        return saveResponse.Succes;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         public static async Task<List<EtappesRonde>> GetEtappesRonde(Guid rondeId, Guid gebruikerId)
         {
             string url = $"{_BASEURI}/gebruiker/ronde/etappes/{rondeId}/{gebruikerId}?code={_FUNCTIONKEY}";

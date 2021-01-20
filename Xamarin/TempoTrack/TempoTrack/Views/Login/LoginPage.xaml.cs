@@ -94,9 +94,9 @@ namespace TempoTrack.Views.Login
             //authenticator.Error += onAuthError;
 
             GebruikerV2 gebruikerInfo = new GebruikerV2();
-            gebruikerInfo.GebruikerId = Guid.Parse("e0944f6f-f304-494e-9f96-4addea34fcab");
-            gebruikerInfo.Email = "signin.testuser@gmail.com";
-            gebruikerInfo.name = "jelle demets";
+            gebruikerInfo.GebruikerId = Guid.Parse("a7bc9d97-fe81-42ae-84fd-5fd8b0334755");
+            gebruikerInfo.Email = "niels.onderbeke.no@gmail.com";
+            gebruikerInfo.name = "niels onderbeke";
             Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
 
             //GebruikerV2 gebruikerInfo = new GebruikerV2();
