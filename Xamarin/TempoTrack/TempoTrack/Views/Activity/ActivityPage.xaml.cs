@@ -42,6 +42,7 @@ namespace TempoTrack.Views.Activity
         double avgSeconds = 0; //Houd gemiddelde laptijd bij.
 
         #endregion
+        Boolean isAdmin = false;
 
         public ActivityPage(EtappesRonde parEtappe, GebruikerV2 parGebruikersInfo)
         {
@@ -56,7 +57,24 @@ namespace TempoTrack.Views.Activity
             passedCheckpoint = false;
             isChecking = true;
 
-            checkAcknowledgementAsync(); 
+            if (etappe.Admin == gebruikersInfo.GebruikerId)
+            {
+                isAdmin = true;
+                btnStoppen.Text = "Etappe beëindigen";
+                //Labels die niet gezien mogen worden verbergen
+                lblRonde.IsVisible = false;
+                lblAvgLapTime.IsVisible = false;
+                lblAvgLapTimeFixed.IsVisible = false;
+                lblTotalTime.IsVisible = false;
+                lblTotalTimeFixed.IsVisible = false;
+
+                //timer tonen hoe lang de ronde bezig is
+                //achter countdown
+            }
+            else
+            {
+                checkAcknowledgementAsync();
+            }
         }
 
         #region *** Checking functions  ***
