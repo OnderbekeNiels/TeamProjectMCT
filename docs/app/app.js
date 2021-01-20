@@ -1,7 +1,5 @@
 let userId;
 
-//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
-
 //#region *** Global Functions ***
 
 const secToTimeNotation = function (seconds) {
@@ -81,10 +79,14 @@ const listenToToggle = function () {
       const roundId = urlParams.get("roundId");
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
+        document.querySelector('.js-etappes-table').innerHTML = '';
+        showLoader();
         getEtappes(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
+        document.querySelector('.js-rounds-ranking-table').innerHTML = '';
+        showLoader();
         getRoundsRanking(roundId);
       }
     });
@@ -133,7 +135,7 @@ const showRounds = function (data) {
 //  Checken of data is not zero -> yes: user feedback;
   if(data.length == 0){
     htmlString += `
-    <div class="c-ranking-table__row js-rounds-table-row u-text-align--center">U heeft nog geen data om weer te geven.</div>`
+    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
   }
   else{
     for (const item of data) {
@@ -158,11 +160,11 @@ const showRounds = function (data) {
         </p>
       </div>`;
     }
-    
-    listenToClickRound();
   }
-  table.innerHTML = htmlString;
   hideLoader();
+  table.innerHTML = htmlString;
+  listenToClickRound();
+  
 };
 
 const showRoundsRanking = function (data) {
@@ -210,8 +212,9 @@ const showRoundsRanking = function (data) {
             </div>`;
     }
   }
-  table.innerHTML = htmlString;
   hideLoader();
+  table.innerHTML = htmlString;
+  
 };
 
 const showEtappes = function (data) {
@@ -234,7 +237,7 @@ const showEtappes = function (data) {
 //  Checken of data is not zero -> yes: user feedback;
 if(data.length == 0){
   htmlString += `
-  <div class="c-ranking-table__row js-rounds-table-row u-text-align--center">U heeft nog geen data om weer te geven.</div>`
+  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
 }
 else{
   let aantalEtappes = 0;
@@ -266,10 +269,12 @@ else{
     }
   }
   
-  listenToClickEtappe();
+  
 }
-  table.innerHTML = htmlString;
   hideLoader();
+  table.innerHTML = htmlString;
+  listenToClickEtappe();
+  
 };
 
 const showRoundInfo = function (data) {
@@ -330,8 +335,9 @@ const showEtappesRanking = function (data) {
             </div>`;
     }
   }
-  table.innerHTML = htmlString;
   hideLoader();
+  table.innerHTML = htmlString;
+  
 };
 
 const showEtappeInfo = function (data) {
@@ -438,14 +444,15 @@ const showEtappeUserChartData = function (data) {
       },
     },
   };
-  let speedChart = new Chart(ctx, config);
   hideLoader();
+  let speedChart = new Chart(ctx, config);
+  
 };
 
 const hideLoader = function () {
   const loaders = document.querySelectorAll(".js-data-loader");
   for(const item of loaders){
-    item.classList.add("o-hide-accessible");
+    item.classList.add("o-display-none");
   }
   
 };
@@ -453,7 +460,7 @@ const hideLoader = function () {
 const showLoader = function () {
   const loaders = document.querySelectorAll(".js-data-loader");
   for(const item of loaders){
-    item.classList.remove("o-hide-accessible");
+    item.classList.remove("o-display-none");
   }
 };
 
@@ -473,7 +480,8 @@ const getRounds = async function () {
     const data = await response.json();
     showRounds(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -485,7 +493,8 @@ const getEtappes = async function (rondeId) {
     showEtappes(data);
     showRoundInfo(data[0]);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -497,7 +506,8 @@ const getRoundsRanking = async function (roundId) {
     showRoundsRanking(data);
     showRoundInfo(data[0]);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -509,7 +519,8 @@ const getEtappesRanking = async function (etappeId) {
     showEtappesRanking(data);
     getEtappeInfo(etappeId);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -520,7 +531,8 @@ const getEtappeInfo = async function (etappeId) {
     const data = await response.json();
     showEtappeInfo(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -531,7 +543,8 @@ const getEtappeUserData = async function (etappeId) {
     const data = await response.json();
     showEtappeUserData(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -542,7 +555,8 @@ const getEtappeUserChartData = async function (etappeId) {
     const data = await response.json();
     showEtappeUserChartData(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -578,6 +592,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // get userid and name from user:
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
+
 
   if (userId == null || userName == null) {
     window.location.pathname = "/index.html";
