@@ -113,7 +113,6 @@ const listenToClickLogo = function () {
 //#region *** Show Data Functions ***
 
 const showRounds = function (data) {
-  data = []
   data.sort((a, b) => (a.startDatum < b.startDatum ? 1 : -1));
   const table = document.querySelector(".js-rounds-table");
   let htmlString = `<div class="c-ranking-table__header">
