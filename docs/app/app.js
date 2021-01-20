@@ -1,6 +1,6 @@
 let userId;
 
-userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
+//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -583,9 +583,8 @@ document.addEventListener("DOMContentLoaded", function () {
   listenToClickLogo();
 
   // get userid and name from user:
-  //userId = localStorage.getItem("gebruikerId");
-  //userName = localStorage.getItem("name");
-  userName = 'Nils';
+  userId = localStorage.getItem("gebruikerId");
+  userName = localStorage.getItem("name");
 
   if (userId == null || userName == null) {
     window.location.pathname = "/index.html";
