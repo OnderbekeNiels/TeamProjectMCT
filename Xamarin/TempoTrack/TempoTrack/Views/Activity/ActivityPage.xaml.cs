@@ -17,6 +17,7 @@ namespace TempoTrack.Views.Activity
         //Navigation.PushAsync(new ActivityPage(RondeInfo.rondeId, GebruikersInfo.gerbruikersId));
         RondesGebruiker RondeInfo;
         GebruikerV2 GebruikersInfo;
+        bool admin;
         public ActivityPage(RondesGebruiker parRondesGebruiker, GebruikerV2 parGebruikersInfo)
         {
             InitializeComponent();
@@ -25,17 +26,40 @@ namespace TempoTrack.Views.Activity
             RondeInfo = parRondesGebruiker;
             GebruikersInfo = parGebruikersInfo;
 
-            /*if (GebruikersInfo.GebruikerId == RondeInfo.Admin)
-            {
-                //AdminControls tonen
-                btnEtappeStoppen.IsVisible = true;
-            }*/
+            //Controleren of gebruiker admin is voor het opslaan vd etappe
+            if (GebruikersInfo.GebruikerId == RondeInfo.Admin) 
+            { 
+                admin = true; 
+            } 
+            else            
+            { 
+                admin = false; 
+            }
         }
 
         private void btnStoppen_clicked(object sender, EventArgs e)
         {
+            //Controleren total laps gedaan
+            //Als de ronde nog niet gdn is
+            //if (!laps gedaan)
+            //{
             Console.WriteLine("Ronde opgegeven");
             opgevenRonde();
+            //}
+            //else
+            //{
+                //Als de ronde gdn is
+                //Console.WriteLine("Ronde Opslaan");
+                //if (admin == true)
+                //{
+                //    EtappeStoppen();
+                //}
+            //}
+        }
+
+        private void EtappeStoppen() 
+        {
+
         }
 
         private async Task opgevenRonde()
