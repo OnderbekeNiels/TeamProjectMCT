@@ -81,10 +81,12 @@ const listenToToggle = function () {
       const roundId = urlParams.get("roundId");
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
+        showLoader();
         getEtappes(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
+        showLoader();
         getRoundsRanking(roundId);
       }
     });
@@ -159,9 +161,10 @@ const showRounds = function (data) {
       </div>`;
     }
   }
+  hideLoader();
   table.innerHTML = htmlString;
   listenToClickRound();
-  hideLoader();
+  
 };
 
 const showRoundsRanking = function (data) {
@@ -209,8 +212,9 @@ const showRoundsRanking = function (data) {
             </div>`;
     }
   }
-  table.innerHTML = htmlString;
   hideLoader();
+  table.innerHTML = htmlString;
+  
 };
 
 const showEtappes = function (data) {
@@ -267,9 +271,10 @@ else{
   
   
 }
+  hideLoader();
   table.innerHTML = htmlString;
   listenToClickEtappe();
-  hideLoader();
+  
 };
 
 const showRoundInfo = function (data) {
@@ -330,8 +335,9 @@ const showEtappesRanking = function (data) {
             </div>`;
     }
   }
-  table.innerHTML = htmlString;
   hideLoader();
+  table.innerHTML = htmlString;
+  
 };
 
 const showEtappeInfo = function (data) {
@@ -438,14 +444,15 @@ const showEtappeUserChartData = function (data) {
       },
     },
   };
-  let speedChart = new Chart(ctx, config);
   hideLoader();
+  let speedChart = new Chart(ctx, config);
+  
 };
 
 const hideLoader = function () {
   const loaders = document.querySelectorAll(".js-data-loader");
   for(const item of loaders){
-    item.classList.add("o-hide-accessible");
+    item.classList.add("o-display-none");
   }
   
 };
@@ -453,7 +460,7 @@ const hideLoader = function () {
 const showLoader = function () {
   const loaders = document.querySelectorAll(".js-data-loader");
   for(const item of loaders){
-    item.classList.remove("o-hide-accessible");
+    item.classList.remove("o-display-none");
   }
 };
 

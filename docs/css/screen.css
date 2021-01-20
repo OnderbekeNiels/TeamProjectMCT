@@ -411,6 +411,10 @@ input:disabled {
   border: 0;
 }
 
+.o-display-none {
+  display: none;
+}
+
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
