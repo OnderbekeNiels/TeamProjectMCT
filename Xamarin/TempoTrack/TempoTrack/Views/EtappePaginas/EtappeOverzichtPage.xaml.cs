@@ -212,7 +212,7 @@ namespace TempoTrack.Views.EtappePaginas
             EtappesRonde etappe = lvwEtappes.SelectedItem as EtappesRonde;
             if (etappe.StartTijd > DateTime.Now)
             {
-               Navigation.PushAsync(new ActivityPage(RondeInfo, GebruikersInfo));
+               Navigation.PushAsync(new ActivityPage(etappe, GebruikersInfo));
             }
         }
 

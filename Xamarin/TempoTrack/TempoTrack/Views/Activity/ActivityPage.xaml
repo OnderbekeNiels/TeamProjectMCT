@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TempoTrack.Views.Activity.ActivityPage"
              NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="Etappe opnemen"
              BackgroundColor="#FFFFFF">
     <ContentPage.Content>
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -27,7 +28,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" x:Name="lblTotalTime" FontSize="45" Text="30:36" TextColor="#015D99" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
+                <Label Grid.Row="0" x:Name="lblTotalTime" FontSize="45" Text="00:00:00" TextColor="#015D99" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
                 <Label Grid.Row="1" FontSize="16" Text="Tijd" VerticalOptions="Start" HorizontalOptions="Center" />
             </Grid>
             
@@ -41,8 +42,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" x:Name="lblRonde" FontSize="45" Text="13/14" TextColor="#015D99" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
-                <Label Grid.Row="1" FontSize="16" Text="Rondes" VerticalOptions="Start" HorizontalOptions="Center" />
+                <Label Grid.Row="0" x:Name="lblRonde" FontSize="45" Text="00:00:00" TextColor="#015D99" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
+                <Label Grid.Row="1" FontSize="16" x:Name="lblAftelKlok" Text="Tijd voor de start" VerticalOptions="Start" HorizontalOptions="Center" />
             </Grid>
 
             <Frame Grid.Row="3" BackgroundColor="#929292" HeightRequest="0.5" Padding="0" />
@@ -55,7 +56,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" x:Name="lblAvgLapTime" FontSize="45" Text="30:36" TextColor="#015D99" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
+                <Label Grid.Row="0" x:Name="lblAvgLapTime" FontSize="45" Text="00:00:00" TextColor="#015D99" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
                 <Label Grid.Row="1" FontSize="16" Text="Gemiddelde tijd per ronde" VerticalOptions="Start" HorizontalOptions="Center" />
             </Grid>
             <Button Grid.Row ="5" x:Name="btnStoppen" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,16" HeightRequest="40" Text="Stoppen met deelnemen" BackgroundColor="#016FB7" TextColor="White"/>
