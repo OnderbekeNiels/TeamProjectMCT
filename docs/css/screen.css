@@ -1071,11 +1071,15 @@ input:disabled {
 }
 
 /*
-    Utilities: flexbasis
+    Utilities: flexbox
 */
 
 .u-flex-basis-1-of-3 {
   flex-basis: calc(100% / 3);
+}
+
+.u-justify-content--center{
+  justify-content: center;
 }
 
 /*

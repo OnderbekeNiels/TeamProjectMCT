@@ -1,6 +1,6 @@
 let userId;
 
-//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
+userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
 
 //#region *** Global Functions ***
 
@@ -113,6 +113,7 @@ const listenToClickLogo = function () {
 //#region *** Show Data Functions ***
 
 const showRounds = function (data) {
+  data = []
   data.sort((a, b) => (a.startDatum < b.startDatum ? 1 : -1));
   const table = document.querySelector(".js-rounds-table");
   let htmlString = `<div class="c-ranking-table__header">
@@ -133,7 +134,7 @@ const showRounds = function (data) {
 //  Checken of data is not zero -> yes: user feedback;
   if(data.length == 0){
     htmlString += `
-    <div class="c-ranking-table__row js-rounds-table-row u-text-align--center">U heeft nog geen data om weer te geven.</div>`
+    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
   }
   else{
     for (const item of data) {
@@ -158,10 +159,9 @@ const showRounds = function (data) {
         </p>
       </div>`;
     }
-    
-    listenToClickRound();
   }
   table.innerHTML = htmlString;
+  listenToClickRound();
   hideLoader();
 };
 
@@ -234,7 +234,7 @@ const showEtappes = function (data) {
 //  Checken of data is not zero -> yes: user feedback;
 if(data.length == 0){
   htmlString += `
-  <div class="c-ranking-table__row js-rounds-table-row u-text-align--center">U heeft nog geen data om weer te geven.</div>`
+  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
 }
 else{
   let aantalEtappes = 0;
@@ -266,9 +266,10 @@ else{
     }
   }
   
-  listenToClickEtappe();
+  
 }
   table.innerHTML = htmlString;
+  listenToClickEtappe();
   hideLoader();
 };
 
@@ -576,8 +577,9 @@ document.addEventListener("DOMContentLoaded", function () {
   listenToClickLogo();
 
   // get userid and name from user:
-  userId = localStorage.getItem("gebruikerId");
-  userName = localStorage.getItem("name");
+  //userId = localStorage.getItem("gebruikerId");
+  //userName = localStorage.getItem("name");
+  userName = 'Nils';
 
   if (userId == null || userName == null) {
     window.location.pathname = "/index.html";
