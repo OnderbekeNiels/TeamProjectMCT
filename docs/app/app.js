@@ -1,7 +1,5 @@
 let userId;
 
-//userId = "A7BC9D97-FE81-42AE-84FD-5FD8B0334755";
-
 //#region *** Global Functions ***
 
 const secToTimeNotation = function (seconds) {
@@ -81,11 +79,13 @@ const listenToToggle = function () {
       const roundId = urlParams.get("roundId");
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
+        document.querySelector('.js-etappes-table').innerHTML = '';
         showLoader();
         getEtappes(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
+        document.querySelector('.js-rounds-ranking-table').innerHTML = '';
         showLoader();
         getRoundsRanking(roundId);
       }
@@ -592,6 +592,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // get userid and name from user:
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
+
 
   if (userId == null || userName == null) {
     window.location.pathname = "/index.html";
