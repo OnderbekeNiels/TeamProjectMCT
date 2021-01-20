@@ -133,7 +133,7 @@ const showRounds = function (data) {
 //  Checken of data is not zero -> yes: user feedback;
   if(data.length == 0){
     htmlString += `
-    <div class="c-ranking-table__row js-rounds-table-row">U heeft nog geen data om weer te geven.</div>`
+    <div class="c-ranking-table__row js-rounds-table-row u-text-align--center">U heeft nog geen data om weer te geven.</div>`
   }
   else{
     for (const item of data) {
@@ -158,9 +158,10 @@ const showRounds = function (data) {
         </p>
       </div>`;
     }
-    table.innerHTML = htmlString;
+    
     listenToClickRound();
   }
+  table.innerHTML = htmlString;
   hideLoader();
 };
 
@@ -233,7 +234,7 @@ const showEtappes = function (data) {
 //  Checken of data is not zero -> yes: user feedback;
 if(data.length == 0){
   htmlString += `
-  <div class="c-ranking-table__row js-rounds-table-row">U heeft nog geen data om weer te geven.</div>`
+  <div class="c-ranking-table__row js-rounds-table-row u-text-align--center">U heeft nog geen data om weer te geven.</div>`
 }
 else{
   let aantalEtappes = 0;
@@ -264,9 +265,10 @@ else{
       aantalEtappes--;
     }
   }
-  table.innerHTML = htmlString;
+  
   listenToClickEtappe();
 }
+  table.innerHTML = htmlString;
   hideLoader();
 };
 
