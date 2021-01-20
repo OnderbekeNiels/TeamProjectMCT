@@ -129,30 +129,38 @@ const showRounds = function (data) {
     Positie
   </p>
 </div>`;
-  for (const item of data) {
+
+//  Checken of data is not zero -> yes: user feedback;
+  if(data.length == 0){
     htmlString += `
-        <div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundId='${
-          item.rondeId
-        }'>
-      <p class="c-ranking-table__row-item">
-      ${datetimeToDateNotation(item.startDatum)}
-      </p>
-      <div class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">
-        <p class="c-ranking-table__row-item--top">${item.rondeNaam}</p>
-        <p class="c-ranking-table__row-item--sub">${
-          item.aantalEtappes
-        } etappes</p>
-      </div>
-      <p class="c-ranking-table__row-item">
-      ${secToTimeNotation(item.totaalTijd)}
-      </p>
-      <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha u-mr-clear">
-      #${item.plaats}
-      </p>
-    </div>`;
+    <div class="c-ranking-table__row js-rounds-table-row">U heeft nog geen data om weer te geven.</div>`
   }
-  table.innerHTML = htmlString;
-  listenToClickRound();
+  else{
+    for (const item of data) {
+      htmlString += `
+          <div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundId='${
+            item.rondeId
+          }'>
+        <p class="c-ranking-table__row-item">
+        ${datetimeToDateNotation(item.startDatum)}
+        </p>
+        <div class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">
+          <p class="c-ranking-table__row-item--top">${item.rondeNaam}</p>
+          <p class="c-ranking-table__row-item--sub">${
+            item.aantalEtappes
+          } etappes</p>
+        </div>
+        <p class="c-ranking-table__row-item">
+        ${secToTimeNotation(item.totaalTijd)}
+        </p>
+        <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha u-mr-clear">
+        #${item.plaats}
+        </p>
+      </div>`;
+    }
+    table.innerHTML = htmlString;
+    listenToClickRound();
+  }
   hideLoader();
 };
 
@@ -222,6 +230,12 @@ const showEtappes = function (data) {
     Positie
   </p>
 </div>`;
+//  Checken of data is not zero -> yes: user feedback;
+if(data.length == 0){
+  htmlString += `
+  <div class="c-ranking-table__row js-rounds-table-row">U heeft nog geen data om weer te geven.</div>`
+}
+else{
   let aantalEtappes = 0;
   for (const item of data) {
     if (item.etappeActief == false) {
@@ -252,6 +266,7 @@ const showEtappes = function (data) {
   }
   table.innerHTML = htmlString;
   listenToClickEtappe();
+}
   hideLoader();
 };
 
