@@ -480,7 +480,8 @@ const getRounds = async function () {
     const data = await response.json();
     showRounds(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -492,7 +493,8 @@ const getEtappes = async function (rondeId) {
     showEtappes(data);
     showRoundInfo(data[0]);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -504,7 +506,8 @@ const getRoundsRanking = async function (roundId) {
     showRoundsRanking(data);
     showRoundInfo(data[0]);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -516,7 +519,8 @@ const getEtappesRanking = async function (etappeId) {
     showEtappesRanking(data);
     getEtappeInfo(etappeId);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -527,7 +531,8 @@ const getEtappeInfo = async function (etappeId) {
     const data = await response.json();
     showEtappeInfo(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -538,7 +543,8 @@ const getEtappeUserData = async function (etappeId) {
     const data = await response.json();
     showEtappeUserData(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
@@ -549,7 +555,8 @@ const getEtappeUserChartData = async function (etappeId) {
     const data = await response.json();
     showEtappeUserChartData(data);
   } catch (error) {
-    console.error("An error occured, we handled it.", error);
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
   }
 };
 
