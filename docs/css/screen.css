@@ -983,6 +983,7 @@ input:disabled {
   width: 1.5rem;
 }
 
+
 /*
     Utilities: spacing
     ---
@@ -1076,6 +1077,14 @@ input:disabled {
 
 .u-flex-basis-1-of-3 {
   flex-basis: calc(100% / 3);
+}
+
+.u-flex-basis-2-of-4{
+  flex-basis: calc(100% * (2/4));
+}
+
+.u-flex-basis-1-of-4{
+  flex-basis: calc(100% /4);
 }
 
 .u-justify-content--center {

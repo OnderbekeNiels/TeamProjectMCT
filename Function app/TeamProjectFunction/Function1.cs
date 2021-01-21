@@ -1447,6 +1447,16 @@ namespace TeamProjectFunction
                             data.EtappeActief = bool.Parse(reader["EtappeActief"].ToString());
                             data.RondeNaam = reader["RondeNaam"].ToString();
 
+                            //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
+
+                            List<EtappesRonde> etappeKlassement = await GetEtappeKlassement(data.EtappeId, connectionString);
+                            EtappesRonde obj = etappeKlassement.FirstOrDefault();
+
+                            if (obj != null)
+                            {
+                                data.SnelsteTijd = obj.TotaalTijd;
+                            }
+
                             etappes.Add(data);
                         }
                     }

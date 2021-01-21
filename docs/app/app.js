@@ -67,6 +67,17 @@ const listenToClickRound = function () {
   }
 };
 
+const listenToClickRoundAdmin = function () {
+  const rounds = document.querySelectorAll(".js-rounds-table-row");
+  for (const item of rounds) {
+    item.addEventListener("click", function () {
+      window.location.href = `ronde_detail_admin.html?roundId=${this.getAttribute(
+        "data-roundId"
+      )}`;
+    });
+  }
+};
+
 const listenToClickEtappe = function () {
   const rounds = document.querySelectorAll(".js-etappes-table-row");
   for (const item of rounds) {
@@ -183,6 +194,42 @@ const showRounds = function (data) {
 
 const showRoundsAdmin = function(data){
   console.table(data);
+  const table = document.querySelector(".js-rounds-table");
+  let htmlString = `<div class="c-ranking-table__header">
+  <p class="c-ranking-table__header-item">
+    Startdatum
+  </p>
+  <p class="c-ranking-table__header-item u-text-align--left u-flex-basis-2-of-4">
+    Ronde
+  </p>
+  <p class="c-ranking-table__header-item u-mr-clear">
+    # Etappes
+  </p>
+</div>`;
+
+//  Checken of data is not zero -> yes: user feedback;
+  if(data.length == 0){
+    htmlString += `
+    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
+  }
+  else{
+    for (const item of data) {
+      htmlString += `<div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundid="${item.rondeId}">
+      <p class="c-ranking-table__row-item u-flex-basis-1-of-4">
+      ${datetimeToDateNotation(item.startDatum)}
+      </p>
+      <p class="c-ranking-table__row-item  u-text-align--left u-flex-basis-2-of-4">
+      ${item.rondeNaam}
+      </p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-flex-basis-1-of-4">
+      ${item.aantalEtappes} etappes
+      </p>
+    </div>`;
+    }
+  }
+  hideLoader();
+  table.innerHTML = htmlString;
+  listenToClickRoundAdmin();
 }
 
 const showRoundsRanking = function (data) {
@@ -292,6 +339,68 @@ else{
   hideLoader();
   table.innerHTML = htmlString;
   listenToClickEtappe();
+  
+};
+
+const showEtappesAdmin = function (data) {
+  
+  console.table(data);
+  const table = document.querySelector(".js-etappes-table");
+  let htmlString = `      <div class="c-ranking-table__header">
+  <p class="c-ranking-table__header-item">
+    Startdatum
+  </p>
+  <p class="c-ranking-table__header-item u-text-align--left">
+    Ronde
+  </p>
+  <p class="c-ranking-table__header-item">
+    Totale tijd
+  </p>
+  <p class="c-ranking-table__header-item u-mr-clear">
+    Positie
+  </p>
+</div>`;
+//  Checken of data is not zero -> yes: user feedback;
+if(data.length == 0){
+  htmlString += `
+  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
+}
+else{
+  let aantalEtappes = 0;
+  for (const item of data) {
+    if (item.etappeActief == false) {
+      aantalEtappes++;
+    }
+  }
+  for (const item of data) {
+    if (item.etappeActief != true) {
+      htmlString += `
+      <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
+        item.etappeId
+      }' data-etappeTitle='Etappe ${aantalEtappes}'>
+    <p class="c-ranking-table__row-item">
+    ${datetimeToDateNotation(item.startTijd)}
+    </p>
+    <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">Etappe 
+    ${aantalEtappes}
+    </p>
+    <p class="c-ranking-table__row-item">
+    ${secToTimeNotation(item.totaalTijd)}
+    </p>
+    <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-color-alpha ">
+    #${item.plaats}
+    </p>
+  </div>`;
+      aantalEtappes--;
+    }
+  }
+  
+  
+}
+  hideLoader();
+  table.innerHTML = htmlString;
+  listenToClickEtappe();
+  
   
 };
 
@@ -528,6 +637,19 @@ const getEtappes = async function (rondeId) {
   }
 };
 
+const getEtappesAdmin = async function (rondeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/site/admin/ronde/etappes/${rondeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    showEtappesAdmin(data);
+    //showRoundInfo(data[0]);
+  } catch (error) {
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
+  }
+};
+
 const getRoundsRanking = async function (roundId) {
   let endpoint = `https://temptrackingfunction.azurewebsites.net/api/klassement/rondes/${roundId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
@@ -654,6 +776,18 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         getEtappes(roundId);
         listenToToggle();
+      }
+    }
+
+    if (document.querySelector(".js-ronde-detail-admin")) {
+      showLoader();
+      let urlParams = new URLSearchParams(window.location.search);
+      const roundId = urlParams.get("roundId");
+      if (roundId == null) {
+        window.location.pathname = "/ronde_overzicht.html";
+      } else {
+        getEtappesAdmin(roundId);
+        //listenToToggleAdmin();
       }
     }
 
