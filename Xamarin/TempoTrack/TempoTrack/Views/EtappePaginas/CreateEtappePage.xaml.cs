@@ -34,7 +34,7 @@ namespace TempoTrack.Views.EtappePaginas
 
             //Kleuren instellen voor navbar
             NavigationPage.SetHasBackButton(this, true);
-            Color fireRed = Color.FromHex("#d22222");
+            Color fireRed = Color.FromHex("#B22222");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }

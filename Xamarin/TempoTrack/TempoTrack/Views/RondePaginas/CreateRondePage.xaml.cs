@@ -19,12 +19,6 @@ namespace TempoTrack.Views.RondePaginas
             InitializeComponent();
             btnCreate.Clicked += btnCreate_cliked;
             GebruikersInfo = gebruikersInfo;
-
-            //Kleuren instellen voor navbar
-            NavigationPage.SetHasBackButton(this, true);
-            Color fireRed = Color.FromHex("#d22222");
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
 
         private void btnCreate_cliked(object sender, EventArgs e)
@@ -67,8 +61,6 @@ namespace TempoTrack.Views.RondePaginas
                 //Ronde aangemaakt doorgaan naar etappe pagina
                 Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
             }
-
         }
-
     }
 }

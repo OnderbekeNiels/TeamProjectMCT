@@ -20,6 +20,12 @@ namespace TempoTrack.Views.RondePaginas
 
         public RondeOverzichtPage(GebruikerV2 gebruikersInfo)
         {
+            //Kleuren instellen voor navbar
+            NavigationPage.SetHasBackButton(this, true);
+            Color Blauw = Color.FromHex("#015D99");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Blauw;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
             GebruikersInfo = gebruikersInfo;
             InitializeComponent();
             lvwRondes.ItemSelected += LvwRondes_ItemSelected;
