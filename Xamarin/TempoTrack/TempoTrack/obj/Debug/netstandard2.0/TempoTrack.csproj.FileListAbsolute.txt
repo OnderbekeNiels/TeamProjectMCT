@@ -111,3 +111,5 @@ C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
 C:\DP\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\DeelnemersOverzichtPage.xaml.g.cs

@@ -272,7 +272,7 @@ namespace TempoTrack.Views.Activity
 
                 //Deelnemer uit de ronde smijten
                 await EtappeRepository.UpdateDeelnemerGestopt(etappe.RondId, gebruikersInfo.GebruikerId);
-                Navigation.PopAsync();
+                Navigation.PushAsync(new RondeOverzichtPage(gebruikersInfo));
             }
         }
 
