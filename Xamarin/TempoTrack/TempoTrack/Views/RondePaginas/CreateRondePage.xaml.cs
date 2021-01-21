@@ -19,6 +19,11 @@ namespace TempoTrack.Views.RondePaginas
             InitializeComponent();
             btnCreate.Clicked += btnCreate_cliked;
             GebruikersInfo = gebruikersInfo;
+
+            NavigationPage.SetHasBackButton(this, true);
+            Color fireRed = Color.FromHex("#d22222");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
 
         private void btnCreate_cliked(object sender, EventArgs e)
