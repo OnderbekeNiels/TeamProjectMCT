@@ -29,7 +29,7 @@ namespace TempoTrack.Views.RondePaginas
             btnRefresh.Clicked += BtnRefresh_Clicked;
             btnLogOut.Clicked += BtnLogOut_Clicked;
 
-            LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
+            LoadRondesAsync(GebruikersInfo.GebruikerId);
         }
 
         private void BtnLogOut_Clicked(object sender, EventArgs e)
@@ -41,13 +41,26 @@ namespace TempoTrack.Views.RondePaginas
         {
             lvwRondes.ItemsSource = null;
             lvwRondes.IsRefreshing = true;
-            LoadRondesAsync(GebruikersInfo.GebruikerId, lvwRondes);
+            LoadRondesAsync(GebruikersInfo.GebruikerId);
         }
 
         //De rondes ophalen van een bepaalde gebruiker
-        private static async Task LoadRondesAsync(Guid gebruikerId, Xamarin.Forms.ListView lvw)
+        private async Task LoadRondesAsync(Guid gebruikerId)
         {
             List<RondesGebruiker> rondesGebruiker = await RondeRepository.GetRondesGebruiker(gebruikerId);
+
+            if(rondesGebruiker == null || rondesGebruiker.Count == 0)
+            {
+                lvwRondes.EndRefresh();
+                lvwRondes.IsVisible = false;
+
+                lblNoData.IsVisible = true;
+            }
+            else
+            {
+                lvwRondes.IsVisible = true;
+                lblNoData.IsVisible = false;
+            }
 
             foreach (RondesGebruiker item in rondesGebruiker)
             {
@@ -62,8 +75,8 @@ namespace TempoTrack.Views.RondePaginas
                 //Debug.WriteLine(item.ToString());
             }
 
-            lvw.ItemsSource = rondesGebruiker;
-            lvw.EndRefresh();
+            lvwRondes.ItemsSource = rondesGebruiker;
+            lvwRondes.EndRefresh();
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
