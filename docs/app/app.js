@@ -775,11 +775,11 @@ document.addEventListener("DOMContentLoaded", function () {
   listenToClickLogo();
 
   // get userid and name from user:
-  //userId = localStorage.getItem("gebruikerId");
-  //userName = localStorage.getItem("name");
+  userId = localStorage.getItem("gebruikerId");
+  userName = localStorage.getItem("name");
 
-  userId = 'A7BC9D97-FE81-42AE-84FD-5FD8B0334755';
-  userName = 'niels xxx';
+  // userId = 'A7BC9D97-FE81-42AE-84FD-5FD8B0334755';
+  // userName = 'niels xxx';
 
 
   if (userId == null || userName == null) {
