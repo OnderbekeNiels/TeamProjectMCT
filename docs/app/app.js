@@ -93,6 +93,21 @@ const listenToClickEtappe = function () {
   }
 };
 
+const listenToClickEtappeAdmin = function () {
+  const rounds = document.querySelectorAll(".js-etappes-table-row");
+  for (const item of rounds) {
+    item.addEventListener("click", function () {
+      localStorage.setItem(
+        "etappeTitle",
+        this.getAttribute("data-etappeTitle")
+      );
+      window.location.href = `etappe_detail_admin.html?etappeId=${this.getAttribute(
+        "data-etappeId"
+      )}`;
+    });
+  }
+};
+
 const listenToToggle = function () {
   const etappeInput = document.querySelector(".js-option-etappe"),
     roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
@@ -107,6 +122,31 @@ const listenToToggle = function () {
         document.querySelector('.js-etappes-table').innerHTML = '';
         showLoader();
         getEtappes(roundId);
+      }
+      if (roundsRankingInput.checked) {
+        rankingContainer.classList.add("c-rounds-ranking--visible");
+        document.querySelector('.js-rounds-ranking-table').innerHTML = '';
+        showLoader();
+        getRoundsRanking(roundId);
+      }
+    });
+  }
+};
+
+const listenToToggleAdmin = function () {
+  const etappeInput = document.querySelector(".js-option-etappe"),
+    roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
+    inputs = document.querySelectorAll(".js-option"),
+    rankingContainer = document.querySelector(".c-ranking-container");
+  for (const input of inputs) {
+    input.addEventListener("change", function () {
+      let urlParams = new URLSearchParams(window.location.search);
+      const roundId = urlParams.get("roundId");
+      if (etappeInput.checked) {
+        rankingContainer.classList.remove("c-rounds-ranking--visible");
+        document.querySelector('.js-etappes-table').innerHTML = '';
+        showLoader();
+        getEtappesAdmin(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
@@ -343,21 +383,16 @@ else{
 };
 
 const showEtappesAdmin = function (data) {
-  
-  console.table(data);
   const table = document.querySelector(".js-etappes-table");
   let htmlString = `      <div class="c-ranking-table__header">
-  <p class="c-ranking-table__header-item">
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3">
     Startdatum
   </p>
-  <p class="c-ranking-table__header-item u-text-align--left">
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3 u-text-align--left">
     Ronde
   </p>
-  <p class="c-ranking-table__header-item">
-    Totale tijd
-  </p>
-  <p class="c-ranking-table__header-item u-mr-clear">
-    Positie
+  <p class="c-ranking-table__header-item u-flex-basis-1-of-3 u-mr-clear">
+    Etappe Tijd
   </p>
 </div>`;
 //  Checken of data is not zero -> yes: user feedback;
@@ -378,30 +413,24 @@ else{
       <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
         item.etappeId
       }' data-etappeTitle='Etappe ${aantalEtappes}'>
-    <p class="c-ranking-table__row-item">
+    <p class="c-ranking-table__row-item u-flex-basis-1-of-3">
     ${datetimeToDateNotation(item.startTijd)}
     </p>
-    <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left">Etappe 
+    <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left   u-flex-basis-1-of-3">Etappe 
     ${aantalEtappes}
     </p>
-    <p class="c-ranking-table__row-item">
-    ${secToTimeNotation(item.totaalTijd)}
-    </p>
-    <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-color-alpha ">
-    #${item.plaats}
+    <p class="c-ranking-table__row-item u-flex-basis-1-of-3 u-mr-clear">
+    ${secToTimeNotation(item.snelsteTijd)}
     </p>
   </div>`;
       aantalEtappes--;
     }
   }
   
-  
 }
   hideLoader();
   table.innerHTML = htmlString;
-  listenToClickEtappe();
-  
-  
+  listenToClickEtappeAdmin();
 };
 
 const showRoundInfo = function (data) {
@@ -643,7 +672,7 @@ const getEtappesAdmin = async function (rondeId) {
     const response = await fetch(endpoint);
     const data = await response.json();
     showEtappesAdmin(data);
-    //showRoundInfo(data[0]);
+    showRoundInfo(data[0]);
   } catch (error) {
     console.error("An error occured, try again.", error);
     alert("Er liep iets mis. Probeer opnieuw.");
@@ -787,7 +816,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.pathname = "/ronde_overzicht.html";
       } else {
         getEtappesAdmin(roundId);
-        //listenToToggleAdmin();
+        listenToToggleAdmin();
       }
     }
 
@@ -803,6 +832,17 @@ document.addEventListener("DOMContentLoaded", function () {
           .querySelector(".js-graph-button")
           .setAttribute("data-etappeId", etappeId);
         listenToClickGraphButton();
+      }
+    }
+
+    if (document.querySelector(".js-etappe-detail-admin")) {
+      showLoader();
+      let urlParams = new URLSearchParams(window.location.search);
+      const etappeId = urlParams.get("etappeId");
+      if (etappeId == null) {
+        window.location.pathname = "/ronde_detail.html";
+      } else {
+        getEtappesRanking(etappeId);
       }
     }
 
