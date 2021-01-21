@@ -168,10 +168,14 @@ const listenToClickGraphButton = function () {
 };
 
 const listenToClickLogo = function () {
-  document
-    .querySelector(".js-header-logo")
-    .addEventListener("click", function () {
-      window.location.pathname = "ronde_overzicht.html";
+  const logo = document.querySelector(".js-header-logo");
+  let destination = "ronde_overzicht.html"
+  if(document.querySelector('.is-admin') != null){
+      destination = "ronde_overzicht_admin.html"
+  }
+   
+    logo.addEventListener("click", function () {
+      window.location.pathname = destination;
     });
 };
 

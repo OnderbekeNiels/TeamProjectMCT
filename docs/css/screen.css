@@ -40,6 +40,9 @@
   --global-color-neutral-dark: #666666;
   --global-color-neutral-x-dark: #2d2d2d;
 
+  --global-color-accent: var(--is-admin, var(--global-color-alpha));
+
+
   /* fonts */
 
   --global-font-weight-regular: 400;
@@ -125,7 +128,7 @@
     stroke: var(--global-color-alpha-light);
   }
   66% {
-    stroke: var(--global-color-alpha);
+    stroke: var(--global-color-accent);
   }
   80%,
   90% {
@@ -141,7 +144,7 @@
     stroke: var(--global-color-alpha-light);
   }
   66% {
-    stroke: var(--global-color-alpha);
+    stroke: var(--global-color-accent);
   }
   80%,
   90% {
@@ -158,6 +161,10 @@
     ---
     Global page styles + universal box-sizing:
 */
+
+.is-admin{
+  --is-admin: darkred;
+}
 
 html {
   font-size: 100%;
@@ -185,13 +192,13 @@ html {
 */
 
 ::-moz-selection {
-  background: var(--global-color-alpha);
+  background: var(--global-color-accent);
   color: white;
   text-shadow: none;
 }
 
 ::selection {
-  background: var(--global-color-alpha);
+  background: var(--global-color-accent);
   color: white;
   text-shadow: none;
 }
@@ -426,7 +433,7 @@ input:disabled {
 
 .c-header {
   width: 100%;
-  background-color: var(--global-color-alpha);
+  background-color: var(--global-color-accent);
   padding: var(--global-whitespace-md);
   display: flex;
   justify-content: space-between;
@@ -493,13 +500,13 @@ input:disabled {
 
 .c-header__logoutBtn:hover {
   background-color: var(--global-color-neutral-x-light);
-  color: var(--global-color-alpha);
+  color: var(--global-color-accent);
 }
 
 .c-header__logoutBtn:active,
 .c-header__logoutBtn:focus {
   outline: none;
-  border-color: var(--global-color-alpha);
+  border-color: var(--global-color-accent);
   box-shadow: 0 0 0 3px var(--global-color-neutral-x-light);
 }
 
@@ -602,7 +609,7 @@ input:disabled {
 .c-ranking-table__header {
   display: none;
   width: 100%;
-  background-color: var(--global-color-alpha);
+  background-color: var(--global-color-accent);
   font-size: 1.125rem;
   border-radius: var(--global-borderRadius);
   margin-bottom: var(--global-whitespace-md);
@@ -635,7 +642,7 @@ input:disabled {
 
 .c-ranking-table__row:active,
 .c-ranking-table__row:focus {
-  box-shadow: 0 0 0 3px var(--global-color-alpha);
+  box-shadow: 0 0 0 3px var(--global-color-accent);
 }
 
 .c-ranking-table__row-item {
@@ -836,7 +843,7 @@ input:disabled {
   padding: var(--global-whitespace-md);
   text-align: center;
   color: var(--global-color-neutral-dark);
-  /* background-color: var(--global-color-alpha); */
+  /* background-color: var(--global-color-accent); */
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -848,14 +855,14 @@ input:disabled {
 
 .c-toggle {
   --c-toggle-boxShadow: unset;
-  --c-toggle-borderColor: var(--global-color-alpha);
-  --c-toggle-color: var(--global-color-alpha);
+  --c-toggle-borderColor: var(--global-color-accent);
+  --c-toggle-color: var(--global-color-accent);
   --c-toggle-backgroundColor: var(--global-color-neutral-x-light);
 
   /* Action styles */
   --c-toggle-checked-color: var(--global-color-neutral-x-light);
-  --c-toggle-checked-backgroundColor: var(--global-color-alpha);
-  --c-toggle-focus-color: var(--global-color-alpha);
+  --c-toggle-checked-backgroundColor: var(--global-color-accent);
+  --c-toggle-focus-color: var(--global-color-accent);
   --c-toggle-focus-backgroundColor: var(--global-color-alpha-xx-light);
 
   display: flex;
@@ -960,7 +967,7 @@ input:disabled {
   display: flex;
   align-items: center;
   font-size: 1rem;
-  border: 1px solid var(--global-color-alpha);
+  border: 1px solid var(--global-color-accent);
   border-radius: var(--global-borderRadius);
   padding: 0 var(--global-whitespace-sm);
   margin: var(--global-whitespace-md) auto;
@@ -968,18 +975,18 @@ input:disabled {
 
 .c-etappe-chart-button:hover {
   background-color: var(--global-color-neutral-x-light);
-  color: var(--global-color-alpha);
+  color: var(--global-color-accent);
 }
 
 .c-etappe-chart-button:active,
 .c-etappe-chart-button:focus {
   outline: none;
-  border-color: var(--global-color-alpha);
-  box-shadow: 0 0 0 3px var(--global-color-alpha);
+  border-color: var(--global-color-accent);
+  box-shadow: 0 0 0 3px var(--global-color-accent);
 }
 
 .c-etappe-chart-icon {
-  fill: var(--global-color-alpha);
+  fill: var(--global-color-accent);
   width: 1.5rem;
 }
 
@@ -1108,7 +1115,7 @@ input:disabled {
 */
 
 .u-color-alpha {
-  color: var(--global-color-alpha);
+  color: var(--global-color-accent);
 }
 
 /*
