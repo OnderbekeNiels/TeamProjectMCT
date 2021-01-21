@@ -53,7 +53,7 @@ namespace TempoTrack.Models
             {
                 if (IsAdmin)
                 {
-                    return "#015D99";
+                    return "#B22222";
                 }
                 else
                 {

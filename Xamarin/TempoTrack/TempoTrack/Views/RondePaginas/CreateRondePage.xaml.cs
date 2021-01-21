@@ -61,8 +61,6 @@ namespace TempoTrack.Views.RondePaginas
                 //Ronde aangemaakt doorgaan naar etappe pagina
                 Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
             }
-
         }
-
     }
 }

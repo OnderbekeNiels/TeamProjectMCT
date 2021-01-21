@@ -49,7 +49,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="lblNoData" Text="Geen etappes beschikbaar" VerticalOptions="Center" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="24" TextColor="#015D99" IsVisible="false"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="lblNoData" Text="Geen etappes beschikbaar" VerticalOptions="Center" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="24" TextColor="#B22222" IsVisible="false"/>
 
             <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwEtappesAdmin" RowHeight="50" Margin="0" SeparatorVisibility="None" IsVisible="false" >
                 <ListView.ItemTemplate>
@@ -65,7 +65,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding EtappeNaam}' TextColor="#707070" FontSize="16"/>
-                                    <Label Grid.Column="1" x:Name="lblStartTijd" HorizontalOptions="End" VerticalOptions="Center" Margin="8,0,16,0" Text='{Binding StringStartTijd}' TextColor="#015D99" FontSize="16" />
+                                    <Label Grid.Column="1" x:Name="lblStartTijd" HorizontalOptions="End" VerticalOptions="Center" Margin="8,0,16,0" Text='{Binding StringStartTijd}' TextColor="#B22222" FontSize="16" />
                                 </Grid>
                             </Frame>
                         </ViewCell>

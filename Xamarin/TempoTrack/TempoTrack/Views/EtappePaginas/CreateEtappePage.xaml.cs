@@ -31,6 +31,12 @@ namespace TempoTrack.Views.EtappePaginas
 
             tpEtappe.Time = DateTime.Now.AddMinutes(1).TimeOfDay;
             lblAantalRondes.Text = Convert.ToString(1);
+
+            //Kleuren instellen voor navbar
+            NavigationPage.SetHasBackButton(this, true);
+            Color fireRed = Color.FromHex("#B22222");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
 
         private void btnDown_clicked(object sender, EventArgs e)

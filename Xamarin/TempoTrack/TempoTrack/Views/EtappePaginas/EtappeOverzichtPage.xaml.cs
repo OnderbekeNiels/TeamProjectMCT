@@ -20,6 +20,8 @@ namespace TempoTrack.Views.EtappePaginas
         private static GebruikerV2 GebruikersInfo { get; set; }
 
         private static int etappeTeller = 0;
+
+        private static int NavigationStackCount = 0;
         public EtappeOverzichtPage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
             RondeInfo = rondeInfo;
@@ -42,12 +44,28 @@ namespace TempoTrack.Views.EtappePaginas
 
             if(GebruikersInfo.GebruikerId == RondeInfo.Admin)
             {
+                //Kleuren instellen voor navbar
+                NavigationPage.SetHasBackButton(this, true);
+                Color fireRed = Color.FromHex("#B22222");
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
                 //AdminControls tonen
                 btnCreateEtappe.IsVisible = true;
                 btnInviteAdmin.IsVisible = true;
                 btnVerwijder.IsVisible = true;
                 lvwEtappesAdmin.IsVisible = true;
 
+                //AdminColors
+                btnDeelnemers.TextColor = fireRed;
+                btnDeelnemers.BorderColor = fireRed;
+                btnRefresh.TextColor = fireRed;
+                btnRefresh.BorderColor = fireRed;
+                btnCreateEtappe.TextColor = fireRed;
+                btnCreateEtappe.BorderColor = fireRed;
+                btnInviteAdmin.TextColor = fireRed;
+                btnInviteAdmin.BorderColor = fireRed;
+                btnVerwijder.BackgroundColor = fireRed;
 
                 //UserControls niet tonen
                 btnStoppen.IsVisible = false;
@@ -55,15 +73,38 @@ namespace TempoTrack.Views.EtappePaginas
                 grdUserStanding.IsVisible = false;
                 lvwEtappes.IsVisible = false;
             }
+            else
+            {
+                //Kleuren instellen voor navbar
+                //NavigationPage.SetHasBackButton(this, true);
+                Color Blauw = Color.FromHex("#015D99");
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Blauw;
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            }
 
             LoadEtappesAsync();
 
             LoadTitle();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+            return true;
+        }
+
+        protected override async void OnDisappearing()
+        {
+            if (NavigationStackCount >= Navigation.NavigationStack.Count) 
+            {
+                Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+            }
+        }
+
         protected override void OnAppearing()
         {
             //Tonen van etappe bij terecht komen op deze pagina 
+            NavigationStackCount = Navigation.NavigationStack.Count;
             LoadEtappesAsync();
             base.OnAppearing();
         }
