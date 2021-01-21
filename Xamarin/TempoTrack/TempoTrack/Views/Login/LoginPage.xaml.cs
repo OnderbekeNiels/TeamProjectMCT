@@ -93,17 +93,17 @@ namespace TempoTrack.Views.Login
             //};
             //authenticator.Error += onAuthError;
 
-            GebruikerV2 gebruikerInfo = new GebruikerV2();
-            gebruikerInfo.GebruikerId = Guid.Parse("a7bc9d97-fe81-42ae-84fd-5fd8b0334755");
-            gebruikerInfo.Email = "niels.onderbeke.no@gmail.com";
-            gebruikerInfo.name = "niels onderbeke";
-            Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
-
             //GebruikerV2 gebruikerInfo = new GebruikerV2();
-            //gebruikerInfo.GebruikerId = Guid.Parse("ecde6aac-3192-4f8c-a077-c5bbbff1e600");
-            //gebruikerInfo.Email = "jelle.demets@student.howest.be";
-            //gebruikerInfo.name = "Jelle Demets";
+            //gebruikerInfo.GebruikerId = Guid.Parse("a7bc9d97-fe81-42ae-84fd-5fd8b0334755");
+            //gebruikerInfo.Email = "niels.onderbeke.no@gmail.com";
+            //gebruikerInfo.name = "niels onderbeke";
             //Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
+
+            GebruikerV2 gebruikerInfo = new GebruikerV2();
+            gebruikerInfo.GebruikerId = Guid.Parse("ecde6aac-3192-4f8c-a077-c5bbbff1e600");
+            gebruikerInfo.Email = "jelle.demets@student.howest.be";
+            gebruikerInfo.name = "Jelle Demets";
+            Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
 
             //Ronde ronde = new Ronde();
             //ronde.RondeId = Guid.Parse("3A8CC923-EEAA-49CA-9E95-07687F7ADC3E");

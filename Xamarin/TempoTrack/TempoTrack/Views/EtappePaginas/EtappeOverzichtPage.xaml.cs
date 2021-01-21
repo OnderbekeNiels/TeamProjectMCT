@@ -105,21 +105,27 @@ namespace TempoTrack.Views.EtappePaginas
         {
            List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(RondeInfo.RondeId, GebruikersInfo.GebruikerId);
 
+            if(etappes == null || etappes.Count == 0)
+            {
+                lvwEtappes.EndRefresh();
+                lvwEtappes.IsVisible = false;
+
+                lblNoData.IsVisible = true;
+            }
+            else
+            {
+                lblNoData.IsVisible = false;
+                lvwEtappes.IsVisible = true;
+            }
+
             etappeTeller += etappes.Count();
 
             foreach (EtappesRonde item in etappes)
             {
                 item.EtappeNaam = $"Etappe {etappeTeller}";
                 etappeTeller -= 1;
-                
-                //item.TotaalRondeTijd = RondeInfo.TotaalTijd;
-                //Debug.WriteLine("-------------------------------------------------------");
-                //Debug.WriteLine(item.ToString());
-                //Debug.WriteLine("-------------------------------------------------------");
+               
             }
-
-            //etappes.Reverse();
-                       
 
             if (GebruikersInfo.GebruikerId != RondeInfo.Admin)
             {
