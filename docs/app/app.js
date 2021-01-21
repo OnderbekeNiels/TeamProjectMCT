@@ -778,10 +778,6 @@ document.addEventListener("DOMContentLoaded", function () {
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
 
-  // userId = 'A7BC9D97-FE81-42AE-84FD-5FD8B0334755';
-  // userName = 'niels';
-
-
   if (userId == null || userName == null) {
     window.location.pathname = "/index.html";
   } else {
