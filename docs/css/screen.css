@@ -543,7 +543,7 @@ input:disabled {
   line-height: 1.5;
   font-size: 1rem;
   text-align: center;
-  margin-bottom: var(--global-whitespace-xl);
+  margin-bottom: 0;
   color: var(--global-color-neutral-dark);
 }
 

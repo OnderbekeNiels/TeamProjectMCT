@@ -42,6 +42,20 @@ const datetimeToDateNotation = function (date) {
 
 //#region *** Listen To ***
 
+const listenToClickAdminPage = function(){
+  const btn = document.querySelector('.js-admin-button');
+  btn.addEventListener('click', function(){
+    window.location.href = `ronde_overzicht_admin.html`;
+  });
+}
+
+const listenToClickDeelnemerPage = function(){
+  const btn = document.querySelector('.js-deelnemer-button');
+  btn.addEventListener('click', function(){
+    window.location.href = `ronde_overzicht.html`;
+  });
+}
+
 const listenToClickRound = function () {
   const rounds = document.querySelectorAll(".js-rounds-table-row");
   for (const item of rounds) {
@@ -166,6 +180,10 @@ const showRounds = function (data) {
   listenToClickRound();
   
 };
+
+const showRoundsAdmin = function(data){
+  console.table(data);
+}
 
 const showRoundsRanking = function (data) {
   const table = document.querySelector(".js-rounds-ranking-table");
@@ -485,6 +503,18 @@ const getRounds = async function () {
   }
 };
 
+const getRoundsAdmin = async function () {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/site/admin/rondes/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    showRoundsAdmin(data);
+  } catch (error) {
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
+  }
+};
+
 const getEtappes = async function (rondeId) {
   let endpoint = `https://temptrackingfunction.azurewebsites.net/api/gebruiker/ronde/etappes/${rondeId}/${userId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
   try {
@@ -590,8 +620,11 @@ document.addEventListener("DOMContentLoaded", function () {
   listenToClickLogo();
 
   // get userid and name from user:
-  userId = localStorage.getItem("gebruikerId");
-  userName = localStorage.getItem("name");
+  //userId = localStorage.getItem("gebruikerId");
+  //userName = localStorage.getItem("name");
+
+  userId = 'A7BC9D97-FE81-42AE-84FD-5FD8B0334755';
+  userName = 'niels xxx';
 
 
   if (userId == null || userName == null) {
@@ -603,6 +636,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (document.querySelector(".js-ronde-overzicht")) {
       showLoader();
       getRounds();
+      listenToClickAdminPage();
+    }
+
+    if (document.querySelector(".js-ronde-overzicht-admin")) {
+      showLoader();
+      getRoundsAdmin();
+      listenToClickDeelnemerPage();
     }
 
     if (document.querySelector(".js-ronde-detail")) {
