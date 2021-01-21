@@ -163,7 +163,7 @@
 */
 
 .is-admin{
-  --is-admin: darkred;
+  --is-admin: #b22222;
 }
 
 html {
