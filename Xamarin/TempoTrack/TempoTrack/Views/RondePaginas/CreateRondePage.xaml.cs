@@ -20,6 +20,7 @@ namespace TempoTrack.Views.RondePaginas
             btnCreate.Clicked += btnCreate_cliked;
             GebruikersInfo = gebruikersInfo;
 
+            //Kleuren instellen voor navbar
             NavigationPage.SetHasBackButton(this, true);
             Color fireRed = Color.FromHex("#d22222");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
