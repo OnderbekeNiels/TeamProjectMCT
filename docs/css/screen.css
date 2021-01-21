@@ -482,7 +482,7 @@ input:disabled {
 
 .c-header__logoutBtn {
   display: none;
-  background-color: var(--global-color-neutral-alpha);
+  background-color: var(--global-color-accent);
   border: 1px solid var(--global-color-neutral-x-light);
   padding: var(--global-whitespace-sm) var(--global-whitespace-md);
   border-radius: var(--global-borderRadius);
@@ -808,6 +808,29 @@ input:disabled {
 
 .c-home-loginBtn {
   margin-left: var(--global-whitespace-md);
+}
+
+.c-home__downloadBtn {
+  background-color: var(--global-color-accent);
+  border: 1px solid var(--global-color-accent);
+  padding: var(--global-whitespace-sm) var(--global-whitespace-md);
+  border-radius: var(--global-borderRadius);
+  color: var(--global-color-neutral-x-light);
+  font-size: 1rem;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.c-home__downloadBtn:hover {
+  background-color: var(--global-color-neutral-x-light);
+  color: var(--global-color-accent);
+}
+
+.c-home__downloadBtn:active,
+.c-home__downloadBtn:focus {
+  outline: none;
+  border-color: var(--global-color-accent);
+  box-shadow: 0 0 0 3px var(--global-color-accent);
 }
 
 @media (min-width: 64rem) {
