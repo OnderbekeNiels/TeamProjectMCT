@@ -136,7 +136,7 @@ namespace TempoTrack.Views.EtappePaginas
         private void LoadTitle()
         {
             checkConnectivity();
-            if(RondeInfo.RondeNaam.Length >= 20)
+            if(RondeInfo.RondeNaam.Length >= 15)
             {
                 lblRondeNaam.FontSize = 16;
             }
