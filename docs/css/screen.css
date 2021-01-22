@@ -787,6 +787,7 @@ input:disabled {
 .c-home-title {
   font-size: 3rem;
   line-height: 1;
+  font-weight: var(--global-font-weight-bold);
   margin-bottom: var(--global-whitespace-xl);
   color: var(--global-color-neutral-x-dark);
 }
