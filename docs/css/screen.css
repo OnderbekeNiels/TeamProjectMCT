@@ -834,6 +834,12 @@ input:disabled {
   box-shadow: 0 0 0 3px var(--global-color-accent);
 }
 
+.c-home__foto-bron{
+    font-size: 0.75rem;
+    text-align: right;
+    color: var(--global-color-neutral);
+}
+
 @media (min-width: 64rem) {
   .c-home-container {
     max-width: 72rem;
