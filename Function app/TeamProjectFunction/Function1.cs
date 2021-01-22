@@ -940,12 +940,9 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{etappeId}")] HttpRequest req,
           ILogger log, Guid etappeId)
         {
-
-           
-
             try
             {
-                
+                CustomResponse customResponse = new CustomResponse();
                 string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
                 using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 {
@@ -955,18 +952,24 @@ namespace TeamProjectFunction
                         sqlCommand.Connection = sqlConnection;
                         sqlCommand.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
                         sqlCommand.Parameters.AddWithValue("@EtappeId", etappeId);
-
-
-
                         await sqlCommand.ExecuteNonQueryAsync();
 
-                        CustomResponse customResponse = new CustomResponse();
+                        List<Gebruiker> gebruikers = await GetDNFDeelnemers(etappeId, connectionString);
+
+                        foreach(Gebruiker g in gebruikers)
+                        {
+                            DisableDeelnemer(g.GebruikerId, connectionString);
+                        }
+
                         customResponse.Succes = true;
 
-                        return new OkObjectResult(customResponse);
-
                     }
+
                 }
+                return new OkObjectResult(customResponse);
+
+
+
             }
             catch (Exception ex)
             {
@@ -975,6 +978,53 @@ namespace TeamProjectFunction
                 return new BadRequestResult(); ;
             }
         }
+
+
+        public static async Task<List<Gebruiker>> GetDNFDeelnemers(Guid etappeId, string connString)
+        {
+            List<Gebruiker> gebruikers = new List<Gebruiker>();
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "select d.IsActief, l.GebruikerId, l.EtappeId from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId join Deelnemers as d on d.GebruikersId = g.GebruikersId and d.RondeId = r.RondeId where l.EtappeId = @etappeId group by l.GebruikerId, g.GebruikersNaam, l.EtappeId, e.Laps, d.IsActief having count(l.TijdLap) < e.Laps;";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@etappeId", etappeId);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Gebruiker data = new Gebruiker();
+                        data.GebruikerId = Guid.Parse(reader["GebruikerId"].ToString());
+                        gebruikers.Add(data);
+                    }
+                }
+            }
+            return gebruikers;
+        }
+
+        public static async Task<int> DisableDeelnemer(Guid userId, string connString)
+        {
+
+            int response = 0;
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "update Deelnemers set IsActief = 0 where GebruikersId = @userId";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                     response = await command.ExecuteNonQueryAsync();
+                }
+            }
+            return response;
+        }
+
 
 
         [FunctionName("AddLaptijd")]
@@ -1658,7 +1708,7 @@ namespace TeamProjectFunction
                             etappeInfo.Laps = int.Parse(reader["Laps"].ToString());
                         }
                     }
-
+                    
                     //Opvragen aantal deelnemers in de etappe
                     using (SqlCommand command = new SqlCommand())
                     {
@@ -1737,6 +1787,44 @@ namespace TeamProjectFunction
 
         }
 
+        [FunctionName("GetInfoEtappeGraphTimes")]
+        public static async Task<IActionResult> GetInfoEtappeGraphTimes(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "info/etappe/times/{etappeId}")] HttpRequest req, Guid etappeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                EtappeInfoUser etappeInfoUser = new EtappeInfoUser();
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select l.EtappeId, min(l.TijdLap) as 'SnelsteLapTijd', max(l.TijdLap) as 'TraagsteLaptijd' from LapTijden as l where l.EtappeId = @etappeId group by l.EtappeId;";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            etappeInfoUser.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            etappeInfoUser.SnelsteLapTijd = int.Parse(reader["SnelsteLapTijd"].ToString());
+                            etappeInfoUser.TraagsteLapTijd = int.Parse(reader["TraagsteLapTijd"].ToString());
+                        }
+                    }
+                }
+                return new OkObjectResult(etappeInfoUser);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
         [FunctionName("GetLapTijdenEtappeGraphUser")]
         public static async Task<IActionResult> GetLapTijdenEtappeGraphUser(
 [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "info/etappe/laptijden/users/{etappeId}/{userId}")] HttpRequest req, Guid etappeId, Guid userId, ILogger log)
@@ -1779,6 +1867,81 @@ namespace TeamProjectFunction
             }
 
         }
+
+        [FunctionName("GetLapTijdenEtappeGraphAdmin")]
+        public static async Task<IActionResult> GetLapTijdenEtappeGraphAdmin(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "info/admin/etappe/laptijden/users/{etappeId}")] HttpRequest req, Guid etappeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<EtappeLapTijdAdmin> lapTijden = new List<EtappeLapTijdAdmin>();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select top 5 Row_number() OVER (order by Sum(l.TijdLap)) as 'Plaats', l.GebruikerId, g.GebruikersNaam, l.EtappeId,  Sum(l.TijdLap) as 'TotaalTijd' from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId where l.EtappeId = @etappeId group by  l.GebruikerId, g.GebruikersNaam, l.EtappeId, e.Laps having count(l.TijdLap) = e.Laps order by Sum(l.TijdLap);";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@etappeId", etappeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            EtappeLapTijdAdmin data = new EtappeLapTijdAdmin();
+                            data.Plaats = int.Parse(reader["Plaats"].ToString());
+                            data.GebruikersId = Guid.Parse(reader["GebruikerId"].ToString());
+                            data.GebruikersNaam = reader["GebruikersNaam"].ToString();
+                            data.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            data.LapTijden = await GetLapTijden(data.GebruikersId, etappeId, connectionString);
+
+                            lapTijden.Add(data);
+                        }
+                    }
+                }
+              
+                return new OkObjectResult(lapTijden);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
+        public static async Task<List<EtappeLapTijdUser>> GetLapTijden(Guid userdId, Guid etappeId, string connString)
+        {
+            List<EtappeLapTijdUser> etappeLapTijdUser = new List<EtappeLapTijdUser>();
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "select l.EtappeId, l.GebruikerId, g.GebruikersNaam, l.LapNummer, l.TijdLap from Laptijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId where g.GebruikersId = @userId and l.EtappeId = @etappeId group by l.EtappeId, l.GebruikerId, g.GebruikersNaam, g.GebruikersId, l.LapNummer, l.TijdLap order by l.LapNummer;";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@etappeId", etappeId);
+                    command.Parameters.AddWithValue("@userId", userdId);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        EtappeLapTijdUser data = new EtappeLapTijdUser();
+                        data.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                        data.GebruikerId = Guid.Parse(reader["GebruikerId"].ToString());
+                        data.LapNummer = int.Parse(reader["LapNummer"].ToString());
+                        data.TijdLap = int.Parse(reader["TijdLap"].ToString());
+                        etappeLapTijdUser.Add(data);
+                    }
+                }
+            }
+            return etappeLapTijdUser;
+        }
+
     }
 }
 
