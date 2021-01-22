@@ -42,20 +42,23 @@ const datetimeToDateNotation = function (date) {
 
 //#region *** Listen To ***
 
-const listenToClickAdminPage = function(){
-  const btn = document.querySelector('.js-admin-button');
-  btn.addEventListener('click', function(){
+//Listen to toggle button that links to admin page
+const listenToClickAdminPage = function () {
+  const btn = document.querySelector(".js-admin-button");
+  btn.addEventListener("click", function () {
     window.location.href = `ronde_overzicht_admin.html`;
   });
-}
+};
 
-const listenToClickDeelnemerPage = function(){
-  const btn = document.querySelector('.js-deelnemer-button');
-  btn.addEventListener('click', function(){
+//Listen to toggle button that links to deelnemer page
+const listenToClickDeelnemerPage = function () {
+  const btn = document.querySelector(".js-deelnemer-button");
+  btn.addEventListener("click", function () {
     window.location.href = `ronde_overzicht.html`;
   });
-}
+};
 
+//Event listener that listens to a click on a round from the round overview on the deelnemer page
 const listenToClickRound = function () {
   const rounds = document.querySelectorAll(".js-rounds-table-row");
   for (const item of rounds) {
@@ -67,6 +70,7 @@ const listenToClickRound = function () {
   }
 };
 
+//Event listener that listens to a click on a round from the round overview on the admin page
 const listenToClickRoundAdmin = function () {
   const rounds = document.querySelectorAll(".js-rounds-table-row");
   for (const item of rounds) {
@@ -78,6 +82,7 @@ const listenToClickRoundAdmin = function () {
   }
 };
 
+//Event listener that listens to a click on a etappe from the etappe overview on the deelnemer page
 const listenToClickEtappe = function () {
   const rounds = document.querySelectorAll(".js-etappes-table-row");
   for (const item of rounds) {
@@ -93,6 +98,7 @@ const listenToClickEtappe = function () {
   }
 };
 
+//Event listener that listens to a click on a etappe from the etappe overview on the admin page
 const listenToClickEtappeAdmin = function () {
   const rounds = document.querySelectorAll(".js-etappes-table-row");
   for (const item of rounds) {
@@ -108,6 +114,7 @@ const listenToClickEtappeAdmin = function () {
   }
 };
 
+//Event listener of the toggle button that switches between klassement and etappe view
 const listenToToggle = function () {
   const etappeInput = document.querySelector(".js-option-etappe"),
     roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
@@ -119,13 +126,13 @@ const listenToToggle = function () {
       const roundId = urlParams.get("roundId");
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
-        document.querySelector('.js-etappes-table').innerHTML = '';
+        document.querySelector(".js-etappes-table").innerHTML = "";
         showLoader();
         getEtappes(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
-        document.querySelector('.js-rounds-ranking-table').innerHTML = '';
+        document.querySelector(".js-rounds-ranking-table").innerHTML = "";
         showLoader();
         getRoundsRanking(roundId);
       }
@@ -133,6 +140,7 @@ const listenToToggle = function () {
   }
 };
 
+//Event listener of the toggle button that switches between klassement and etappe view
 const listenToToggleAdmin = function () {
   const etappeInput = document.querySelector(".js-option-etappe"),
     roundsRankingInput = document.querySelector(".js-option-rounds-ranking"),
@@ -144,13 +152,13 @@ const listenToToggleAdmin = function () {
       const roundId = urlParams.get("roundId");
       if (etappeInput.checked) {
         rankingContainer.classList.remove("c-rounds-ranking--visible");
-        document.querySelector('.js-etappes-table').innerHTML = '';
+        document.querySelector(".js-etappes-table").innerHTML = "";
         showLoader();
         getEtappesAdmin(roundId);
       }
       if (roundsRankingInput.checked) {
         rankingContainer.classList.add("c-rounds-ranking--visible");
-        document.querySelector('.js-rounds-ranking-table').innerHTML = '';
+        document.querySelector(".js-rounds-ranking-table").innerHTML = "";
         showLoader();
         getRoundsRanking(roundId);
       }
@@ -158,6 +166,7 @@ const listenToToggleAdmin = function () {
   }
 };
 
+//Event listener of the button that links the etappe_detail page to the graph page of a deelnemer
 const listenToClickGraphButton = function () {
   const btn = document.querySelector(".js-graph-button");
   btn.addEventListener("click", function () {
@@ -167,6 +176,7 @@ const listenToClickGraphButton = function () {
   });
 };
 
+//Event listener of the button that links the etappe_detail page to the graph page of the admin
 const listenToClickGraphButtonAdmin = function () {
   const btn = document.querySelector(".js-graph-button");
   btn.addEventListener("click", function () {
@@ -176,16 +186,17 @@ const listenToClickGraphButtonAdmin = function () {
   });
 };
 
+//Event listener home button
 const listenToClickLogo = function () {
   const logo = document.querySelector(".js-header-logo");
-  let destination = "ronde_overzicht.html"
-  if(document.querySelector('.is-admin') != null){
-      destination = "ronde_overzicht_admin.html"
+  let destination = "ronde_overzicht.html";
+  if (document.querySelector(".is-admin") != null) {
+    destination = "ronde_overzicht_admin.html";
   }
-   
-    logo.addEventListener("click", function () {
-      window.location.pathname = destination;
-    });
+
+  logo.addEventListener("click", function () {
+    window.location.pathname = destination;
+  });
 };
 
 //#endregion
@@ -210,12 +221,11 @@ const showRounds = function (data) {
   </p>
 </div>`;
 
-//  Checken of data is not zero -> yes: user feedback;
-  if(data.length == 0){
+  //  Checken of data is not zero -> yes: user feedback;
+  if (data.length == 0) {
     htmlString += `
-    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
-  }
-  else{
+    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`;
+  } else {
     for (const item of data) {
       htmlString += `
           <div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundId='${
@@ -242,10 +252,17 @@ const showRounds = function (data) {
   hideLoader();
   table.innerHTML = htmlString;
   listenToClickRound();
-  
 };
 
-const showRoundsAdmin = function(data){
+const calcAantalEtappesNotation = function (count) {
+  if (count > 1) {
+    return `${count} etappes`;
+  } else {
+    return `${count} etappe`;
+  }
+};
+
+const showRoundsAdmin = function (data) {
   console.table(data);
   const table = document.querySelector(".js-rounds-table");
   let htmlString = `<div class="c-ranking-table__header">
@@ -260,14 +277,15 @@ const showRoundsAdmin = function(data){
   </p>
 </div>`;
 
-//  Checken of data is not zero -> yes: user feedback;
-  if(data.length == 0){
+  //  Checken of data is not zero -> yes: user feedback;
+  if (data.length == 0) {
     htmlString += `
-    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
-  }
-  else{
+    <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`;
+  } else {
     for (const item of data) {
-      htmlString += `<div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundid="${item.rondeId}">
+      htmlString += `<div class="c-ranking-table__row js-rounds-table-row u-show-pointer" data-roundid="${
+        item.rondeId
+      }">
       <p class="c-ranking-table__row-item u-flex-basis-1-of-4">
       ${datetimeToDateNotation(item.startDatum)}
       </p>
@@ -275,7 +293,7 @@ const showRoundsAdmin = function(data){
       ${item.rondeNaam}
       </p>
       <p class="c-ranking-table__row-item c-ranking-table__row-item--position u-mr-clear u-flex-basis-1-of-4">
-      ${item.aantalEtappes} etappes
+      ${calcAantalEtappesNotation(item.aantalEtappes)}
       </p>
     </div>`;
     }
@@ -283,7 +301,7 @@ const showRoundsAdmin = function(data){
   hideLoader();
   table.innerHTML = htmlString;
   listenToClickRoundAdmin();
-}
+};
 
 const showRoundsRanking = function (data) {
   const table = document.querySelector(".js-rounds-ranking-table");
@@ -332,7 +350,6 @@ const showRoundsRanking = function (data) {
   }
   hideLoader();
   table.innerHTML = htmlString;
-  
 };
 
 const showEtappes = function (data) {
@@ -352,21 +369,20 @@ const showEtappes = function (data) {
     Positie
   </p>
 </div>`;
-//  Checken of data is not zero -> yes: user feedback;
-if(data.length == 0){
-  htmlString += `
-  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
-}
-else{
-  let aantalEtappes = 0;
-  for (const item of data) {
-    if (item.etappeActief == false) {
-      aantalEtappes++;
+  //  Checken of data is not zero -> yes: user feedback;
+  if (data.length == 0) {
+    htmlString += `
+  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`;
+  } else {
+    let aantalEtappes = 0;
+    for (const item of data) {
+      if (item.etappeActief == false) {
+        aantalEtappes++;
+      }
     }
-  }
-  for (const item of data) {
-    if (item.etappeActief != true) {
-      htmlString += `
+    for (const item of data) {
+      if (item.etappeActief != true) {
+        htmlString += `
       <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
         item.etappeId
       }' data-etappeTitle='Etappe ${aantalEtappes}'>
@@ -383,16 +399,13 @@ else{
     #${item.plaats}
     </p>
   </div>`;
-      aantalEtappes--;
+        aantalEtappes--;
+      }
     }
   }
-  
-  
-}
   hideLoader();
   table.innerHTML = htmlString;
   listenToClickEtappe();
-  
 };
 
 const showEtappesAdmin = function (data) {
@@ -408,21 +421,20 @@ const showEtappesAdmin = function (data) {
     Etappe Tijd
   </p>
 </div>`;
-//  Checken of data is not zero -> yes: user feedback;
-if(data.length == 0){
-  htmlString += `
-  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`
-}
-else{
-  let aantalEtappes = 0;
-  for (const item of data) {
-    if (item.etappeActief == false) {
-      aantalEtappes++;
+  //  Checken of data is not zero -> yes: user feedback;
+  if (data.length == 0) {
+    htmlString += `
+  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`;
+  } else {
+    let aantalEtappes = 0;
+    for (const item of data) {
+      if (item.etappeActief == false) {
+        aantalEtappes++;
+      }
     }
-  }
-  for (const item of data) {
-    if (item.etappeActief != true) {
-      htmlString += `
+    for (const item of data) {
+      if (item.etappeActief != true) {
+        htmlString += `
       <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
         item.etappeId
       }' data-etappeTitle='Etappe ${aantalEtappes}'>
@@ -436,11 +448,10 @@ else{
     ${secToTimeNotation(item.snelsteTijd)}
     </p>
   </div>`;
-      aantalEtappes--;
+        aantalEtappes--;
+      }
     }
   }
-  
-}
   hideLoader();
   table.innerHTML = htmlString;
   listenToClickEtappeAdmin();
@@ -506,7 +517,6 @@ const showEtappesRanking = function (data) {
   }
   hideLoader();
   table.innerHTML = htmlString;
-  
 };
 
 const showEtappeInfo = function (data) {
@@ -605,10 +615,9 @@ const showEtappeUserChartData = function (data) {
               display: true,
               labelString: "Ronde Tijd",
             },
-              ticks : {
-                reverse : true
+            ticks: {
+              reverse: true,
             },
-            
           },
         ],
       },
@@ -616,46 +625,41 @@ const showEtappeUserChartData = function (data) {
   };
   hideLoader();
   let speedChart = new Chart(ctx, config);
-  
 };
 
-
-const getLapTijden =function(data){
+const getLapTijden = function (data) {
   let listLapTijden = [];
-  for(let item of data){
+  for (let item of data) {
     listLapTijden.push(item.tijdLap);
   }
   return listLapTijden;
-}
+};
 
 const showEtappeAdminChartData = function (data) {
-
   let lapNummers = [];
-  for(let item of data[0].lapTijden)
-  {
-    lapNummers.push(item.lapNummer)
+  for (let item of data[0].lapTijden) {
+    lapNummers.push(item.lapNummer);
   }
 
-  const lineColors = ['#FFC145', '#5B5F97', '#EA4200', '#00B8DB', '#2FB760']
+  const lineColors = ["#FFC145", "#5B5F97", "#EA4200", "#00B8DB", "#2FB760"];
 
   let dataObjects = [];
   let counter = 0;
-  for(let item of data)
-  {
+  for (let item of data) {
     var obj = {
       label: `${item.gebruikersNaam.toUpperCase()}`,
       borderColor: lineColors[counter],
       backgroundColor: lineColors[counter],
       fill: false,
       data: getLapTijden(item.lapTijden),
-    }
+    };
     counter++;
-    dataObjects.push(obj)
+    dataObjects.push(obj);
   }
 
   var lineChartData = {
     labels: lapNummers,
-    datasets: dataObjects
+    datasets: dataObjects,
   };
 
   let ctx = document.querySelector(".js-etappe-chart").getContext("2d");
@@ -695,10 +699,9 @@ const showEtappeAdminChartData = function (data) {
               display: true,
               labelString: "Ronde Tijd",
             },
-              ticks : {
-                reverse : true
+            ticks: {
+              reverse: true,
             },
-            
           },
         ],
       },
@@ -706,7 +709,6 @@ const showEtappeAdminChartData = function (data) {
   };
   hideLoader();
   let speedChart = new Chart(ctx, config);
-  
 };
 
 const showEtappeAdminData = function (data) {
@@ -721,30 +723,29 @@ const showEtappeAdminData = function (data) {
 <p class="c-etappe-info-data">${secToTimeNotation(data.traagsteLapTijd)}</p>
 </div>
   `;
-  document.querySelector(".js-etappe-head").innerText = `${
-    localStorage.getItem("rondeNaam")
-  } - ${localStorage.getItem("etappeTitle")}`;
+  document.querySelector(".js-etappe-head").innerText = `${localStorage.getItem(
+    "rondeNaam"
+  )} - ${localStorage.getItem("etappeTitle")}`;
 };
 
 const hideLoader = function () {
   const loaders = document.querySelectorAll(".js-data-loader");
-  for(const item of loaders){
+  for (const item of loaders) {
     item.classList.add("o-display-none");
   }
-  
 };
 
 const showLoader = function () {
   const loaders = document.querySelectorAll(".js-data-loader");
-  for(const item of loaders){
+  for (const item of loaders) {
     item.classList.remove("o-display-none");
   }
 };
 
-const showUserName = function(userName){
+const showUserName = function (userName) {
   userName = userName.split(" ");
-  document.querySelector('.js-user-name').innerText = userName[0].toUpperCase();
-}
+  document.querySelector(".js-user-name").innerText = userName[0].toUpperCase();
+};
 
 //#endregion
 
@@ -885,7 +886,7 @@ const getEtappeAdminChartData = async function (etappeId) {
     console.error("An error occured, try again.", error);
     alert("Er liep iets mis. Probeer opnieuw.");
   }
-}
+};
 
 //#endregion
 
@@ -911,22 +912,14 @@ function signOut() {
 
 //#endregion
 
-document.addEventListener("DOMContentLoaded", function () {
-
-  //Listen to click logo -> go to home
-  listenToClickLogo();
-
+const pageChecker = function(){
   // get userid and name from user:
-  // userId = localStorage.getItem("gebruikerId");
-  // userName = localStorage.getItem("name");
-
-  userId = 'E0944F6F-F304-494E-9F96-4ADDEA34FCAB';
-  userName = 'dsdsfs';
+  userId = localStorage.getItem("gebruikerId");
+  userName = localStorage.getItem("name");
 
   if (userId == null || userName == null) {
     window.location.pathname = "/index.html";
   } else {
-
     showUserName(userName);
 
     if (document.querySelector(".js-ronde-overzicht")) {
@@ -1019,4 +1012,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  //Listen to click logo -> go to home
+  listenToClickLogo();
+  pageChecker();
 });
