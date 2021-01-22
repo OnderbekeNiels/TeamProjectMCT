@@ -15,8 +15,10 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" x:Name="lblTotaalDeelnemers" VerticalOptions="Start" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="16" TextColor="#707070"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="btnRefresh" FontFamily="DIN2014-Bold" VerticalOptions="Start" HorizontalOptions="Center" FontSize="16" BorderRadius="20" Margin="16,16,16,12" Text="Refresh" BackgroundColor="White" TextColor="#b22222" BorderWidth="1" BorderColor="#b22222" Padding="0"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="btnRefresh" FontFamily="DIN2014-Bold" VerticalOptions="Start" HorizontalOptions="Center" FontSize="16" BorderRadius="20" Margin="16,16,16,12" Text="Refresh" BackgroundColor="White" TextColor="#015D99" BorderWidth="1" BorderColor="#015D99" Padding="0"/>
 
+            
+            
             <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwDeelnemers" RowHeight="50" Margin="0,16,0,0" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -27,9 +29,9 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    
-                                    <Label Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding Nummer}' TextColor="#B22222" FontSize="16"/>
-                                    <Label Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding GebruikersNaam}' TextColor="#B22222" FontSize="16"/>
+
+                                    <Label Grid.Column="0" Grid.Row="0" x:Name="lblPlaats" HorizontalOptions="Center" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding Nummer}' TextColor='{Binding Kleur}' FontSize="16"/>
+                                    <Label Grid.Column="1" Grid.Row="0" x:Name="lblNaam" HorizontalOptions="Center" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding GebruikersNaam}' TextColor='{Binding Kleur}' FontSize="16"/>
                                     
                                 </Grid>
                             </Frame>

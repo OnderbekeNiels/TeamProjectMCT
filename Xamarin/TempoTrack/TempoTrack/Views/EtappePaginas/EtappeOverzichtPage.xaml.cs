@@ -69,6 +69,7 @@ namespace TempoTrack.Views.EtappePaginas
                 btnInviteAdmin.TextColor = fireRed;
                 btnInviteAdmin.BorderColor = fireRed;
                 btnVerwijder.BackgroundColor = fireRed;
+                lblNoData.TextColor = fireRed;
 
                 //UserControls niet tonen
                 btnStoppen.IsVisible = false;
@@ -331,7 +332,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void BtnDeelnemers_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new DeelnemersOverzichtPage(RondeInfo.RondeId));
+            Navigation.PushAsync(new DeelnemersOverzichtPage(RondeInfo, GebruikersInfo));
         }
 
         private void checkConnectivity()
