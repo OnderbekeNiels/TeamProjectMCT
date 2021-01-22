@@ -167,6 +167,15 @@ const listenToClickGraphButton = function () {
   });
 };
 
+const listenToClickGraphButtonAdmin = function () {
+  const btn = document.querySelector(".js-graph-button");
+  btn.addEventListener("click", function () {
+    window.location.href = `etappe_grafiek_admin.html?etappeId=${this.getAttribute(
+      "data-etappeId"
+    )}`;
+  });
+};
+
 const listenToClickLogo = function () {
   const logo = document.querySelector(".js-header-logo");
   let destination = "ronde_overzicht.html"
@@ -512,6 +521,7 @@ const showEtappeInfo = function (data) {
       ((3600 / data.totaalTijd) * data.afstand + Number.EPSILON) * 100
     ) / 100
   } KM/U`;
+  localStorage.setItem("rondeNaam", data.rondeNaam);
   etappeName.innerText = `${data.rondeNaam} - ${localStorage.getItem(
     "etappeTitle"
   )}`;
@@ -607,6 +617,95 @@ const showEtappeUserChartData = function (data) {
   hideLoader();
   let speedChart = new Chart(ctx, config);
   
+};
+
+const showEtappeAdminChartData = function (data) {
+  let converted_labels = [];
+  let converted_data = [];
+  for (const item of data) {
+    converted_labels.push(item.lapNummer);
+    converted_data.push(item.tijdLap);
+  }
+
+  let ctx = document.querySelector(".js-etappe-chart").getContext("2d");
+
+  let config = {
+    type: "line",
+    data: {
+      labels: converted_labels,
+      datasets: [
+        {
+          label: "seconden",
+          backgroundColor: "#016fb7",
+          borderColor: "#016fb7",
+          data: converted_data,
+          pointRadius: 3,
+          pointHoverRadius: 8,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      title: {
+        display: true,
+        text: "Afgewerkte rondes",
+      },
+      tooltips: {
+        mode: "index",
+        intersect: true,
+      },
+      hover: {
+        mode: "nearest",
+        intersect: true,
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: "Rondes",
+            },
+          },
+        ],
+        yAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: "Ronde Tijd",
+            },
+              ticks : {
+                reverse : true
+            },
+            
+          },
+        ],
+      },
+    },
+  };
+  hideLoader();
+  let speedChart = new Chart(ctx, config);
+  
+};
+
+const showEtappeAdminData = function (data) {
+  const etappeInfo = document.querySelector(".js-etappe-info");
+  etappeInfo.innerHTML = `
+<div class="c-etappe-info-container__item">
+<p class="c-etappe-info-subtitle">Snelste rondetijd</p>
+<p class="c-etappe-info-data">${secToTimeNotation(data.snelsteLapTijd)}</p>
+</div>
+<div class="c-etappe-info-container__item">
+<p class="c-etappe-info-subtitle">Traagste rondetijd</p>
+<p class="c-etappe-info-data">${secToTimeNotation(data.traagsteLapTijd)}</p>
+</div>
+  `;
+  document.querySelector(".js-etappe-head").innerText = `${
+    localStorage.getItem("rondeNaam")
+  } - ${localStorage.getItem("etappeTitle")}`;
 };
 
 const hideLoader = function () {
@@ -745,6 +844,32 @@ const getEtappeUserChartData = async function (etappeId) {
   }
 };
 
+const getEtappeAdminData = async function (etappeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/etappe/times/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.table(data);
+    showEtappeAdminData(data);
+  } catch (error) {
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
+  }
+};
+
+const getEtappeAdminChartData = async function (etappeId) {
+  let endpoint = `https://temptrackingfunction.azurewebsites.net/api/info/admin/etappe/laptijden/users/${etappeId}?code=WJ/wMMoTjMGaF6AdEBO9gyjfMaODsitooxxbpAavwzUhEj4WcgrLqw==`;
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.table(data);
+    showEtappeAdminChartData(data);
+  } catch (error) {
+    console.error("An error occured, try again.", error);
+    alert("Er liep iets mis. Probeer opnieuw.");
+  }
+}
+
 //#endregion
 
 //#region *** Google Authentication ***
@@ -843,9 +968,13 @@ document.addEventListener("DOMContentLoaded", function () {
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
-        window.location.pathname = "/ronde_detail.html";
+        window.location.pathname = "/ronde_overzicht_admin.html";
       } else {
+        document
+          .querySelector(".js-graph-button")
+          .setAttribute("data-etappeId", etappeId);
         getEtappesRanking(etappeId);
+        listenToClickGraphButtonAdmin();
       }
     }
 
@@ -854,10 +983,22 @@ document.addEventListener("DOMContentLoaded", function () {
       let urlParams = new URLSearchParams(window.location.search);
       const etappeId = urlParams.get("etappeId");
       if (etappeId == null) {
-        window.location.pathname = "/ronde_detail.html";
+        window.location.pathname = "/ronde_overzicht.html";
       } else {
         getEtappeUserData(etappeId);
         getEtappeUserChartData(etappeId);
+      }
+    }
+
+    if (document.querySelector(".js-etappe-grafiek-admin")) {
+      showLoader();
+      let urlParams = new URLSearchParams(window.location.search);
+      const etappeId = urlParams.get("etappeId");
+      if (etappeId == null) {
+        window.location.pathname = "/ronde_overzicht_admin.html";
+      } else {
+        getEtappeAdminData(etappeId);
+        getEtappeAdminChartData(etappeId);
       }
     }
   }
