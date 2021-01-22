@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.InternetConnectivity;
 using TempoTrack.Views.RondePaginas;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -27,6 +28,7 @@ namespace TempoTrack.Views.Activity
 
         public ActivityPageAdmin(EtappesRonde parEtappe)
         {
+            checkConnectivity();
             InitializeComponent();
             btnStoppen.Clicked += BtnStoppen_Clicked; ;
 
@@ -71,6 +73,7 @@ namespace TempoTrack.Views.Activity
 
         private async Task StopEtappe()
         {
+            checkConnectivity();
             bool answer = await DisplayAlert("Etappe stoppen", "Bent u zeker dat u deze etappe wil stoppen? Doe dit enkel wanneer elke deelnemer klaar is met zijn etappe.", "JA", "NEE");
             if (answer)
             {
@@ -96,12 +99,12 @@ namespace TempoTrack.Views.Activity
             base.OnDisappearing();
         }
 
-
-
-
-
-
-
-        
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
+        }
     }
 }
