@@ -14,6 +14,8 @@ using TempoTrack.Repositories;
 using TempoTrack.Views.RondePaginas;
 using TempoTrack.Views.EtappePaginas;
 using TempoTrack.Views.Activity;
+using Xamarin.Essentials;
+using TempoTrack.Views.InternetConnectivity;
 
 namespace TempoTrack.Views.Login
 {
@@ -24,6 +26,7 @@ namespace TempoTrack.Views.Login
         public LoginPage()
         {
             InitializeComponent();
+            checkConnectivity();
             imgLogo.Source = ImageSource.FromResource("TempoTrack.Assets.Images.LogoOnboarding.png");
             imgGoogle.Source = ImageSource.FromResource("TempoTrack.Assets.Images.GoogleLogo.png");
 
@@ -34,6 +37,7 @@ namespace TempoTrack.Views.Login
 
         private void BtnLogin_Clicked(object sender, EventArgs e)
         {
+            checkConnectivity();
 
             //var authenticator = new OAuth2Authenticator
             //             (
@@ -114,6 +118,14 @@ namespace TempoTrack.Views.Login
         private void onAuthError(object sender, AuthenticatorErrorEventArgs e)
         {
             DisplayAlert("Google Authentication Error", e.Message, "OK");
+        }
+
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
         }
     }
 }
