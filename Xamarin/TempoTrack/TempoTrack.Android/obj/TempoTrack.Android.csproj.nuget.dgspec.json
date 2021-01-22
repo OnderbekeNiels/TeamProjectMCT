@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {}
+    "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {}
   },
   "projects": {
-    "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {
+    "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+        "projectUniqueName": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
         "projectName": "TempoTrack.Android",
-        "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+        "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
         "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
-        "outputPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
+        "outputPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid90": {
             "projectReferences": {
-              "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-                "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+              "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+                "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
               }
             }
           }
@@ -54,14 +54,14 @@
         }
       }
     },
-    "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+    "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectUniqueName": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "projectName": "TempoTrack",
-        "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
-        "outputPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
+        "outputPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

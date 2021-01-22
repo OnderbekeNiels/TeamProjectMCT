@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3zT9/qzZjaZj8y/ylzuHoA9wLwGPYHMcPj3oE74ZtFFoxIYAKTrDlMDSuEDGDxOe8oDE6tjmh9Ymz0uYlM6gyw==",
+  "dgSpecHash": "yRAId95gOa7S2FA4Q2G2ZV9royPAVZFIvmO6X7uZztRhsuW6NnpWFsRvprIaAsWov530+BLCiryXjYxdGQwZvg==",
   "success": true,
-  "projectFilePath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+  "projectFilePath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Xander\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.4\\microsoft.aspnet.webapi.client.5.2.4.nupkg.sha512",
     "C:\\Users\\Xander\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.1.0\\microsoft.aspnetcore.authentication.abstractions.2.1.0.nupkg.sha512",

@@ -23973,11 +23973,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+      "projectUniqueName": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
       "projectName": "TempoTrack.UWP",
-      "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+      "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
       "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
-      "outputPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
+      "outputPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -23999,8 +23999,8 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-              "projectPath": "D:\\project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+            "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
             }
           }
         }
