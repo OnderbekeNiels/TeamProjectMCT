@@ -697,7 +697,7 @@ const showEtappeAdminChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Ronde Tijd",
+              labelString: "Ronde Tijd In Seconden",
             },
             ticks: {
               reverse: true,
@@ -912,7 +912,7 @@ function signOut() {
 
 //#endregion
 
-const pageChecker = function(){
+const pageChecker = function () {
   // get userid and name from user:
   userId = localStorage.getItem("gebruikerId");
   userName = localStorage.getItem("name");
@@ -1012,7 +1012,7 @@ const pageChecker = function(){
       }
     }
   }
-}
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   //Listen to click logo -> go to home
