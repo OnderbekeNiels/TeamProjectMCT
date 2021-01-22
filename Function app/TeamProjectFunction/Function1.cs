@@ -940,12 +940,9 @@ namespace TeamProjectFunction
           [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{etappeId}")] HttpRequest req,
           ILogger log, Guid etappeId)
         {
-
-           
-
             try
             {
-                
+                CustomResponse customResponse = new CustomResponse();
                 string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
                 using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 {
@@ -955,18 +952,24 @@ namespace TeamProjectFunction
                         sqlCommand.Connection = sqlConnection;
                         sqlCommand.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
                         sqlCommand.Parameters.AddWithValue("@EtappeId", etappeId);
-
-
-
                         await sqlCommand.ExecuteNonQueryAsync();
 
-                        CustomResponse customResponse = new CustomResponse();
+                        List<Gebruiker> gebruikers = await GetDNFDeelnemers(etappeId, connectionString);
+
+                        foreach(Gebruiker g in gebruikers)
+                        {
+                            DisableDeelnemer(g.GebruikerId, connectionString);
+                        }
+
                         customResponse.Succes = true;
 
-                        return new OkObjectResult(customResponse);
-
                     }
+
                 }
+                return new OkObjectResult(customResponse);
+
+
+
             }
             catch (Exception ex)
             {
@@ -975,6 +978,53 @@ namespace TeamProjectFunction
                 return new BadRequestResult(); ;
             }
         }
+
+
+        public static async Task<List<Gebruiker>> GetDNFDeelnemers(Guid etappeId, string connString)
+        {
+            List<Gebruiker> gebruikers = new List<Gebruiker>();
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "select d.IsActief, l.GebruikerId, l.EtappeId from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId join Deelnemers as d on d.GebruikersId = g.GebruikersId and d.RondeId = r.RondeId where l.EtappeId = @etappeId group by l.GebruikerId, g.GebruikersNaam, l.EtappeId, e.Laps, d.IsActief having count(l.TijdLap) < e.Laps;";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@etappeId", etappeId);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Gebruiker data = new Gebruiker();
+                        data.GebruikerId = Guid.Parse(reader["GebruikerId"].ToString());
+                        gebruikers.Add(data);
+                    }
+                }
+            }
+            return gebruikers;
+        }
+
+        public static async Task<int> DisableDeelnemer(Guid userId, string connString)
+        {
+
+            int response = 0;
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    string sql = "update Deelnemers set IsActief = 0 where GebruikersId = @userId";
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                     response = await command.ExecuteNonQueryAsync();
+                }
+            }
+            return response;
+        }
+
 
 
         [FunctionName("AddLaptijd")]
