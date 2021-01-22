@@ -820,11 +820,13 @@ input:disabled {
   font-size: 1rem;
   line-height: 1.25;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .c-home__downloadBtn:hover {
   background-color: var(--global-color-neutral-x-light);
   color: var(--global-color-accent);
+  text-decoration: none;
 }
 
 .c-home__downloadBtn:active,
@@ -832,6 +834,7 @@ input:disabled {
   outline: none;
   border-color: var(--global-color-accent);
   box-shadow: 0 0 0 3px var(--global-color-accent);
+  text-decoration: none;
 }
 
 .c-home__foto-bron{
