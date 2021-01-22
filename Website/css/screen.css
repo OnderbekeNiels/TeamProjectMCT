@@ -820,7 +820,6 @@ input:disabled {
   font-size: 1rem;
   line-height: 1.25;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .c-home__downloadBtn:hover {
@@ -836,6 +835,20 @@ input:disabled {
   box-shadow: 0 0 0 3px var(--global-color-accent);
   text-decoration: none;
 }
+
+.c-home__downloadBtn-link{
+  text-decoration: none;
+}
+
+.c-home__downloadBtn-link:hover {
+  text-decoration: none;
+}
+
+.c-home__downloadBtn-link:active,
+.c-home__downloadBtn-link:focus {
+  text-decoration: none;
+}
+
 
 .c-home__foto-bron{
     font-size: 0.75rem;
