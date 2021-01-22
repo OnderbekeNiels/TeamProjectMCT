@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +17,7 @@ namespace TempoTrack.Views.RondePaginas
         private static Guid RondeId;
         public DeelnemersOverzichtPage(Guid rondeId)
         {
+            checkConnectivity();
             //Kleuren instellen voor navbar
             NavigationPage.SetHasBackButton(this, true);
             Color fireRed = Color.FromHex("#B22222");
@@ -33,6 +35,7 @@ namespace TempoTrack.Views.RondePaginas
 
         private async Task LoadDeelnemersAsync()
         {
+            checkConnectivity();
             int teller = 0;
             List<DeelnemersRonde> deelnemers = await RondeRepository.GetDeelnemersRonde(RondeId);
 
@@ -59,6 +62,14 @@ namespace TempoTrack.Views.RondePaginas
             lvwDeelnemers.ItemsSource = null;
             lblTotaalDeelnemers.Text = "";
             LoadDeelnemersAsync();
+        }
+
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
         }
     }
 }

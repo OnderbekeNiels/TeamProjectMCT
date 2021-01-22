@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.InternetConnectivity;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,6 +19,7 @@ namespace TempoTrack.Views.RondePaginas
         public CreateRondePage(GebruikerV2 gebruikersInfo)
         {
             InitializeComponent();
+            checkConnectivity();
             btnCreate.Clicked += btnCreate_cliked;
             GebruikersInfo = gebruikersInfo;
         }
@@ -46,6 +49,7 @@ namespace TempoTrack.Views.RondePaginas
 
         private async Task CreateRonde(Ronde ronde)
         {
+            checkConnectivity();
             Ronde rondeResponse = await RondeRepository.CreateRonde(ronde);
             //Controleren of de ronde correct is aangemaakt
             if (rondeResponse == null)
@@ -60,6 +64,13 @@ namespace TempoTrack.Views.RondePaginas
 
                 //Ronde aangemaakt doorgaan naar etappe pagina
                 Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
+            }
+        }
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
             }
         }
     }
