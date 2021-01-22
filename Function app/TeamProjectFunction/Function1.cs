@@ -1219,6 +1219,53 @@ namespace TeamProjectFunction
 
         }
 
+        [FunctionName("GetRondesAdmin")]
+        public static async Task<IActionResult> GetRondesAdmin(
+[HttpTrigger(AuthorizationLevel.Admin, "get", Route = "site/admin/rondes/{UserId}")] HttpRequest req, Guid UserId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<RondesAdmin> rondes = new List<RondesAdmin>();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select r.RondeId, r.Naam as 'RondeNaam', r.Admin, r.StartDatum, Count(e.EtappeId) as 'AantalEtappes' from Rondes as r left join Gebruikers as g on g.GebruikersId = r.Admin left join Etappes as e on e.RondeId = r.RondeId where r.Admin = @userId and e.IsActief = 0 group by r.RondeId, r.Naam, r.Admin, r.StartDatum order by r.StartDatum desc;";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", UserId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            RondesAdmin data = new RondesAdmin();
+                            data.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            data.RondeNaam = reader["RondeNaam"].ToString();
+                            data.Admin = Guid.Parse(reader["Admin"].ToString());
+                            data.StartDatum = DateTime.Parse(reader["StartDatum"].ToString());
+                            data.AantalEtappes = int.Parse(reader["AantalEtappes"].ToString());                          
+
+                            rondes.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(rondes);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
+
+
+
         //Toont alle rondes van een gebruiker, telt enkel de niet actieve etappes mee - voor website
         [FunctionName("GetRondesUserSite")]
         public static async Task<IActionResult> GetRondesUserSite(
@@ -1368,6 +1415,63 @@ namespace TeamProjectFunction
 
         }
 
+        [FunctionName("GetEtappesRondeAdmin")]
+        public static async Task<IActionResult> GetEtappesRondeAdmin(
+        [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "site/admin/ronde/etappes/{RondeId}")] HttpRequest req, Guid RondeId, ILogger log)
+        {
+            try
+            {
+                string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+                List<EtappesRonde> etappes = new List<EtappesRonde>();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "select r.RondeId,r.Naam as 'RondeNaam',e.EtappeId, e.Laps, e.StartTijd, e.LapAfstand, r.Admin, e.IsActief as 'EtappeActief' from Rondes as r left join Etappes as e on r.RondeId = e.RondeId where e.RondeId = @rondeId and e.IsActief = 0 group by r.RondeId, r.Naam, e.Laps, e.EtappeId, e.StartTijd, e.LapAfstand, r.Admin, e.IsActief order by e.StartTijd desc;";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@rondeId", RondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            EtappesRonde data = new EtappesRonde();
+                            data.RondId = Guid.Parse(reader["RondeId"].ToString());
+                            data.EtappeId = Guid.Parse(reader["EtappeId"].ToString());
+                            data.Laps = int.Parse(reader["Laps"].ToString());
+                            data.StartTijd = DateTime.Parse(reader["StartTijd"].ToString());
+                            data.LapAfstand = double.Parse(reader["LapAfstand"].ToString());
+                            data.Admin = Guid.Parse(reader["Admin"].ToString());
+                            data.EtappeActief = bool.Parse(reader["EtappeActief"].ToString());
+                            data.RondeNaam = reader["RondeNaam"].ToString();
+
+                            //Ophalen andere query die per ronde de totaaltijd in een ronde ophaalt. Zo kunnen we per ronde van de gebruiker ook zijn tijd en positie weergeven.
+
+                            List<EtappesRonde> etappeKlassement = await GetEtappeKlassement(data.EtappeId, connectionString);
+                            EtappesRonde obj = etappeKlassement.FirstOrDefault();
+
+                            if (obj != null)
+                            {
+                                data.SnelsteTijd = obj.TotaalTijd;
+                            }
+
+                            etappes.Add(data);
+                        }
+                    }
+                }
+                return new OkObjectResult(etappes);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+                return new BadRequestResult();
+            }
+
+        }
+
         public static async Task<List<EtappesRonde>> GetEtappeKlassement(Guid EtappeId, string connString)
         {
             List<EtappesRonde> etappeKlassement = new List<EtappesRonde>();
@@ -1436,7 +1540,7 @@ namespace TeamProjectFunction
 
         //}
 
-        //Tijden van snelts naar traag van een bepaalde ronde - nog niet gefilterd op deelnemers isactief !!!
+        
         [FunctionName("GetKlassementRonde")]
         public static async Task<IActionResult> GetKlassementRonde(
         [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "klassement/rondes/{rondeId}")] HttpRequest req, Guid rondeId, ILogger log)
