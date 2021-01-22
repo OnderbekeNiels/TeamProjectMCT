@@ -636,13 +636,12 @@ const showEtappeAdminChartData = function (data) {
     lapNummers.push(item.lapNummer)
   }
 
-  const lineColors = ['#009E00', '#9A00FF', '#0088FF' , '#FFBC03', '#B22222']
+  const lineColors = ['#FFC145', '#5B5F97', '#EA4200', '#00B8DB', '#2FB760']
 
   let dataObjects = [];
   let counter = 0;
   for(let item of data)
   {
-    counter++;
     var obj = {
       label: `${item.gebruikersNaam.toUpperCase()}`,
       borderColor: lineColors[counter],
@@ -650,7 +649,7 @@ const showEtappeAdminChartData = function (data) {
       fill: false,
       data: getLapTijden(item.lapTijden),
     }
-
+    counter++;
     dataObjects.push(obj)
   }
 
@@ -669,7 +668,7 @@ const showEtappeAdminChartData = function (data) {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: "Afgewerkte rondes",
+        text: "Afgewerkte rondes van de top 5",
       },
       tooltips: {
         mode: "index",
