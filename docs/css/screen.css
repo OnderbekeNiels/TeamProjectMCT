@@ -1131,7 +1131,7 @@ input:disabled {
 }
 
 .u-hide-pointer {
-  cursor: none;
+  cursor: default;
 }
 
 /*
