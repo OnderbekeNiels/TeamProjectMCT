@@ -55,6 +55,7 @@ namespace TempoTrack.Views.RondePaginas
         //De rondes ophalen van een bepaalde gebruiker
         private async Task LoadRondesAsync(Guid gebruikerId)
         {
+            checkConnectivity();
             List<RondesGebruiker> rondesGebruiker = await RondeRepository.GetRondesGebruiker(gebruikerId);
 
             if(rondesGebruiker == null || rondesGebruiker.Count == 0)
