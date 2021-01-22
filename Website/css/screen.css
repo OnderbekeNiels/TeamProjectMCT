@@ -302,21 +302,18 @@ hr {
 }
 
 a {
-  transition: all var(--transition-alpha);
-  color: var(--color-alpha);
-  outline-color: var(--color-alpha);
+  color: var(--global-color-alpha-xx-light);
+  outline-color: var(--global-color-accent);
   outline-width: medium;
   outline-offset: 2px;
 }
 
-a:visited,
-a:active {
-  color: var(--color-alpha);
+a:visited {
+  color: var(--global-color-alpha);
 }
 
-a:hover,
-a:focus {
-  color: var(--color-alpha-light);
+a:hover, a:active {
+  color: var(--global-color-alpha);
 }
 
 label,
@@ -828,9 +825,14 @@ input:disabled {
   text-decoration: none;
 }
 
+.c-home__downloadBtn:hover a{
+  color: var(--global-color-alpha);
+}
+
 .c-home__downloadBtn:active,
 .c-home__downloadBtn:focus {
   outline: none;
+  color: var(--global-color-accent);
   border-color: var(--global-color-accent);
   box-shadow: 0 0 0 3px var(--global-color-accent);
   text-decoration: none;
