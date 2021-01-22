@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.InternetConnectivity;
 using TempoTrack.Views.RondePaginas;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -217,6 +218,7 @@ namespace TempoTrack.Views.Activity
 
         private async Task SaveEtappeAsync()
         {
+            checkConnectivity();
             //Scherm mag uit gaan want er zijn geen berekeningen en while loops meer
             DeviceDisplay.KeepScreenOn = false;
             await DisplayAlert("Etappe afgewerkt", "U heeft deze etappe afgewerkt, deze wordt nu opgeslagen en verwerkt. U wordt doorgestuurd naar de etappe pagina bij succes.", "SLUITEN");
@@ -262,6 +264,7 @@ namespace TempoTrack.Views.Activity
 
         private async Task OpgevenRonde()
         {
+            checkConnectivity();
             //pop up zodat we zeker zijn of de deelnemer wil stoppen met zijn etappe
             bool answer = await DisplayAlert("Opgepast", "Als u nu stopt met deelnemen kan u volgende etappes niet meer meerijden. Bent u zeker dat u wil stoppen met deelnemen?", "Ja", "Nee");
             Console.WriteLine("Answer: " + answer);
@@ -318,6 +321,14 @@ namespace TempoTrack.Views.Activity
                 return null;
             }
         }
-        
+
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
+        }
+
     }
 }

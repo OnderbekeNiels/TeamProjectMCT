@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
+using TempoTrack.Views.InternetConnectivity;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +20,7 @@ namespace TempoTrack.Views.EtappePaginas
         private static GebruikerV2 GebruikersInfo { get; set; }
         public CreateEtappePage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
+            checkConnectivity();
             RondeInfo = rondeInfo;
             GebruikersInfo = gebruikersInfo;
 
@@ -53,6 +56,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void btnCreate_clicked(object sender, EventArgs e)
         {
+            checkConnectivity();
             var tijd = tpEtappe.Time;
             var datum = dpEtappe.Date;
             var newDate = datum.Year.ToString() + "-" + datum.Month.ToString() + "-" + datum.Day.ToString() + " " + tijd.ToString();
@@ -63,6 +67,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private async Task controleInput(DateTime date) 
         {
+            checkConnectivity();
             // controleren of opgegeven data niet in het verleden ligt
             if (date < DateTime.Now)
             {
@@ -103,6 +108,14 @@ namespace TempoTrack.Views.EtappePaginas
                 }
             }
             //anders niets doen
+        }
+
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
         }
     }   
 }

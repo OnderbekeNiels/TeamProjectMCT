@@ -49,7 +49,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="lblNoData" Text="Geen etappes beschikbaar" VerticalOptions="Center" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="24" TextColor="#B22222" IsVisible="false"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="lblNoData" Text="Geen etappes beschikbaar" VerticalOptions="Center" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="24" TextColor="#015D99" IsVisible="false"/>
 
             <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwEtappesAdmin" RowHeight="50" Margin="0" SeparatorVisibility="None" IsVisible="false" >
                 <ListView.ItemTemplate>
