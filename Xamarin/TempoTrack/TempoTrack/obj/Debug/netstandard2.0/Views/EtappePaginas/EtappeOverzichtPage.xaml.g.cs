@@ -23,6 +23,9 @@ namespace TempoTrack.Views.EtappePaginas {
         private global::Xamarin.Forms.ListView lvwEtappes;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Xamarin.Forms.Label lblNoData;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.ListView lvwEtappesAdmin;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
@@ -60,6 +63,7 @@ namespace TempoTrack.Views.EtappePaginas {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(EtappeOverzichtPage));
             btnRefresh = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "btnRefresh");
             lvwEtappes = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.ListView>(this, "lvwEtappes");
+            lblNoData = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "lblNoData");
             lvwEtappesAdmin = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.ListView>(this, "lvwEtappesAdmin");
             grdUserStanding = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "grdUserStanding");
             lblRondePlaats = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "lblRondePlaats");

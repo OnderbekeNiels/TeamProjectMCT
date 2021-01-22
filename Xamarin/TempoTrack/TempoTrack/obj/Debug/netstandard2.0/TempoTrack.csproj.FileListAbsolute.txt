@@ -72,8 +72,6 @@ D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingKlassement.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingStart.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\CreateRondePage.xaml.g.cs
-D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
-D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\EtappePaginas\CreateEtappePage.xaml.g.cs
 D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\RondeOverzichtPage.xaml.g.cs
 C:\DP\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\EtappePaginas\CreateEtappePage.xaml.g.cs
@@ -110,3 +108,8 @@ C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
 C:\Xamarin\realone\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
+C:\DP\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\DeelnemersOverzichtPage.xaml.g.cs
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
+D:\Project\TeamProjectMCT\Xamarin\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp

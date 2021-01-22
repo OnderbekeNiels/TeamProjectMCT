@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {}
+    "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {}
   },
   "projects": {
-    "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {
+    "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+        "projectUniqueName": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
         "projectName": "TempoTrack.UWP",
-        "projectPath": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
-        "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-        "outputPath": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack.UWP\\obj\\",
+        "projectPath": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+        "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -19,7 +19,7 @@
           "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -33,8 +33,8 @@
         "frameworks": {
           "uap10.0.16299": {
             "projectReferences": {
-              "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-                "projectPath": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+              "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+                "projectPath": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
               }
             }
           }
@@ -87,21 +87,21 @@
         }
       }
     },
-    "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+    "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectUniqueName": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "projectName": "TempoTrack",
-        "projectPath": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
-        "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-        "outputPath": "C:\\Xamarin\\realone\\TempoTrack\\TempoTrack\\obj\\",
+        "projectPath": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "packagesPath": "C:\\Users\\robbe\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\robbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -171,7 +171,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

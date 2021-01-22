@@ -38,7 +38,7 @@ namespace TempoTrack.Models
             {
                 if (EtappeActief && StartTijd > DateTime.Now)
                 {
-                    return "#015D99";
+                    return "#b22222";
                 }
                 else
                 {

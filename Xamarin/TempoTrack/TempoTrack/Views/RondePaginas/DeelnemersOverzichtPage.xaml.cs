@@ -16,6 +16,12 @@ namespace TempoTrack.Views.RondePaginas
         private static Guid RondeId;
         public DeelnemersOverzichtPage(Guid rondeId)
         {
+            //Kleuren instellen voor navbar
+            NavigationPage.SetHasBackButton(this, true);
+            Color fireRed = Color.FromHex("#B22222");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
             RondeId = rondeId;
 
             InitializeComponent();
