@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
 using TempoTrack.Views.EtappePaginas;
+using TempoTrack.Views.InternetConnectivity;
 using TempoTrack.Views.Login;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -151,6 +153,14 @@ namespace TempoTrack.Views.RondePaginas
         private void btnCreate_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new CreateRondePage(GebruikersInfo));
+        }
+
+        private void checkConnectivity() 
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
         }
     }
 }
