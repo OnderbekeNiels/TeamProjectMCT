@@ -619,32 +619,51 @@ const showEtappeUserChartData = function (data) {
   
 };
 
-const showEtappeAdminChartData = function (data) {
-  let converted_labels = [];
-  let converted_data = [];
-  for (const item of data) {
-    converted_labels.push(item.lapNummer);
-    converted_data.push(item.tijdLap);
+
+const getLapTijden =function(data){
+  let listLapTijden = [];
+  for(let item of data){
+    listLapTijden.push(item.tijdLap);
   }
+  return listLapTijden;
+}
+
+const showEtappeAdminChartData = function (data) {
+
+  let lapNummers = [];
+  for(let item of data[0].lapTijden)
+  {
+    lapNummers.push(item.lapNummer)
+  }
+
+  const lineColors = ['#009E00', '#9A00FF', '#0088FF' , '#FFBC03', '#B22222']
+
+  let dataObjects = [];
+  let counter = 0;
+  for(let item of data)
+  {
+    counter++;
+    var obj = {
+      label: `${item.gebruikersNaam.toUpperCase()}`,
+      borderColor: lineColors[counter],
+      backgroundColor: lineColors[counter],
+      fill: false,
+      data: getLapTijden(item.lapTijden),
+    }
+
+    dataObjects.push(obj)
+  }
+
+  var lineChartData = {
+    labels: lapNummers,
+    datasets: dataObjects
+  };
 
   let ctx = document.querySelector(".js-etappe-chart").getContext("2d");
 
   let config = {
     type: "line",
-    data: {
-      labels: converted_labels,
-      datasets: [
-        {
-          label: "seconden",
-          backgroundColor: "#016fb7",
-          borderColor: "#016fb7",
-          data: converted_data,
-          pointRadius: 3,
-          pointHoverRadius: 8,
-          fill: false,
-        },
-      ],
-    },
+    data: lineChartData,
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -862,7 +881,6 @@ const getEtappeAdminChartData = async function (etappeId) {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.table(data);
     showEtappeAdminChartData(data);
   } catch (error) {
     console.error("An error occured, try again.", error);
@@ -903,7 +921,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // userId = localStorage.getItem("gebruikerId");
   // userName = localStorage.getItem("name");
 
-  userId = 'A7BC9D97-FE81-42AE-84FD-5FD8B0334755';
+  userId = 'E0944F6F-F304-494E-9F96-4ADDEA34FCAB';
   userName = 'dsdsfs';
 
   if (userId == null || userName == null) {
