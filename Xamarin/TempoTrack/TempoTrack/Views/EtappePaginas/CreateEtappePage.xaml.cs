@@ -56,6 +56,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void btnCreate_clicked(object sender, EventArgs e)
         {
+            checkConnectivity();
             var tijd = tpEtappe.Time;
             var datum = dpEtappe.Date;
             var newDate = datum.Year.ToString() + "-" + datum.Month.ToString() + "-" + datum.Day.ToString() + " " + tijd.ToString();
