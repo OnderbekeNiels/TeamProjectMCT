@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label FontAttributes="Bold" Text="Geef een ronde naam in" FontSize="24" TextColor="#015D99" Margin="16,8,0,0" />
-            <Entry x:Name="entRondeNaam" Placeholder="Ronde naam"  TextColor="Black" Margin="16,8,16,0" />
+            <Entry x:Name="entRondeNaam" Placeholder="Ronde naam"  TextColor="Black" PlaceholderColor="Gray" Margin="16,8,16,0" />
             <Button x:Name="btnCreate" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16" HeightRequest="40" Text="Ronde Aanmaken" BackgroundColor="#015D99" TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
