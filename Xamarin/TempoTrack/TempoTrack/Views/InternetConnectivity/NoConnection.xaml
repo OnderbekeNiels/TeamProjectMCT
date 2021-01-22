@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.InternetConnectivity.NoConnection">
+    <ContentPage.Content>
+        <StackLayout>
+                        
+            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+                <Label Text="Geen netwerk beschikbaar" FontSize="20" FontFamily="DIN2014-Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#016FB7"  Margin="40,0,40,0"/>
+                <Label Text="Gelieve te controleren of uw internet connectie aanstaat, we starten automatisch terug op." FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="32,0,32,32"/>
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

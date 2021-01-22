@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using TempoTrack.Models;
 using TempoTrack.Repositories;
 using TempoTrack.Views.Activity;
+using TempoTrack.Views.InternetConnectivity;
 using TempoTrack.Views.RondePaginas;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,6 +26,7 @@ namespace TempoTrack.Views.EtappePaginas
         private static int NavigationStackCount = 0;
         public EtappeOverzichtPage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
+            checkConnectivity();
             RondeInfo = rondeInfo;
             GebruikersInfo = gebruikersInfo;
 
@@ -131,6 +134,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void LoadTitle()
         {
+            checkConnectivity();
             if(RondeInfo.RondeNaam.Length >= 20)
             {
                 lblRondeNaam.FontSize = 16;
@@ -144,7 +148,8 @@ namespace TempoTrack.Views.EtappePaginas
 
         private async Task LoadEtappesAsync()
         {
-           List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(RondeInfo.RondeId, GebruikersInfo.GebruikerId);
+            checkConnectivity();
+            List<EtappesRonde> etappes = await EtappeRepository.GetEtappesRonde(RondeInfo.RondeId, GebruikersInfo.GebruikerId);
 
             if(etappes == null || etappes.Count == 0)
             {
@@ -190,6 +195,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private async Task RemoveSpelerRonde(Guid gebruikersId,Guid rondeId)
         {
+            checkConnectivity();
             //Een confirmatie vragen
             bool confirmatie = await DisplayAlert("Waarschuwing", "Ben je zeker dat je de ronde wilt verlaten?", "Ja", "Nee");
 
@@ -227,6 +233,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void BtnRefresh_Clicked(object sender, EventArgs e)
         {
+            checkConnectivity();
             lvwEtappes.ItemsSource = null;
             lblRondeTijd.Text = "";
             lblRondePlaats.Text = "";
@@ -237,7 +244,6 @@ namespace TempoTrack.Views.EtappePaginas
         private static async Task LoadRondesAsync(Guid rondeId, Xamarin.Forms.Label lblPlaats, Xamarin.Forms.Label lblTijd)
         {
             List<RondeKlassement> rondesKlassement = await RondeRepository.GetRondeKlassement(rondeId);
-
             foreach(RondeKlassement item in rondesKlassement)
             {
                 if(item.GebruikersId == GebruikersInfo.GebruikerId)
@@ -262,7 +268,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private async Task DeleteRondes(Guid rondeId)
         {
-
+            checkConnectivity();
             bool confirmatie = await DisplayAlert("Waarschuwing", "Ben je zeker dat je de ronde wilt verwijderen?", "Ja", "Nee");
 
             if(confirmatie == true)
@@ -326,6 +332,14 @@ namespace TempoTrack.Views.EtappePaginas
         private void BtnDeelnemers_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new DeelnemersOverzichtPage(RondeInfo.RondeId));
+        }
+
+        private void checkConnectivity()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            {
+                Navigation.PushModalAsync(new NoConnection());
+            }
         }
     }
 }
