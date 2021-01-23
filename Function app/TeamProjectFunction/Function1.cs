@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using TeamProjectFunction.Models.Klassement.Graph;
+using System.Diagnostics;
 
 namespace TeamProjectFunction
 {
@@ -935,11 +936,16 @@ namespace TeamProjectFunction
         }
 
 
+        // Zorgt ervoor dat een etappe op non actief wordt geplaatst en dat er gekeken wordt of er deelnemers van de ronde hun etappes hebben afgewerkt
         [FunctionName("StopEtappe")]
         public static async Task<IActionResult> StopEtappe(
-          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe/{etappeId}")] HttpRequest req,
-          ILogger log, Guid etappeId)
+          [HttpTrigger(AuthorizationLevel.Admin, "put", Route = "etappe")] HttpRequest req,
+          ILogger log)
         {
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+
+            bool succes = false;
             try
             {
                 CustomResponse customResponse = new CustomResponse();
@@ -950,25 +956,20 @@ namespace TeamProjectFunction
                     using (SqlCommand sqlCommand = new SqlCommand())
                     {
                         sqlCommand.Connection = sqlConnection;
-                        sqlCommand.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @EtappeId";
-                        sqlCommand.Parameters.AddWithValue("@EtappeId", etappeId);
+                        sqlCommand.CommandText = "UPDATE Etappes SET IsActief = 0 WHERE EtappeId = @etappeId";
+                        sqlCommand.Parameters.AddWithValue("@etappeId", etappe.EtappeId);
                         await sqlCommand.ExecuteNonQueryAsync();
 
-                        List<Gebruiker> gebruikers = await GetDNFDeelnemers(etappeId, connectionString);
+                        List<Deelnemer> deelnemers = await GetDeelnemersFromRonde(etappe.RondeId, connectionString);
 
-                        foreach(Gebruiker g in gebruikers)
-                        {
-                            DisableDeelnemer(g.GebruikerId, connectionString);
-                        }
+                        succes = await LapControleFromDeelnemer(deelnemers, etappe.EtappeId, connectionString);
 
-                        customResponse.Succes = true;
+                        customResponse.Succes = succes;
 
                     }
 
                 }
                 return new OkObjectResult(customResponse);
-
-
 
             }
             catch (Exception ex)
@@ -977,51 +978,116 @@ namespace TeamProjectFunction
                 Console.WriteLine($"Error: {ex}");
                 return new BadRequestResult(); ;
             }
+
         }
 
-
-        public static async Task<List<Gebruiker>> GetDNFDeelnemers(Guid etappeId, string connString)
-        {
-            List<Gebruiker> gebruikers = new List<Gebruiker>();
-            using (SqlConnection connection = new SqlConnection(connString))
+        //Haalt alle actieve deelnemers van een ronde op
+        public static async Task<List<Deelnemer>> GetDeelnemersFromRonde(Guid rondeId, string connString)
             {
-                await connection.OpenAsync();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    string sql = "select d.IsActief, l.GebruikerId, l.EtappeId from LapTijden as l join Gebruikers as g on g.GebruikersId = l.GebruikerId join Etappes as e on e.EtappeId = l.EtappeId join Rondes as r on r.RondeId = e.RondeId join Deelnemers as d on d.GebruikersId = g.GebruikersId and d.RondeId = r.RondeId where l.EtappeId = @etappeId group by l.GebruikerId, g.GebruikersNaam, l.EtappeId, e.Laps, d.IsActief having count(l.TijdLap) < e.Laps;";
-                    command.CommandText = sql;
-                    command.Parameters.AddWithValue("@etappeId", etappeId);
-                    SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.Read())
+                List<Deelnemer> deelnemers = new List<Deelnemer>();
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
                     {
-                        Gebruiker data = new Gebruiker();
-                        data.GebruikerId = Guid.Parse(reader["GebruikerId"].ToString());
-                        gebruikers.Add(data);
+                        command.Connection = connection;
+                        string sql = "select d.GebruikersId, g.GebruikersNaam, d.RondeId from Deelnemers as d join Rondes as r on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where d.RondeId = @rondeId and r.Admin != d.GebruikersId and d.IsActief = 1 group by d.GebruikersId, g.GebruikersNaam, d.RondeId;";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@rondeId", rondeId);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Deelnemer data = new Deelnemer();
+                            data.GebruikerId = Guid.Parse(reader["GebruikersId"].ToString());
+                            data.RondeId = Guid.Parse(reader["RondeId"].ToString());
+                            deelnemers.Add(data);
+                        }
+                    }
+                }
+                return deelnemers;
+            }
+
+        //Controleert of de deelnemers al hun laps hebben afgewerkt binnen de etappe
+        public static async Task<bool> LapControleFromDeelnemer(List<Deelnemer> deelnemers, Guid etappeId, string connString)
+        {
+            bool succes = false;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    await connection.OpenAsync();
+
+                    foreach (Deelnemer d in deelnemers)
+                    {
+                        using (SqlCommand command = new SqlCommand())
+                        {
+                            command.Connection = connection;
+                            string sql = "select count(l.LapTijdId) as 'AantalRegistraties', e.Laps from LapTijden as l join etappes as e on e.EtappeId = l.EtappeId where e.EtappeId = @etappeId and l.GebruikerId = @userId group by e.Laps;";
+                            command.CommandText = sql;
+                            command.Parameters.AddWithValue("@etappeId", etappeId);
+                            command.Parameters.AddWithValue("@userId", d.GebruikerId);
+
+                            SqlDataReader reader = command.ExecuteReader();
+
+                            if (!reader.HasRows)
+                            {
+                                DisableDeelnemer(d.GebruikerId, d.RondeId, connString);
+                            }
+                            else
+                            {
+                                LapControle controle = new LapControle();
+                                while (reader.Read())
+                                {
+                                    controle.AantalRegistarties = int.Parse(reader["AantalRegistraties"].ToString());
+                                    controle.Laps = int.Parse(reader["Laps"].ToString());
+                                }
+
+                                if (controle.Laps > controle.AantalRegistarties)
+                                {
+                                    DisableDeelnemer(d.GebruikerId, d.RondeId, connString);
+                                }
+                            }
+                        }
+                    }
+                }
+                succes = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message); 
+            }
+
+            return succes;
+
+        }
+       
+        //Zet de deelnemers die de etappes niet volledig hebben afgewerkt op non actief
+        public static async Task<int> DisableDeelnemer(Guid userId, Guid rondeId, string connString)
+        {
+            int response = 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        string sql = "update Deelnemers set IsActief = 0 where GebruikersId = @userId and rondeId = @rondeId";
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@rondeId", rondeId);
+                        response = await command.ExecuteNonQueryAsync();
                     }
                 }
             }
-            return gebruikers;
-        }
-
-        public static async Task<int> DisableDeelnemer(Guid userId, string connString)
-        {
-
-            int response = 0;
-            using (SqlConnection connection = new SqlConnection(connString))
+            catch (Exception ex)
             {
-                await connection.OpenAsync();
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    string sql = "update Deelnemers set IsActief = 0 where GebruikersId = @userId";
-                    command.CommandText = sql;
-                    command.Parameters.AddWithValue("@userId", userId);
-
-                     response = await command.ExecuteNonQueryAsync();
-                }
+                Debug.WriteLine(ex.Message);
             }
+            
             return response;
         }
 
@@ -1067,8 +1133,6 @@ namespace TeamProjectFunction
                             sqlCommandInsert.Parameters.AddWithValue("@GebruikerId", lapTijd.GebruikerId);
                             sqlCommandInsert.Parameters.AddWithValue("@TijdLap", lapTijd.TijdLap);
                             sqlCommandInsert.Parameters.AddWithValue("@LapNummer", lapTijd.LapNummer);
-
-
 
                             await sqlCommandInsert.ExecuteNonQueryAsync();
 
@@ -1185,8 +1249,8 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        command.CommandText = "select d.GebruikersId, g.GebruikersNaam from Rondes as r join Deelnemers as d on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where r.RondeId = @RondeId";
-                        command.Parameters.AddWithValue("@RondeId", RondeId);
+                        command.CommandText = "select d.GebruikersId, g.GebruikersNaam from Deelnemers as d join Rondes as r on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where d.RondeId = @rondeId and r.Admin != d.GebruikersId group by d.GebruikersId, g.GebruikersNaam;";
+                        command.Parameters.AddWithValue("@rondeId", RondeId);
                         SqlDataReader reader = command.ExecuteReader();
 
                         while (reader.Read())
@@ -1332,7 +1396,7 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 and e.IsActief = 0 group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
+                        string sql = "select g.GebruikersId,r.Admin, r.InviteCode, r.RondeId, r.Naam as 'RondeNaam', r.StartDatum, count(e.etappeId) as 'AantalEtappes' from  Gebruikers as g join Deelnemers as d on d.GebruikersId = g.GebruikersId join Rondes as r on r.RondeId = d.RondeId left join Etappes as e on e.RondeId = r.RondeId where d.GebruikersId = @userId and d.IsActief = 1 and e.IsActief = 0 and r.Admin != @userId group by g.GebruikersId, r.Admin, g.GebruikersNaam, g.Email, r.RondeId, r.Naam, r.StartDatum, r.InviteCode order by r.StartDatum desc";
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("@userId", UserId);
                         SqlDataReader reader = command.ExecuteReader();
