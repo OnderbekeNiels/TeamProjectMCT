@@ -46,7 +46,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Grid.Row="1" Grid.ColumnSpan="2" x:Name="lblNoData" Text="Geen rondes beschikbaar" VerticalOptions="Center" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="24" TextColor="#015D99" IsVisible="false"/>
+            <Label Grid.Row="1" x:Name="lblNoData" Text="Geen rondes beschikbaar" VerticalOptions="Center" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="24" TextColor="#015D99" IsVisible="false"/>
 
             <Button Grid.Row ="2" Grid.ColumnSpan="2" x:Name="btnCreate" FontFamily="DIN2014-Bold" VerticalOptions="EndAndExpand" FontSize="16" BorderRadius="20" Margin="16,0,16,0" HeightRequest="40" Text="Ronde Aanmaken" BackgroundColor="White" TextColor="#016FB7" BorderWidth="1" BorderColor="#016FB7"/>
 

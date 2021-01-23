@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 ec83f9ce-eba4-4d90-84a2-293e3df320be
-=======
-ffbf8489-d02b-4a02-ba1a-7d980fe48d85
->>>>>>> APPAddIcon
