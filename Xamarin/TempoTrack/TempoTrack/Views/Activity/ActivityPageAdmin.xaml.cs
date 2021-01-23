@@ -36,12 +36,9 @@ namespace TempoTrack.Views.Activity
 
             
             etappe = parEtappe;
-            isNotStarted = true;
+            lblTotalTimeFixed.Text = "Tijd voor de start";
             this.Title = etappe.EtappeNaam;
             btnStoppen.IsEnabled = false;
-
-            Device.StartTimer(TimeSpan.FromSeconds(1), TimeFromStartTimer);
-
         }
 
         private void BtnStoppen_Clicked(object sender, EventArgs e)
@@ -51,9 +48,15 @@ namespace TempoTrack.Views.Activity
 
         private bool TimeFromStartTimer()
         {
-            lblTotalTimeFixed.Text = "Tijd voor de start";
             if (DateTime.Now >= etappe.StartTijd)
             {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    lblTotalTimeFixed.Text = "Duratie Etappe";
+                    btnStoppen.IsEnabled = true;
+                });
+
+                isNotStopped = true;
                 Device.StartTimer(TimeSpan.FromSeconds(1), TimeSinceStartTimer);
                 isNotStarted = false;
             }
@@ -70,9 +73,11 @@ namespace TempoTrack.Views.Activity
 
         private bool TimeSinceStartTimer()
         {
-            lblTotalTimeFixed.Text = "Duratie Etappe";
-            TimeSpan timeSinceStart = DateTime.Now - etappe.StartTijd;
-            lblTotalTime.Text = $"{timeSinceStart.ToString(@"hh\:mm\:ss")}";
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                TimeSpan timeSinceStart = DateTime.Now - etappe.StartTijd;
+                lblTotalTime.Text = $"{timeSinceStart.ToString(@"hh\:mm\:ss")}";
+            });
 
             return isNotStopped;
         }
@@ -106,6 +111,13 @@ namespace TempoTrack.Views.Activity
             isNotStarted = false;
             isNotStopped = false;
             base.OnDisappearing();
+        }
+
+        protected override void OnAppearing()
+        {
+            isNotStarted = true;
+            Device.StartTimer(TimeSpan.FromSeconds(1), TimeFromStartTimer);
+            base.OnAppearing();
         }
 
         private void checkConnectivity()

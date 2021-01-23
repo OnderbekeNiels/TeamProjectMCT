@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {}
+    "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {}
   },
   "projects": {
-    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {
+    "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+        "projectUniqueName": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
         "projectName": "TempoTrack.UWP",
-        "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
+        "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.UWP\\TempoTrack.UWP.csproj",
         "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-        "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.UWP\\obj\\",
+        "outputPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.UWP\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -33,8 +33,8 @@
         "frameworks": {
           "uap10.0.16299": {
             "projectReferences": {
-              "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-                "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+              "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+                "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
               }
             }
           }
@@ -87,14 +87,14 @@
         }
       }
     },
-    "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+    "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectUniqueName": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "projectName": "TempoTrack",
-        "projectPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
+        "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj",
         "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-        "outputPath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\obj\\",
+        "outputPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
