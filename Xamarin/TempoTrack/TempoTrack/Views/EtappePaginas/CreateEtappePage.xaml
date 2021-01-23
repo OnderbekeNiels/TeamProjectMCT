@@ -37,8 +37,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="Start" FontFamily="DIN2014-Regular" FontSize="16" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="#707070" />
-                <DatePicker x:Name="dpEtappe" HorizontalOptions="End" Grid.Column="1" />
-                <TimePicker x:Name="tpEtappe" HorizontalOptions="End"  Grid.Column="2" />
+                <DatePicker x:Name="dpEtappe" TextColor="#B22222" HorizontalOptions="End" Grid.Column="1" />
+                <TimePicker x:Name="tpEtappe" TextColor="#B22222" HorizontalOptions="End"  Grid.Column="2" />
             </Grid>
             <Frame BackgroundColor="#929292" HeightRequest="0.5" Padding="0" Margin="16,0,16,0" />
 

@@ -44,7 +44,7 @@ namespace TempoTrack.Views.RondePaginas
 
         private async Task PopUpError()
         {
-            await DisplayAlert("Foutmedling", "Gelieve een ronde naam in te vullen", "OK");
+            await DisplayAlert("Foutmelding", "Gelieve een ronde naam in te vullen", "OK");
         }
 
         private async Task CreateRonde(Ronde ronde)
@@ -55,7 +55,7 @@ namespace TempoTrack.Views.RondePaginas
             if (rondeResponse == null)
             {
                 //Foutmelding
-                await DisplayAlert("Foutmedling", "Er is iets foutgelopen bij het aanmaken van de ronde", "OK");
+                await DisplayAlert("Foutmelding", "Er is iets foutgelopen bij het aanmaken van de ronde", "OK");
             }
             else 
             {
