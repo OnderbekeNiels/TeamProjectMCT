@@ -85,7 +85,9 @@ namespace TempoTrack.Views.RondePaginas
             }
 
             lvwRondes.ItemsSource = rondesGebruiker;
-            lvwRondes.EndRefresh();
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => lvwRondes.EndRefresh());
+
+
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
