@@ -124,11 +124,11 @@ namespace TempoTrack.Views.RondePaginas
 
                 if (deelnemerResponse == null)
                 {
-                    await DisplayAlert("Foutmedling", "Geen verbinding met de servers.", "OK");
+                    await DisplayAlert("Foutmelding", "Geen verbinding met de servers.", "OK");
                 }
                 else
                 {
-                    if (deelnemerResponse.RondeId != null)
+                    if (deelnemerResponse.RondeId != null && deelnemerResponse.RondeId != Guid.Empty)
                     {
                         await DisplayAlert("Succes", "Je doet nu mee aan de ronde", "OK");
                         //doorsturen naar ronde pagina
@@ -136,7 +136,7 @@ namespace TempoTrack.Views.RondePaginas
                     }
                     else
                     {
-                        await DisplayAlert("Foutmedling", deelnemerResponse.Message, "OK");
+                        await DisplayAlert("Foutmelding", deelnemerResponse.Message, "OK");
                     }
 
 
@@ -146,7 +146,7 @@ namespace TempoTrack.Views.RondePaginas
             else
             {
                 //Code kan maar 8 tekens lang zijn
-                await DisplayAlert("Foutmedling", "Foute invite code", "OK");
+                await DisplayAlert("Foutmelding", "Foute invite code", "OK");
             }
         }
 
