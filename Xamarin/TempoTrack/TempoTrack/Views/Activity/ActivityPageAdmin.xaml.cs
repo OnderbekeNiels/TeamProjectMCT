@@ -22,7 +22,9 @@ namespace TempoTrack.Views.Activity
 
         EtappesRonde etappe;
 
-        bool isOnPage;
+        bool isNotStarted;
+
+        bool isNotStopped;
 
         #endregion
 
@@ -34,12 +36,9 @@ namespace TempoTrack.Views.Activity
 
             
             etappe = parEtappe;
-            isOnPage = true;
+            lblTotalTimeFixed.Text = "Tijd voor de start";
             this.Title = etappe.EtappeNaam;
             btnStoppen.IsEnabled = false;
-
-            Device.StartTimer(TimeSpan.FromSeconds(1), PageTimer);
-
         }
 
         private void BtnStoppen_Clicked(object sender, EventArgs e)
@@ -47,29 +46,42 @@ namespace TempoTrack.Views.Activity
             StopEtappe();
         }
 
-        private bool PageTimer()
+        private bool TimeFromStartTimer()
         {
-            if(DateTime.Now >= etappe.StartTijd)
+            if (DateTime.Now >= etappe.StartTijd)
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    TimeSpan timeSinceStart = DateTime.Now - etappe.StartTijd;
                     lblTotalTimeFixed.Text = "Duratie Etappe";
-                    lblTotalTime.Text = $"{timeSinceStart.ToString(@"hh\:mm\:ss")}";
                     btnStoppen.IsEnabled = true;
                 });
+
+                isNotStopped = true;
+                Device.StartTimer(TimeSpan.FromSeconds(1), TimeSinceStartTimer);
+                isNotStarted = false;
             }
             else
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     TimeSpan timeToGo = etappe.StartTijd - DateTime.Now;
-                    lblTotalTimeFixed.Text = "Tijd voor de start";
                     lblTotalTime.Text = $"{timeToGo.ToString(@"hh\:mm\:ss")}";
                 });
             }
-            return isOnPage;
+            return isNotStarted;
         }
+
+        private bool TimeSinceStartTimer()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                TimeSpan timeSinceStart = DateTime.Now - etappe.StartTijd;
+                lblTotalTime.Text = $"{timeSinceStart.ToString(@"hh\:mm\:ss")}";
+            });
+
+            return isNotStopped;
+        }
+
 
         private async Task StopEtappe()
         {
@@ -78,10 +90,11 @@ namespace TempoTrack.Views.Activity
             if (answer)
             {
                 // API CALL ETAPPE NIET ACTIEF ZETTEN
-                bool succes = await EtappeRepository.StopEtappe(etappe.EtappeId);
+                bool succes = await EtappeRepository.StopEtappe(etappe);
                 if (succes)
                 {
                     DisplayAlert("Etappe gestopt", "U heeft deze etappe beeïndigd", "OKE");
+                    isNotStopped = false;
                     Navigation.PopAsync();
                 }
                 else
@@ -95,8 +108,16 @@ namespace TempoTrack.Views.Activity
         protected override void OnDisappearing()
         {
             //Alle checks afzetten.
-            isOnPage = false;
+            isNotStarted = false;
+            isNotStopped = false;
             base.OnDisappearing();
+        }
+
+        protected override void OnAppearing()
+        {
+            isNotStarted = true;
+            Device.StartTimer(TimeSpan.FromSeconds(1), TimeFromStartTimer);
+            base.OnAppearing();
         }
 
         private void checkConnectivity()

@@ -4701,24 +4701,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jelle\\.nuget\\packages\\": {},
+    "C:\\Users\\niels\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "projectUniqueName": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
       "projectName": "TempoTrack.Android",
-      "projectPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
-      "packagesPath": "C:\\Users\\jelle\\.nuget\\packages\\",
-      "outputPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
+      "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
+      "outputPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\jelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -4732,8 +4732,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-            "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-              "projectPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+            "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
             }
           }
         }

@@ -434,7 +434,23 @@ const showEtappesAdmin = function (data) {
     }
     for (const item of data) {
       if (item.etappeActief != true) {
-        htmlString += `
+        if (item.snelsteTijd == 0) {
+          htmlString += `
+        <div class="c-ranking-table__row" data-etappeId='${
+          item.etappeId
+        }' data-etappeTitle='Etappe ${aantalEtappes}'>
+      <p class="c-ranking-table__row-item u-flex-basis-1-of-3">
+      ${datetimeToDateNotation(item.startTijd)}
+      </p>
+      <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left   u-flex-basis-1-of-3">Etappe 
+      ${aantalEtappes}
+      </p>
+      <p class="c-ranking-table__row-item u-flex-basis-1-of-3 u-mr-clear">
+      Afgelast
+      </p>
+    </div>`;
+        } else {
+          htmlString += `
       <div class="c-ranking-table__row js-etappes-table-row u-show-pointer" data-etappeId='${
         item.etappeId
       }' data-etappeTitle='Etappe ${aantalEtappes}'>
@@ -448,6 +464,7 @@ const showEtappesAdmin = function (data) {
     ${secToTimeNotation(item.snelsteTijd)}
     </p>
   </div>`;
+        }
         aantalEtappes--;
       }
     }

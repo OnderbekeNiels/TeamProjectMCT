@@ -140,14 +140,15 @@ namespace TempoTrack.Repositories
             }
         }
 
-        public static async Task<bool> StopEtappe(Guid etappeId)
+        public static async Task<bool> StopEtappe(EtappesRonde etappe)
         {
-            string url = $"{_BASEURI}/etappe/{etappeId}?code={_FUNCTIONKEY}";
+            string url = $"{_BASEURI}/etappe?code={_FUNCTIONKEY}";
             using (HttpClient client = GetHttpClient())
             {
                 try
                 {
-                    HttpContent content = null;
+                    string json = JsonConvert.SerializeObject(etappe);
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await client.PutAsync(url, content);
 
                     if (response.IsSuccessStatusCode)
