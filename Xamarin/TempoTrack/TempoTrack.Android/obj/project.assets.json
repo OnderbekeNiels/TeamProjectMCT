@@ -4701,24 +4701,40 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\jelle\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\Xander\\.nuget\\packages\\": {},
+>>>>>>> APPAddIcon
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
       "projectName": "TempoTrack.Android",
       "projectPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
       "packagesPath": "C:\\Users\\jelle\\.nuget\\packages\\",
       "outputPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
+=======
+      "projectUniqueName": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "projectName": "TempoTrack.Android",
+      "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
+      "outputPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
+>>>>>>> APPAddIcon
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\jelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\Xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> APPAddIcon
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -4732,8 +4748,13 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
               "projectPath": "C:\\DP\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+=======
+            "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "D:\\project\\backup\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+>>>>>>> APPAddIcon
             }
           }
         }

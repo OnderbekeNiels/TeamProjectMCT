@@ -5,7 +5,11 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+<<<<<<< HEAD
     <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\jelle\.nuget\packages\;C:\Microsoft\Xamarin\NuGet\;C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\</NuGetPackageFolders>
+=======
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Xander\.nuget\packages\;C:\Microsoft\Xamarin\NuGet\;C:\Program Files (x86)\Microsoft SDKs\UWPNuGetPackages\</NuGetPackageFolders>
+>>>>>>> APPAddIcon
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
     <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.8.0</NuGetToolVersion>
   </PropertyGroup>
@@ -31,6 +35,7 @@
     <Import Project="$(NuGetPackageRoot)xamarin.forms\4.6.0.1141\buildTransitive\Xamarin.Forms.props" Condition="Exists('$(NuGetPackageRoot)xamarin.forms\4.6.0.1141\buildTransitive\Xamarin.Forms.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+<<<<<<< HEAD
     <Pkgruntime_win10-x86_Microsoft_Net_UWPCoreRuntimeSdk Condition=" '$(Pkgruntime_win10-x86_Microsoft_Net_UWPCoreRuntimeSdk)' == '' ">C:\Users\jelle\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.1.2</Pkgruntime_win10-x86_Microsoft_Net_UWPCoreRuntimeSdk>
     <Pkgruntime_win10-x86_Microsoft_Net_Native_SharedLibrary Condition=" '$(Pkgruntime_win10-x86_Microsoft_Net_Native_SharedLibrary)' == '' ">C:\Users\jelle\.nuget\packages\runtime.win10-x86.microsoft.net.native.sharedlibrary\2.1.8</Pkgruntime_win10-x86_Microsoft_Net_Native_SharedLibrary>
     <Pkgruntime_win10-x86_Microsoft_Net_Native_Compiler Condition=" '$(Pkgruntime_win10-x86_Microsoft_Net_Native_Compiler)' == '' ">C:\Users\jelle\.nuget\packages\runtime.win10-x86.microsoft.net.native.compiler\2.1.8</Pkgruntime_win10-x86_Microsoft_Net_Native_Compiler>
@@ -43,5 +48,19 @@
     <PkgMicrosoft_UI_Xaml Condition=" '$(PkgMicrosoft_UI_Xaml)' == '' ">C:\Users\jelle\.nuget\packages\microsoft.ui.xaml\2.3.191211002</PkgMicrosoft_UI_Xaml>
     <PkgMicrosoft_Net_UWPCoreRuntimeSdk Condition=" '$(PkgMicrosoft_Net_UWPCoreRuntimeSdk)' == '' ">C:\Users\jelle\.nuget\packages\microsoft.net.uwpcoreruntimesdk\2.1.2</PkgMicrosoft_Net_UWPCoreRuntimeSdk>
     <PkgMicrosoft_Net_Native_Compiler Condition=" '$(PkgMicrosoft_Net_Native_Compiler)' == '' ">C:\Users\jelle\.nuget\packages\microsoft.net.native.compiler\2.1.8</PkgMicrosoft_Net_Native_Compiler>
+=======
+    <Pkgruntime_win10-x86_Microsoft_Net_UWPCoreRuntimeSdk Condition=" '$(Pkgruntime_win10-x86_Microsoft_Net_UWPCoreRuntimeSdk)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.1.2</Pkgruntime_win10-x86_Microsoft_Net_UWPCoreRuntimeSdk>
+    <Pkgruntime_win10-x86_Microsoft_Net_Native_SharedLibrary Condition=" '$(Pkgruntime_win10-x86_Microsoft_Net_Native_SharedLibrary)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-x86.microsoft.net.native.sharedlibrary\2.1.8</Pkgruntime_win10-x86_Microsoft_Net_Native_SharedLibrary>
+    <Pkgruntime_win10-x86_Microsoft_Net_Native_Compiler Condition=" '$(Pkgruntime_win10-x86_Microsoft_Net_Native_Compiler)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-x86.microsoft.net.native.compiler\2.1.8</Pkgruntime_win10-x86_Microsoft_Net_Native_Compiler>
+    <Pkgruntime_win10-x64_Microsoft_Net_UWPCoreRuntimeSdk Condition=" '$(Pkgruntime_win10-x64_Microsoft_Net_UWPCoreRuntimeSdk)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.1.2</Pkgruntime_win10-x64_Microsoft_Net_UWPCoreRuntimeSdk>
+    <Pkgruntime_win10-x64_Microsoft_Net_Native_SharedLibrary Condition=" '$(Pkgruntime_win10-x64_Microsoft_Net_Native_SharedLibrary)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-x64.microsoft.net.native.sharedlibrary\2.1.8</Pkgruntime_win10-x64_Microsoft_Net_Native_SharedLibrary>
+    <Pkgruntime_win10-x64_Microsoft_Net_Native_Compiler Condition=" '$(Pkgruntime_win10-x64_Microsoft_Net_Native_Compiler)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-x64.microsoft.net.native.compiler\2.1.8</Pkgruntime_win10-x64_Microsoft_Net_Native_Compiler>
+    <Pkgruntime_win10-arm_Microsoft_Net_UWPCoreRuntimeSdk Condition=" '$(Pkgruntime_win10-arm_Microsoft_Net_UWPCoreRuntimeSdk)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.1.2</Pkgruntime_win10-arm_Microsoft_Net_UWPCoreRuntimeSdk>
+    <Pkgruntime_win10-arm_Microsoft_Net_Native_SharedLibrary Condition=" '$(Pkgruntime_win10-arm_Microsoft_Net_Native_SharedLibrary)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-arm.microsoft.net.native.sharedlibrary\2.1.8</Pkgruntime_win10-arm_Microsoft_Net_Native_SharedLibrary>
+    <Pkgruntime_win10-arm_Microsoft_Net_Native_Compiler Condition=" '$(Pkgruntime_win10-arm_Microsoft_Net_Native_Compiler)' == '' ">C:\Users\Xander\.nuget\packages\runtime.win10-arm.microsoft.net.native.compiler\2.1.8</Pkgruntime_win10-arm_Microsoft_Net_Native_Compiler>
+    <PkgMicrosoft_UI_Xaml Condition=" '$(PkgMicrosoft_UI_Xaml)' == '' ">C:\Users\Xander\.nuget\packages\microsoft.ui.xaml\2.3.191211002</PkgMicrosoft_UI_Xaml>
+    <PkgMicrosoft_Net_UWPCoreRuntimeSdk Condition=" '$(PkgMicrosoft_Net_UWPCoreRuntimeSdk)' == '' ">C:\Users\Xander\.nuget\packages\microsoft.net.uwpcoreruntimesdk\2.1.2</PkgMicrosoft_Net_UWPCoreRuntimeSdk>
+    <PkgMicrosoft_Net_Native_Compiler Condition=" '$(PkgMicrosoft_Net_Native_Compiler)' == '' ">C:\Users\Xander\.nuget\packages\microsoft.net.native.compiler\2.1.8</PkgMicrosoft_Net_Native_Compiler>
+>>>>>>> APPAddIcon
   </PropertyGroup>
 </Project>
