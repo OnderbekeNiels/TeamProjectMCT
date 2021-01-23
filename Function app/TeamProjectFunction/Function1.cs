@@ -954,7 +954,7 @@ namespace TeamProjectFunction
                         sqlCommand.Parameters.AddWithValue("@EtappeId", etappeId);
                         await sqlCommand.ExecuteNonQueryAsync();
 
-                        List<Gebruiker> gebruikers = await GetDNFDeelnemers(etappeId, connectionString);
+                        List<Gebruiker> gebruikers = await GetDeelnemersRonde(etappeId, connectionString);
 
                         foreach(Gebruiker g in gebruikers)
                         {
@@ -1185,8 +1185,8 @@ namespace TeamProjectFunction
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
-                        command.CommandText = "select d.GebruikersId, g.GebruikersNaam from Rondes as r join Deelnemers as d on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where r.RondeId = @RondeId";
-                        command.Parameters.AddWithValue("@RondeId", RondeId);
+                        command.CommandText = "select d.GebruikersId, g.GebruikersNaam from Deelnemers as d join Rondes as r on r.RondeId = d.RondeId join Gebruikers as g on d.GebruikersId = g.GebruikersId where d.RondeId = @rondeId and r.Admin != d.GebruikersId group by d.GebruikersId, g.GebruikersNaam;";
+                        command.Parameters.AddWithValue("@rondeId", RondeId);
                         SqlDataReader reader = command.ExecuteReader();
 
                         while (reader.Read())
