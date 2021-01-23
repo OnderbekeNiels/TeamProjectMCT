@@ -943,7 +943,7 @@ namespace TeamProjectFunction
           ILogger log)
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Etappe etappe = JsonConvert.DeserializeObject<Etappe>(requestBody);
+            EtappesRonde etappe = JsonConvert.DeserializeObject<EtappesRonde>(requestBody);
 
             bool succes = false;
             try
@@ -960,7 +960,7 @@ namespace TeamProjectFunction
                         sqlCommand.Parameters.AddWithValue("@etappeId", etappe.EtappeId);
                         await sqlCommand.ExecuteNonQueryAsync();
 
-                        List<Deelnemer> deelnemers = await GetDeelnemersFromRonde(etappe.RondeId, connectionString);
+                        List<Deelnemer> deelnemers = await GetDeelnemersFromRonde(etappe.RondId, connectionString);
 
                         succes = await LapControleFromDeelnemer(deelnemers, etappe.EtappeId, connectionString);
 
