@@ -1166,6 +1166,10 @@ input:disabled {
   color: var(--global-color-accent);
 }
 
+.u-yellow-jersey{
+  background-color: #FFDA3E;
+}
+
 /*
     Print styles.
     ---

@@ -312,10 +312,33 @@ const showRoundsRanking = function (data) {
   </p>
   <p class="c-ranking-table__header-item u-flex-basis-1-of-3 u-mr-clear">Totale tijd</p>
 </div>`;
-  let fastestTime = data[0].totaalTijd;
-  for (const item of data) {
-    if (item.totaalTijd == fastestTime) {
-      htmlString += `<div class="c-ranking-table__row">
+
+//checken of de data niet leeg is
+  if (data.length == 0) {
+    htmlString += `
+  <div class="c-ranking-table__row u-justify-content--center">U heeft nog geen data om weer te geven.</div>`;
+  } else {
+    let fastestTime = data[0].totaalTijd;
+
+    //Display the first in the rank with a yellow row.
+    htmlString += `<div class="c-ranking-table__row u-yellow-jersey">
+  <p
+    class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
+  >
+  #${data[0].plaats}
+  </p>
+  <p class="c-ranking-table__row-item c-ranking-table__row-item--item-name u-text-align--left c-result-item">${data[0].gebruikersNaam.toUpperCase()}</p>
+  <p class="c-ranking-table__row-item c-ranking-table__row-item--total-time c-result-item u-mr-clear">${secToTimeNotation(
+    data[0].totaalTijd
+  )}</p>
+</div>`;
+
+    //Remove the first person and go on with showing the ranking
+    data.shift();
+
+    for (const item of data) {
+      if (item.totaalTijd == fastestTime) {
+        htmlString += `<div class="c-ranking-table__row">
       <p
         class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
       >
@@ -326,8 +349,8 @@ const showRoundsRanking = function (data) {
         item.totaalTijd
       )}</p>
     </div>`;
-    } else {
-      htmlString += `
+      } else {
+        htmlString += `
     <div class="c-ranking-table__row">
               <p
                 class="c-ranking-table__row-item c-ranking-table__row-item--position u-color-alpha c-result-item"
@@ -346,6 +369,7 @@ const showRoundsRanking = function (data) {
                 )}</p>
               </div>
             </div>`;
+      }
     }
   }
   hideLoader();
@@ -605,7 +629,7 @@ const showEtappeUserChartData = function (data) {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: "Afgewerkte rondes",
+        text: "Jouw afgewerkte rondes uitgedrukt in seconden",
       },
       tooltips: {
         mode: "index",
@@ -621,7 +645,7 @@ const showEtappeUserChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Rondes",
+              labelString: "Baan ronde",
             },
           },
         ],
@@ -630,7 +654,7 @@ const showEtappeUserChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Ronde Tijd",
+              labelString: "Rondetijd (seconden)",
             },
             ticks: {
               reverse: true,
@@ -689,7 +713,7 @@ const showEtappeAdminChartData = function (data) {
       maintainAspectRatio: false,
       title: {
         display: true,
-        text: "Afgewerkte rondes van de top 5",
+        text: `Ronde tijden van de top ${data.length} uitgedrukt in seconden`,
       },
       tooltips: {
         mode: "index",
@@ -705,7 +729,7 @@ const showEtappeAdminChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Rondes",
+              labelString: "Baan Ronde",
             },
           },
         ],
@@ -714,7 +738,7 @@ const showEtappeAdminChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Ronde Tijd In Seconden",
+              labelString: "Rondetijd (seconden)",
             },
             ticks: {
               reverse: true,
