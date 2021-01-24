@@ -22,8 +22,6 @@ namespace TempoTrack.Views.EtappePaginas
         private static GebruikerV2 GebruikersInfo { get; set; }
 
         private static int etappeTeller = 0;
-
-        private static int NavigationStackCount = 0;
         public EtappeOverzichtPage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
         {
             checkConnectivity();
@@ -91,24 +89,9 @@ namespace TempoTrack.Views.EtappePaginas
             LoadTitle();
         }
 
-        protected override bool OnBackButtonPressed()
-        {
-            Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
-            return true;
-        }
-
-        protected override async void OnDisappearing()
-        {
-            if (NavigationStackCount >= Navigation.NavigationStack.Count) 
-            {
-                Navigation.PushAsync(new RondeOverzichtPage(GebruikersInfo));
-            }
-        }
-
         protected override void OnAppearing()
         {
             //Tonen van etappe bij terecht komen op deze pagina 
-            NavigationStackCount = Navigation.NavigationStack.Count;
             LoadEtappesAsync();
             base.OnAppearing();
         }
@@ -299,7 +282,7 @@ namespace TempoTrack.Views.EtappePaginas
 
         private void BtnCreateEtappe_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new CreateEtappePage(RondeInfo, GebruikersInfo));
+            Navigation.PushAsync(new CreateEtappePage(RondeInfo));
         }
 
         private void lvwEtappes_ItemSelected(object sender, SelectedItemChangedEventArgs e)

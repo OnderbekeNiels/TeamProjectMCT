@@ -152,6 +152,17 @@ namespace TempoTrack.Views.RondePaginas
             }
         }
 
+        protected override void OnAppearing()
+        {
+            //Alles neutraal instellen.
+            Color Blauw = Color.FromHex("#015D99");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Blauw;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            btnRefresh.TextColor = Blauw;
+            btnRefresh.BorderColor = Blauw;
+            base.OnAppearing();
+        }
+
         //Navigeren naar create ronde pagina
         private void btnCreate_Clicked(object sender, EventArgs e)
         {

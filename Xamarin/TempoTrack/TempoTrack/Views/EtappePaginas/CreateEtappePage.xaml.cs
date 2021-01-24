@@ -17,12 +17,10 @@ namespace TempoTrack.Views.EtappePaginas
     {
         int laps;
         private static RondesGebruiker RondeInfo { get; set; }
-        private static GebruikerV2 GebruikersInfo { get; set; }
-        public CreateEtappePage(RondesGebruiker rondeInfo, GebruikerV2 gebruikersInfo)
+        public CreateEtappePage(RondesGebruiker rondeInfo)
         {
             checkConnectivity();
             RondeInfo = rondeInfo;
-            GebruikersInfo = gebruikersInfo;
 
             InitializeComponent();
             laps = 1;
@@ -35,11 +33,15 @@ namespace TempoTrack.Views.EtappePaginas
             tpEtappe.Time = DateTime.Now.AddMinutes(1).TimeOfDay;
             lblAantalRondes.Text = Convert.ToString(1);
 
+            this.Title = rondeInfo.RondeNaam;
+
             //Kleuren instellen voor navbar
             NavigationPage.SetHasBackButton(this, true);
             Color fireRed = Color.FromHex("#B22222");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = fireRed;
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
+            
         }
 
         private void btnDown_clicked(object sender, EventArgs e)
@@ -103,8 +105,8 @@ namespace TempoTrack.Views.EtappePaginas
                     await DisplayAlert("Succes", "Etappe is succesvol aangemaakt", "OK");
 
                     //Etappe aangemaakt doorgaan naar etappe pagina
-                    Navigation.PushAsync(new EtappeOverzichtPage(RondeInfo,GebruikersInfo));
-                    //Navigation.PopAsync();
+                    Navigation.PopAsync();
+
                 }
             }
             //anders niets doen
