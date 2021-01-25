@@ -46,6 +46,11 @@ namespace TempoTrack.Views.Activity
             StopEtappe();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
+
         private bool TimeFromStartTimer()
         {
             if (DateTime.Now >= etappe.StartTijd)

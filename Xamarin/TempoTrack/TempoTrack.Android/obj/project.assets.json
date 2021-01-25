@@ -4701,24 +4701,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\niels\\.nuget\\packages\\": {},
+    "C:\\Users\\Xander\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "projectUniqueName": "D:\\project\\new\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
       "projectName": "TempoTrack.Android",
-      "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
-      "packagesPath": "C:\\Users\\niels\\.nuget\\packages\\",
-      "outputPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack.Android\\obj\\",
+      "projectPath": "D:\\project\\new\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\TempoTrack.Android.csproj",
+      "packagesPath": "C:\\Users\\Xander\\.nuget\\packages\\",
+      "outputPath": "D:\\project\\new\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\niels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Xander\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -4732,8 +4732,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-            "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
-              "projectPath": "C:\\Xamarin\\Testing\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
+            "D:\\project\\new\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj": {
+              "projectPath": "D:\\project\\new\\TeamProjectMCT\\Xamarin\\TempoTrack\\TempoTrack\\TempoTrack.csproj"
             }
           }
         }
