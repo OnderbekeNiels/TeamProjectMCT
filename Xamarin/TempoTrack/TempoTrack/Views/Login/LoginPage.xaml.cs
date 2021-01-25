@@ -111,6 +111,11 @@ namespace TempoTrack.Views.Login
             DisplayAlert("Google Authentication Error", e.Message, "OK");
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
+
         private void checkConnectivity()
         {
             if (Connectivity.NetworkAccess == NetworkAccess.None)

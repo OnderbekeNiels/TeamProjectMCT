@@ -329,6 +329,11 @@ namespace TempoTrack.Views.Activity
                 Navigation.PushModalAsync(new NoConnection());
             }
         }
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
+
 
     }
 }

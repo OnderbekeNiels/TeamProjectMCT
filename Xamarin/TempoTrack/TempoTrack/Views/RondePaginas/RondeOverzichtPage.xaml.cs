@@ -45,6 +45,11 @@ namespace TempoTrack.Views.RondePaginas
             Navigation.PushAsync(new LoginPage());
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
+
         private void BtnRefresh_Clicked(object sender, EventArgs e)
         {
             lvwRondes.ItemsSource = null;
