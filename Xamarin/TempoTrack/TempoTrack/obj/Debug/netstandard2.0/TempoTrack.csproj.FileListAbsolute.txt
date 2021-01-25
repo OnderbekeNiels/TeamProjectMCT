@@ -169,3 +169,30 @@ C:\Xamarin\Testing\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Xamarin\Testing\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
 C:\Xamarin\Testing\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
 C:\Xamarin\Testing\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb
+C:\Xamarin\Final test\TempoTrack\TempoTrack\bin\Debug\netstandard2.0\TempoTrack.deps.json
+C:\Xamarin\Final test\TempoTrack\TempoTrack\bin\Debug\netstandard2.0\TempoTrack.dll
+C:\Xamarin\Final test\TempoTrack\TempoTrack\bin\Debug\netstandard2.0\ref\TempoTrack.dll
+C:\Xamarin\Final test\TempoTrack\TempoTrack\bin\Debug\netstandard2.0\TempoTrack.pdb
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csprojAssemblyReference.cache
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Activity\ActivityPageAdmin.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\EtappePaginas\CreateEtappePage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\EtappePaginas\EtappeOverzichtPage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\InternetConnectivity\NoConnection.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Login\LoginPage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingEtappes.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingGPS.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingKlassement.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\Onboarding\OnboardingStart.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\CreateRondePage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\DeelnemersOverzichtPage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\Views\RondePaginas\RondeOverzichtPage.xaml.g.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.AssemblyInfoInputs.cache
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.AssemblyInfo.cs
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.csproj.CoreCompileInputs.cache
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.dll
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\ref\TempoTrack.dll
+C:\Xamarin\Final test\TempoTrack\TempoTrack\obj\Debug\netstandard2.0\TempoTrack.pdb

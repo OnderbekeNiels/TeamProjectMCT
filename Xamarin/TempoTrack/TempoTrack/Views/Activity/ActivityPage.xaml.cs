@@ -104,12 +104,12 @@ namespace TempoTrack.Views.Activity
         {
             Location Phone = await GetCurrentLocation(); //Ophalen locatie van de gsm
 
-            //Gegevens thuis
-            Location finishP1 = new Location(50.915360140224536, 3.6511388192946113); //Linker uiteinde finish piste
-            Location finishP2 = new Location(50.915356335370404, 3.6511052916846483); //Midden finsih piste
-            Location finishP3 = new Location(50.915352530515946, 3.6510684113136893); //Rechter uiteinde finish piste
+            //Gegevens finish op de piste in Brugge
+            Location finishP1 = new Location(51.205852955695214, 3.243597105208559); //Linker uiteinde finish piste
+            Location finishP2 = new Location(51.20587312131655, 3.243555530972205); //Midden finsih piste
+            Location finishP3 = new Location(51.205889085760525, 3.243516638944648); //Rechter uiteinde finish piste
 
-            Location checkpoint = new Location(50.91506396202935, 3.651253141698211); //Midden checkpoint piste
+            Location checkpoint = new Location(51.20551719426052, 3.244668291323074); //Midden checkpoint piste
 
             //Berekenen afstand van jouw gsm ten opzichte van de punten.
             double distanceFinishP1 = Location.CalculateDistance(finishP1, Phone, DistanceUnits.Kilometers) * 1000;
@@ -119,13 +119,13 @@ namespace TempoTrack.Views.Activity
             double distanceCheckpoint = Location.CalculateDistance(checkpoint, Phone, DistanceUnits.Kilometers) * 1000;
 
             //Checken of je op 6 meter bent van het chechpoint
-            if (distanceCheckpoint <= 6)
+            if (distanceCheckpoint <= 7)
             {
                 passedCheckpoint = true;
             }
 
             //Checken of je op 2 meter bent van de finsih 
-            if (distanceFinishP1 <= 2 || distanceFinishP2 <= 2 || distanceFinishP3 <= 2)
+            if (distanceFinishP1 <= 3 || distanceFinishP2 <= 3 || distanceFinishP3 <= 3)
             {
                 //Kijken of je het checkpoint al gepasseerd bent
                 if (passedCheckpoint)
