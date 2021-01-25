@@ -51,4 +51,11 @@ function signOut() {
 
 document.addEventListener("DOMContentLoaded", function () {
   //console.log("DOM loaded");
+  
+  if(document.querySelector(".js-home")){
+    document.querySelector('.js-download-button').addEventListener('click', function(){
+      console.log('click');
+      window.location.href = "https://drive.google.com/file/d/1ZjwweZJQxdzzEAh5jlX1TT8oeHSYtFup/view?usp=sharing";
+    })
+  }
 });
