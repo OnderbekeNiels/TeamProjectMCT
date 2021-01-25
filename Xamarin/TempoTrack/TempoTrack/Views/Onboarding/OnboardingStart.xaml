@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.Onboarding.OnboardingStart"             
+             NavigationPage.HasNavigationBar="False" 
+             BackgroundColor="#EFEFEF">
+    
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Padding="16,50,16,16">
+            <Label Text="Tempo Track" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666" />
+            <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="160" />
+
+            <Label Text="Start jouw eigen Tour de France" FontSize="20" FontFamily="DIN2014-Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="40,0,40,24"/>
+            <Label Text="Alles is in orde en klaar voor jouw Tour!" FontSize="18" FontFamily="DIN2014-Light" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666"  Margin="56,0,56,32"/>
+
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,0,0,56">
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
+                <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="#016FB7" BorderColor="#016FB7" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <Button x:Name="btnStart" Text="Start"  BackgroundColor="#016FB7" FontFamily="DIN2014-Regular" CornerRadius="20" TextColor="#FFFFFF" Margin="8,8,8,32" HeightRequest="40" WidthRequest="136" Padding="0" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

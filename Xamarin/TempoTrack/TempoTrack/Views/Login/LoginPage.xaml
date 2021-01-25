@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.Login.LoginPage"
+             NavigationPage.HasNavigationBar="False" 
+             BackgroundColor="#EFEFEF">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Tempo Track" FontSize="28" FontFamily="DIN2014-Regular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="#666666" Padding="16,50,16,16"/>
+            <Image x:Name="imgLogo" VerticalOptions="CenterAndExpand" HeightRequest="160" />
+
+            <Frame BackgroundColor="#EFEFEF" Padding="0,0,0,80">
+                <Grid BackgroundColor="#4286F5" HorizontalOptions="Center" x:Name="btnLogin">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="160"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" x:Name="imgGoogle" />
+                    <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" x:Name="lblLogin" Text="Sign in with Google" FontSize="16" TextColor="#FFFFFF" FontAttributes="Bold" />
+
+                </Grid>
+            </Frame>
+  
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

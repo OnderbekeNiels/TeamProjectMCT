@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.MainPage" NavigationPage.HasNavigationBar="False">
+
+    <StackLayout>
+        <Button x:Name="btnLogin" Text="Click here to login with Google" />
+        <Label x:Name="lblemail" Text=""/>
+        <Label x:Name="lblname" Text=""/>
+        <Label x:Name="lblphoto" Text=""/>
+    </StackLayout>
+
+</ContentPage>

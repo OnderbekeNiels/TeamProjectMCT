@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.RondePaginas.DeelnemersOverzichtPage"
+             Title="Deelnemers">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" x:Name="lblTotaalDeelnemers" VerticalOptions="Start" HorizontalOptions="Center" Margin="16,16,0,12" BackgroundColor="Transparent" FontSize="16" TextColor="#707070"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="btnRefresh" FontFamily="DIN2014-Bold" VerticalOptions="Start" HorizontalOptions="Center" FontSize="16" BorderRadius="20" Margin="16,16,16,12" Text="Refresh" BackgroundColor="White" TextColor="#015D99" BorderWidth="1" BorderColor="#015D99" Padding="0"/>
+
+            
+            
+            <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="lvwDeelnemers" RowHeight="50" Margin="0,16,0,0" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="White" Margin="10,8,8,10" Padding="0" HasShadow="True" CornerRadius="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" Grid.Row="0" x:Name="lblPlaats" HorizontalOptions="Center" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding Nummer}' TextColor='{Binding Kleur}' FontSize="16"/>
+                                    <Label Grid.Column="1" Grid.Row="0" x:Name="lblNaam" HorizontalOptions="Center" VerticalOptions="Center" Margin="16,0,0,0" Text='{Binding GebruikersNaam}' TextColor='{Binding Kleur}' FontSize="16"/>
+                                    
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

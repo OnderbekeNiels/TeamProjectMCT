@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "be486e35-6bf8-45ce-af69-91e6b28364fe",
+		"name": "teamProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"gebruikersnaam\": \"test1\",\r\n  \"email\": \"test9@email.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/gebruikers/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"gebruikers",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"test9@email.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/gebruikers/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"gebruikers",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create ronde",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Admin\": \"ee6c128e-0b7e-4d8f-b139-6a40308e112d\",\r\n    \"naam\": \"testronde1\",\r\n    \"startdatum\" : \"2021-01-05T15:00:00\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/rondes/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"rondes",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update ronde",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rondeId\": \"4dca58c9-7e62-4bcb-8b05-b81b15a1ba75\",\r\n    \"Admin\": \"ee6c128e-0b7e-4d8f-b139-6a40308e112d\",\r\n    \"naam\": \"testronde1\",\r\n    \"startDatum\": \"2021-01-05T15:00:00\",\r\n    \"eindDatum\": \"2020-12-31T11:59:59\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/rondes/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"rondes",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete ronde",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rondeId\": \"4cc9e0df-1ded-4dc6-8000-b4d27fd3027a\",\r\n    \"naam\": \"testronde1\",\r\n    \"admin\": \"ee6c128e-0b7e-4d8f-b139-6a40308e112d\",\r\n    \"inviteCode\": \"DZKON9AE\",\r\n    \"startDatum\": \"2021-01-05T15:00:00\",\r\n    \"eindDatum\": \"9999-12-31T11:59:59\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add deelnemer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"invitecode\": \"&HI5LGMF\",\r\n    \"gebruikerId\": \"986c5f65-cafc-43ce-8fa5-bf4f97921e92\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/deelnemer/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"deelnemer",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete deelnemer from ronde",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gebruikerId\": \"986c5f65-cafc-43ce-8fa5-bf4f97921e92\",\r\n    \"rondeId\": \"4cc9e0df-1ded-4dc6-8000-b4d27fd3027a\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/deelnemer/del",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"deelnemer",
+						"del"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create etappe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"laps\" : 3,\r\n    \"rondeid\": \"55c83dc3-8bc6-43de-b1ae-50fdf9a10590\",\r\n    \"lapafstand\": 102.33,\r\n    \"starttijd\": \"2021-01-05T15:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/etappes/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"etappes",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update etappe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"laps\" : 3,\r\n    \"rondeid\": \"55c83dc3-8bc6-43de-b1ae-50fdf9a10590\",\r\n    \"lapafstand\": 105.33,\r\n    \"starttijd\": \"2021-01-05T15:00:00\",\r\n    \"EtappeId\" : \"6B2C2BE0-C30C-4742-8ED2-83A14B4FE066\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/etappe/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"etappe",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

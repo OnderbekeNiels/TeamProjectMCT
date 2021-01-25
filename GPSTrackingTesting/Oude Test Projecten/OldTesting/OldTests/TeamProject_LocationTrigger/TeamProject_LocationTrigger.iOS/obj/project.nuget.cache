@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "HUaB2Ro6bY0Q32cQK/rJ43X23Cs7RE9Lzd6Er4/PWm/6G4qQ09a5cb+LuuaGNMYZEKjhK3By2T1tuMa0yIByCQ==",
+  "success": true,
+  "projectFilePath": "D:\\2MCT1 - S1\\Team Project\\TeamProjectMCT\\GPSTrackingTesting\\TeamProject_LocationTrigger\\TeamProject_LocationTrigger.iOS\\TeamProject_LocationTrigger.iOS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
+    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
+  ],
+  "logs": []
+}

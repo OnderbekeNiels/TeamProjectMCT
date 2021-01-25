@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TempoTrack.Views.Activity.ActivityPageAdmin"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="True"
+             Title="Etappe"
+             BackgroundColor="#FFFFFF">
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <Grid VerticalOptions="CenterAndExpand" RowSpacing="0" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" x:Name="lblTotalTime" FontSize="45" Text="00:00:00" TextColor="#B22222" VerticalOptions="EndAndExpand" HorizontalOptions="Center" />
+                <Label Grid.Row="1" x:Name="lblTotalTimeFixed" FontSize="16" Text="Tijd voor de start" VerticalOptions="Start" HorizontalOptions="Center" />
+            </Grid>
+            <Button Grid.Row ="5" x:Name="btnStoppen" FontFamily="DIN2014-Bold" VerticalOptions="End" FontSize="16" BorderRadius="20" Margin="16,0,16,16" HeightRequest="40" Text="STOP ETAPPE" BackgroundColor="#B22222" TextColor="White" IsEnabled="false"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
