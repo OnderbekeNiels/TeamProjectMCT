@@ -19,7 +19,7 @@
                 <Frame HeightRequest="16" WidthRequest="16" CornerRadius="20" HorizontalOptions="Start" VerticalOptions="Start" Margin="0" Padding="0" BackgroundColor="Transparent" BorderColor="#707070" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button x:Name="btnReturn" Text="Return" BackgroundColor="Transparent" FontFamily="DIN2014-Regular" TextColor="##666666" Margin="16,8,8,8" HeightRequest="40" Padding="0" />
+                <Button x:Name="btnReturn" Text="Return" BackgroundColor="Transparent" FontFamily="DIN2014-Regular" TextColor="#666666" Margin="16,8,8,8" HeightRequest="40" Padding="0" />
                 <Button x:Name="btnContinue" Text="Continue"  BackgroundColor="#016FB7" FontFamily="DIN2014-Regular" CornerRadius="20" TextColor="#FFFFFF" Margin="96,8,8,8" HeightRequest="40" WidthRequest="136" Padding="0" />
             </StackLayout>
         </StackLayout>
