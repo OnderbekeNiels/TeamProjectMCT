@@ -645,7 +645,7 @@ const showEtappeUserChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Baan ronde",
+              labelString: "Baanronde",
             },
           },
         ],
@@ -729,7 +729,7 @@ const showEtappeAdminChartData = function (data) {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: "Baan Ronde",
+              labelString: "Baanronde",
             },
           },
         ],

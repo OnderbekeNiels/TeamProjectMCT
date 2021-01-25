@@ -302,18 +302,21 @@ hr {
 }
 
 a {
-  color: var(--global-color-alpha-xx-light);
-  outline-color: var(--global-color-accent);
-  outline-width: medium;
-  outline-offset: 2px;
+  color: var(--global-color-accent);
+  transition: all 0.1s ease-in-out;
+  text-decoration: none;
 }
 
-a:visited {
-  color: var(--global-color-alpha);
+a:visited,
+a:active {
+  color: var(--global-color-accent);
+  text-decoration: none;
 }
 
-a:hover, a:active {
-  color: var(--global-color-alpha);
+a:hover,
+a:focus {
+  color: var(--global-color-alpha-light);
+  text-decoration: none;
 }
 
 label,
@@ -751,7 +754,6 @@ input:disabled {
   display: grid;
   min-height: calc(100vh - 5rem);
   grid-template-rows: 1fr auto;
-  gap: var(--global-whitespace-xxxl);
 }
 
 .c-home-grid__item:nth-child(1) {
@@ -822,34 +824,16 @@ input:disabled {
 .c-home__downloadBtn:hover {
   background-color: var(--global-color-neutral-x-light);
   color: var(--global-color-accent);
-  text-decoration: none;
-}
-
-.c-home__downloadBtn:hover a{
-  color: var(--global-color-alpha);
 }
 
 .c-home__downloadBtn:active,
 .c-home__downloadBtn:focus {
   outline: none;
-  color: var(--global-color-accent);
   border-color: var(--global-color-accent);
   box-shadow: 0 0 0 3px var(--global-color-accent);
-  text-decoration: none;
 }
 
-.c-home__downloadBtn-link{
-  text-decoration: none;
-}
 
-.c-home__downloadBtn-link:hover {
-  text-decoration: none;
-}
-
-.c-home__downloadBtn-link:active,
-.c-home__downloadBtn-link:focus {
-  text-decoration: none;
-}
 
 
 .c-home__foto-bron{
@@ -864,10 +848,7 @@ input:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .c-home-grid__item:nth-child(1) {
-    padding-top: var(--global-whitespace-xxxl);
+    padding-top: var(--global-whitespace-xxl);
   }
 
   .c-home-container__item {
@@ -886,15 +867,18 @@ input:disabled {
 
 .c-footer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: var(--global-whitespace-md);
   text-align: center;
   color: var(--global-color-neutral-dark);
-  /* background-color: var(--global-color-accent); */
   width: 100%;
-  position: absolute;
   bottom: 0;
+}
+
+.c-footer__logo{
+  margin: var(--global-whitespace-sm);
 }
 
 /*
@@ -1038,6 +1022,10 @@ input:disabled {
   width: 1.5rem;
 }
 
+
+.u-mh--sm{
+  height: 32px;
+}
 
 /*
     Utilities: spacing
