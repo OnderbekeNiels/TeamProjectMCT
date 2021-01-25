@@ -93,6 +93,7 @@ namespace TempoTrack.Views.EtappePaginas
         {
             //Tonen van etappe bij terecht komen op deze pagina 
             LoadEtappesAsync();
+            LoadRondesAsync(RondeInfo.RondeId);
             base.OnAppearing();
         }
 
@@ -222,10 +223,10 @@ namespace TempoTrack.Views.EtappePaginas
             lblRondeTijd.Text = "";
             lblRondePlaats.Text = "";
             LoadEtappesAsync();
-            LoadRondesAsync(RondeInfo.RondeId, lblRondePlaats, lblRondeTijd);
+            LoadRondesAsync(RondeInfo.RondeId);
         }
 
-        private static async Task LoadRondesAsync(Guid rondeId, Xamarin.Forms.Label lblPlaats, Xamarin.Forms.Label lblTijd)
+        private async Task LoadRondesAsync(Guid rondeId)
         {
             List<RondeKlassement> rondesKlassement = await RondeRepository.GetRondeKlassement(rondeId);
             foreach(RondeKlassement item in rondesKlassement)
@@ -235,8 +236,8 @@ namespace TempoTrack.Views.EtappePaginas
                     RondeInfo.Plaats = item.Plaats;
                     RondeInfo.TotaalTijd = item.TotaalTijd;
 
-                    lblTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
-                    lblPlaats.Text = RondeInfo.Ranking;
+                    lblRondeTijd.Text = TimeSpan.FromSeconds(RondeInfo.TotaalTijd).ToString();
+                    lblRondePlaats.Text = RondeInfo.Ranking;
 
                 }
             }

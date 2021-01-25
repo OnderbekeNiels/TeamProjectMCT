@@ -91,8 +91,6 @@ namespace TempoTrack.Views.RondePaginas
 
             lvwRondes.ItemsSource = rondesGebruiker;
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() => lvwRondes.EndRefresh());
-
-
         }
 
         private void LvwRondes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -159,6 +157,7 @@ namespace TempoTrack.Views.RondePaginas
 
         protected override void OnAppearing()
         {
+            LoadRondesAsync(GebruikersInfo.GebruikerId);
             //Alles neutraal instellen.
             Color Blauw = Color.FromHex("#015D99");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Blauw;
