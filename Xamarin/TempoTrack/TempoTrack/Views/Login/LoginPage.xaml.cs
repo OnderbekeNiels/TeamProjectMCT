@@ -97,13 +97,6 @@ namespace TempoTrack.Views.Login
             };
             authenticator.Error += onAuthError;
 
-
-            //GebruikerV2 gebruikerInfo = new GebruikerV2();
-            //gebruikerInfo.GebruikerId = Guid.Parse("ecde6aac-3192-4f8c-a077-c5bbbff1e600");
-            //gebruikerInfo.Email = "jelle.demets@student.howest.be";
-            //gebruikerInfo.name = "Jelle Demets";
-            //Navigation.PushAsync(new RondeOverzichtPage(gebruikerInfo));
-
         }
 
         private void onAuthError(object sender, AuthenticatorErrorEventArgs e)
