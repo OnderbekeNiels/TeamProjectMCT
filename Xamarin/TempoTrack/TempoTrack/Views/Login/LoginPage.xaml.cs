@@ -93,6 +93,7 @@ namespace TempoTrack.Views.Login
                 {
                     //Authentication fail
                     //write the code to handle when auth failed
+                    //De gebruiker wordt al terug naar de login pagina gestuurd als het inloggen mislukt is
                 }
             };
             authenticator.Error += onAuthError;

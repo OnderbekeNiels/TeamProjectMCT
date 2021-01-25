@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if(document.querySelector(".js-home")){
     document.querySelector('.js-download-button').addEventListener('click', function(){
       console.log('click');
-      window.location.href = "https://drive.google.com/file/d/1ZjwweZJQxdzzEAh5jlX1TT8oeHSYtFup/view?usp=sharing";
+      window.location.href = "https://drive.google.com/file/d/13J2HocrUtxEKyGGL1M1mOOSU3EqQnlSL/view?usp=sharing";
     })
   }
 });
