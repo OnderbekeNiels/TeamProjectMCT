@@ -304,16 +304,19 @@ hr {
 a {
   color: var(--global-color-accent);
   transition: all 0.1s ease-in-out;
+  text-decoration: none;
 }
 
 a:visited,
 a:active {
   color: var(--global-color-accent);
+  text-decoration: none;
 }
 
 a:hover,
 a:focus {
   color: var(--global-color-alpha-light);
+  text-decoration: none;
 }
 
 label,
@@ -845,6 +848,7 @@ input:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: var(--global-whitespace-xxl);
   }
 
   .c-home-container__item {
