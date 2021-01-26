@@ -104,12 +104,12 @@ namespace TempoTrack.Views.Activity
         {
             Location Phone = await GetCurrentLocation(); //Ophalen locatie van de gsm
 
-            //Gegevens finish op de piste in Brugge
-            Location finishP1 = new Location(51.205852955695214, 3.243597105208559); //Linker uiteinde finish piste
-            Location finishP2 = new Location(51.20587312131655, 3.243555530972205); //Midden finsih piste
-            Location finishP3 = new Location(51.205889085760525, 3.243516638944648); //Rechter uiteinde finish piste
+            //Gegevens finish op de test locatie
+            Location finishP1 = new Location(50.91535714406399, 3.651083336394004); //Linker uiteinde finish piste
+            Location finishP2 = new Location(50.91535883511029, 3.651106135168779); //Midden finsih piste
+            Location finishP3 = new Location(50.9153622172027, 3.651124910630359); //Rechter uiteinde finish piste
 
-            Location checkpoint = new Location(51.20551719426052, 3.244668291323074); //Midden checkpoint piste
+            Location checkpoint = new Location(50.91502821715237, 3.651276238308595); //Midden checkpoint piste
 
             //Berekenen afstand van jouw gsm ten opzichte van de punten.
             double distanceFinishP1 = Location.CalculateDistance(finishP1, Phone, DistanceUnits.Kilometers) * 1000;
